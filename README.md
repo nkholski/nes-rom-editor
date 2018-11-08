@@ -1,6 +1,12 @@
-Move along, nothing to see here.
+# NES EDITOR
 
-This is a work in progress online NES-rom graphics editor. Most of it will change and there is no reason to clone or try to use it yet. Feel free to follow it though. I hope to release something useful pretty soon and make the tool available online.
+The aim of this project is to create an user friendly tool to manipulate (hack) nes-rom files. The main focus is to create an quick and easy to use graphics editor with built-in support for json-based game specific config files. The config files will allow easy access to manipulate palettes, game mechanics etcetera. I'm also experimenting with integrating jsnes for being able to test the rom-hack while working on it. It might even be possible to do some kind of WYSIWYG-connection allowing for manipulating a rom while it's running. We'll see. 
+
+The editor is built in javascript and depends on React. It's not yet particulary useful so if you're here for hacking roms there are better tools out there, at least for a few weeks or so :-).
+
+Needless to say, the project is not endorsed by Nintendo. No roms are bundled and I will not assist in finding them. There are lot of resourses for dumping your cartridges legally.
+
+## Tech stuff
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
