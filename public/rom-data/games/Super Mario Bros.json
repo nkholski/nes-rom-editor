@@ -1,0 +1,64 @@
+{
+    "name": "Super Mario Bros",
+    "md5": ["673913a23cd612daf5ad32d4085e0760"],
+    "possibleMD5": [],
+    "compositions": [{
+        "name": "Mario",
+        "blocks": [[32784, 32816, 32848, 32880],
+        [32800, 32832, 32864, 32896],
+        [32912, 32944, 32976, 33008],
+        [32928, 32960, 32992, 33024],
+        [33040, 33072, 33104, 33136],
+        [33056, 33088, 33120, 33152],
+        [33168, 33200, 33232, 33264],
+        [33184, 33216, 33248, 33280]],
+        "palettes": [{
+                "name": "Mario",
+                "colors": null,
+                "address": [1,2,3]
+            },
+            {
+                "name": "Fire Mario",
+                "colors": [1, 2, 3, 4],
+                "address": null
+            }
+        ]
+    }],
+    "palettes": [
+        {
+            "name": "Mario",
+            "children": [
+                {
+                    "name": "Normal",
+                    "palette": {
+                        "hat": 0,
+                        "hair": 1,
+                        "buttons": 3
+                    }
+                }
+            ]
+        }
+    ],
+    "hacks": [
+        {
+            "name": "Player mechanics",
+            "children": [
+                { "name": "Jump height",
+                "address": 0,
+                "dropdown": [
+                    { "name": "Moon",
+                    "value": 1}
+                ]
+                },
+                {
+                    "name": "Run speed height",
+                    "address": 0,
+                    "number": {
+                        "min": 5,
+                        "max": 55
+                    }
+                }
+            ]
+        }
+    ]
+}
