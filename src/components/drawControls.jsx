@@ -17,10 +17,13 @@ import {
   InputGroupAddon
 } from "reactstrap";
 
-import { expand, setZoom } from "../redux/actions/canvasActions";
-import { setActiveColor } from "../redux/actions/drawActions";
+import { expand, setZoom, setComposition } from "../redux/actions/canvasActions";
+import { setActiveColor, mapPaletteToColors, pushHEXToColors } from "../redux/actions/drawActions";
+import { alterByte } from "../redux/actions/nesRomActions";
 
 import ColorSelect from "./colorSelect";
+import PaletteModal from "./paletteModal";
+
 
 class DrawControls extends Component {
   constructor(props) {
@@ -28,8 +31,13 @@ class DrawControls extends Component {
     this.state = {
       dropdownOpen: {
         expand: false
+      },
+      paletteModal: {
+        isOpen: false,
+        colorIndex: 0
       }
     };
+    this.loadComposition();
   }
 
   render() {
@@ -41,6 +49,7 @@ class DrawControls extends Component {
           colorIndex={colorIndex}
           color={this.props.colors[colorIndex]}
           selected={this.props.activeColorIndex === colorIndex}
+          showPaletteModal={this.showPaletteModal.bind(this)}
           key={colorIndex}
         />
       );
@@ -59,13 +68,13 @@ class DrawControls extends Component {
     const paletteDropDown = this.getPaletteDropDown();
 
     const zoom = this.getZoomDropDown();
+    return <div className="draw-controls">
+     <PaletteModal colorIndex={this.state.paletteModal.colorIndex} isOpen={this.state.paletteModal.isOpen} palette={this.props.nesPalette} callback={this.shiftPaletteRef.bind(this)} />
 
-    return (
-      <div className="draw-controls">
         <div className="md-12" id="colors">
           {colors}
           {paletteDropDown}
-          <Button onClick={() => this.expand(1)} disabled>
+          <Button onClick={() => this.savePaletteToRom()}>
             Save palette to rom
           </Button>
         </div>
@@ -74,36 +83,67 @@ class DrawControls extends Component {
           {zoom}
         </div>
         <div className="md-6">
-          <Button onClick={() => this.expand(1)}>Clear composition</Button>{" "}
-          <Button onClick={() => this.expand(1)}>Load composition</Button>{" "}
-          <Button onClick={() => this.expand(1)}>Save composition</Button>
+          <Button onClick={() => this.expand(1)}>Clear composition</Button> <Button
+            onClick={() => this.expand(1)}
+          >
+            Load composition
+          </Button> <Button onClick={() => this.expand(1)}>
+            Save composition
+          </Button>
         </div>
-        <Modal
-          isOpen={false}
-         /* toggle={this.toggle}
+        <Modal isOpen={false}>
+          /* toggle={this.toggle}
           className={this.props.className} */
-        >
-          <ModalHeader /* toggle={this.toggle} */>Save composition</ModalHeader>
+          <ModalHeader /* toggle={this.toggle} */>
+            Save composition
+          </ModalHeader>
           <ModalBody>
             <p>
-              Save current composition to be able to access it quickly when editing the rom in the future. The current composition consists of 1x1 blocks of 8x8 pixels.
+              Save current composition to be able to access it quickly when
+              editing the rom in the future. The current composition
+              consists of 1x1 blocks of 8x8 pixels.
             </p>
             <InputGroup>
               <Input placeholder="composition name (i.e. Mario, turtle or first room)" />
-            </InputGroup> 
+            </InputGroup>
           </ModalBody>
           <ModalFooter>
             <Button color="primary" /*onClick={this.toggle}*/>
               Overwrite
-            </Button>{" "}
-            <Button color="secondary" /*onClick={this.toggle}*/>
+            </Button> <Button color="secondary" /*onClick={this.toggle}*/>
               Save
             </Button>
           </ModalFooter>
         </Modal>
-      </div>
-    );
+      </div>;
   }
+
+  showPaletteModal(colorIndex) {
+    this.setState({
+      paletteModal: {
+        isOpen: true,
+        colorIndex
+      }
+    });
+  }
+
+  shiftPaletteRef(colorIndex, HEXColor) {
+    this.setState({
+      paletteModal: {
+        isOpen: false
+      }
+    });
+    if(colorIndex === -1){
+      return;
+    }
+    else {
+      const colors = [...this.props.colors];
+      colors[colorIndex] = HEXColor;
+      this.props.pushHEXToColors(colors);
+    }
+
+  }
+
 
   expand = direction => {
     this.props.expand(direction);
@@ -193,6 +233,23 @@ class DrawControls extends Component {
     );
   }
 
+  savePaletteToRom() {
+    const currentComposition = this.state.compositions[0];
+    const selectedTarget = 0;
+    const jobToDo = currentComposition.palettes[selectedTarget].address;
+
+    jobToDo.forEach((address, colorIndex) => {
+      const value = this.props.nesPalette.indexOf(this.props.colors[colorIndex]);
+      if(address === -1 || value === -1){
+        return;
+      }
+      // colors to index
+      console.log("PUSH",value,"to",address)
+      this.props.alterByte(address, value)
+    });
+    console.log(this.state.compositions);
+  }
+
   getPaletteDropDown() {
     const palettes = [
       {
@@ -210,7 +267,7 @@ class DrawControls extends Component {
         <DropdownItem
           key={i}
           onClick={() => {
-            this.props.setPalette(palette.colors);
+            this.props.pushHEXToColors(palette.colors);
           }}
         >
           {palette.name}
@@ -227,6 +284,15 @@ class DrawControls extends Component {
       </ButtonDropdown>
     );
   }
+
+  loadComposition() {
+    fetch("rom-data/games/Super Mario Bros.json").then(res =>res.json()).then((data)=>{
+      this.setState({compositions: data.compositions});
+      this.props.setComposition(data.compositions[0]);
+
+    });
+  }
+
 }
 
 const mapStateToProps = state => {
@@ -243,6 +309,18 @@ const mapDispatchToProps = dispatch => {
     },
     setActiveColor: colorIndex => {
       dispatch(setActiveColor(colorIndex));
+    },
+    setComposition: compositionObj => {
+      dispatch(setComposition(compositionObj))
+    },
+    mapPaletteToColors: palette => {
+      dispatch(mapPaletteToColors(palette));
+    },
+    pushHEXToColors: palette => {
+      dispatch(pushHEXToColors(palette));
+    },
+    alterByte: (address, value) => {
+      dispatch(alterByte(address, value));
     }
   };
 };

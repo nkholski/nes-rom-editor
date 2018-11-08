@@ -8,22 +8,39 @@ export const expand = (direction) => dispatch => {
 export const dropBlock = (globalCoords, romData, byteIndex, colors) => dispatch => {
     dispatch({
         type: 'DROP_BLOCK',
-        payload: { globalCoords, byteIndex, romData, colors }
+        payload: {
+            globalCoords,
+            byteIndex,
+            romData,
+            colors
+        }
     })
 }
 
 export const setClipByte = (byteIndex) => dispatch => {
     dispatch({
         type: 'SET_CLIP_BYTE',
-        payload:  byteIndex
+        payload: byteIndex
     })
+}
+
+export const setComposition = (compositionObject) => dispatch => {
+    dispatch({
+            type: "SET_COMPOSITION",
+            payload: compositionObject
+        }
+    )
 }
 
 // Render block of byteIndex or all (null)
 export const renderBlocks = (romData, colors, byteIndex = null) => dispatch => {
     dispatch({
         type: 'RENDER_BLOCKS',
-        payload: {romData, byteIndex, colors}
+        payload: {
+            romData,
+            byteIndex,
+            colors
+        }
     })
 }
 

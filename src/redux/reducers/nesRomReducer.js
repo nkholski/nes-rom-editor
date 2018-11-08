@@ -21,6 +21,18 @@ export default (state = defaultState, action) => {
             return {
                 result: action.payload
             }
+        case 'ALTER_BYTE':
+            const {address, value } = payload;
+            console.log("LIVE",address, value);
+            const romData = state.romData;
+            romData.setUint8(address, value);
+
+
+            return {
+                ...state,
+                romData,
+                version: state.version+1
+            };
         default:
             return state;
     }

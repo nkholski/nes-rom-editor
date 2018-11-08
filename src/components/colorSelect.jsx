@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function ColorSelect(props) {
-  const selectPalette = <div className="palette">Edit</div>;
+  const selectPalette = <div className="palette" onClick={()=>props.showPaletteModal(props.colorIndex)}>Edit</div>;
   let className = "color";
   className += props.selected ? " selected" : "";
 

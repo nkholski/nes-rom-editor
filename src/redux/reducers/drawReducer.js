@@ -17,11 +17,24 @@ export default (state = defaultState, action) => {
     switch (type) {
         case "SET_PALETTE":
             const nesPalette = payload;
-            return {...state, nesPalette};
+            console.log("PALETE");
+            return { ...state,
+                nesPalette
+            };
         case "SET_ACTIVE_COLOR":
             const activeColorIndex = payload;
             return { ...state,
                 activeColorIndex
+            };
+        
+        case "MAP_PALETTE_TO_COLORS": // Convert array of palette indicies to array of HEX-colors and proceed to next case
+            let colors = payload.map((colorIndex) => {
+                return state.nesPalette[colorIndex];
+            });
+        case "PUSH_HEX_TO_COLORS":
+            colors = colors ? colors : payload;
+            console.log("PAYLOAD HEX", payload);
+            return { ...state, colors: payload
             };
         default:
             return state;

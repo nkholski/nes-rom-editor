@@ -11,3 +11,18 @@ export const setActiveColor = (colorIndex) => dispatch => {
         payload: colorIndex
     })
 }
+
+export const mapPaletteToColors = (palette) => dispatch => {
+    dispatch({
+        type: 'MAP_PALETTE_TO_COLORS',
+        payload: palette
+    })
+}
+
+export const pushHEXToColors = (palette) => dispatch => {
+    console.log("HEX", palette)
+    dispatch({
+        type: 'PUSH_HEX_TO_COLORS',
+        payload: palette
+    })
+}

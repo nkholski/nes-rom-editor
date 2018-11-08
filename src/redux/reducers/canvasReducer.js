@@ -26,6 +26,8 @@ export default (state = defaultState, action) => {
             return setClipByte(state, payload);
         case 'RENDER_BLOCKS':
             return renderBlocks(state, payload);
+        case 'SET_COMPOSITION':
+            return setComposition(state, payload);
         case 'SET_ZOOM':
             return { ...state,
                 scale: payload
@@ -138,4 +140,13 @@ const renderBlocks = (state, {
         }
     }
     return state;
+}
+
+const setComposition = (state, compositionData) => {
+    const blocks = compositionData.blocks;
+    const width = blocks.length;
+    const height = blocks[0].length;
+        console.log("COMPOSITION!", blocks);
+
+    return {...state, blocks, width, height};
 }

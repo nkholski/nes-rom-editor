@@ -5,11 +5,11 @@ export const storeRom = (romData) => dispatch => {
     })
 }
 
-export const injectData = (data) => dispatch => {
+export const alterByte = (address, value) => dispatch => {
     // data : { byteIndex: number, value: number}[] || { byteIndex: number, value: number}
     dispatch({
-        type: 'INJECT_DATA',
-        payload: data
+        type: 'ALTER_BYTE',
+        payload: {address, value}
     })
 }
 

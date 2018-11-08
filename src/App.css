@@ -128,3 +128,10 @@ canvas {
   z-index: 100;
 }
 
+.palette-color-box {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  margin: 1px;
+
+}
