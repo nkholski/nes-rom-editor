@@ -7,14 +7,7 @@ import {
   ButtonDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Input,
-  InputGroup,
-  InputGroupAddon
+  DropdownItem
 } from "reactstrap";
 
 import { expand, setZoom, setComposition } from "../redux/actions/canvasActions";
@@ -23,7 +16,9 @@ import { alterByte } from "../redux/actions/nesRomActions";
 
 import ColorSelect from "./colorSelect";
 import PaletteModal from "./paletteModal";
+import SaveCompositionModal from "./saveCompositionModal";
 
+import CompositionService from "./../services/compositionService";
 
 class DrawControls extends Component {
   constructor(props) {
@@ -35,9 +30,15 @@ class DrawControls extends Component {
       paletteModal: {
         isOpen: false,
         colorIndex: 0
-      }
+      },
+      saveCompositionModal: false
     };
     this.loadComposition();
+
+    const storedCompositions = JSON.parse(localStorage.getItem("compositions"));
+    console.log("compo",storedCompositions);
+
+
   }
 
   render() {
@@ -69,8 +70,8 @@ class DrawControls extends Component {
 
     const zoom = this.getZoomDropDown();
     return <div className="draw-controls">
-     <PaletteModal colorIndex={this.state.paletteModal.colorIndex} isOpen={this.state.paletteModal.isOpen} palette={this.props.nesPalette} callback={this.shiftPaletteRef.bind(this)} />
-
+        <PaletteModal colorIndex={this.state.paletteModal.colorIndex} isOpen={this.state.paletteModal.isOpen} palette={this.props.nesPalette} callback={this.shiftPaletteRef.bind(this)} />
+        <SaveCompositionModal isOpen={this.state.saveCompositionModal} close={this.saveComposition} />
         <div className="md-12" id="colors">
           {colors}
           {paletteDropDown}
@@ -87,34 +88,10 @@ class DrawControls extends Component {
             onClick={() => this.expand(1)}
           >
             Load composition
-          </Button> <Button onClick={() => this.expand(1)}>
+          </Button> <Button onClick={() => this.saveComposition(true)}>
             Save composition
           </Button>
         </div>
-        <Modal isOpen={false}>
-          /* toggle={this.toggle}
-          className={this.props.className} */
-          <ModalHeader /* toggle={this.toggle} */>
-            Save composition
-          </ModalHeader>
-          <ModalBody>
-            <p>
-              Save current composition to be able to access it quickly when
-              editing the rom in the future. The current composition
-              consists of 1x1 blocks of 8x8 pixels.
-            </p>
-            <InputGroup>
-              <Input placeholder="composition name (i.e. Mario, turtle or first room)" />
-            </InputGroup>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" /*onClick={this.toggle}*/>
-              Overwrite
-            </Button> <Button color="secondary" /*onClick={this.toggle}*/>
-              Save
-            </Button>
-          </ModalFooter>
-        </Modal>
       </div>;
   }
 
@@ -125,6 +102,14 @@ class DrawControls extends Component {
         colorIndex
       }
     });
+  }
+
+
+
+  saveComposition = (isOpen = false) => {
+    this.setState({
+      saveCompositionModal: isOpen
+    })
   }
 
   shiftPaletteRef(colorIndex, HEXColor) {

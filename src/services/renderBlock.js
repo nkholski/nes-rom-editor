@@ -9,7 +9,6 @@ export default function renderBlock(firstByteIndex, dataView, X, Y, ctx, scale =
     */
 
     // console.log(firstByteIndex, dataView, X, Y, ctx, scale);
-
     color = color ? color : [
         "#3CBCFC",
         "#F83800",

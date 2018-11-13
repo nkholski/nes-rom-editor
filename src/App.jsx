@@ -6,7 +6,7 @@ import { setPalette } from "./redux/actions/drawActions";
 import ChrNav from "./components/chrNav";
 import DrawCanvas from "./components/drawCanvas";
 import DrawControls from "./components/drawControls";
-
+import RomHacks from "./components/romHacks";
 
 import { Button } from "reactstrap";
 
@@ -23,7 +23,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ready: false
+      ready: false,
+      page: "editor"
     }
     fetch("/files/NESPalette.json")
         .then(response => response.json())
@@ -31,6 +32,15 @@ class App extends React.Component {
           this.props.setPalette(palette);
           this.setState({ready: true});
         });
+    fetch("/files/nesgames.dat")
+      .then(res => res.text())
+      .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+      .then(nesgames => {
+        /* window.nes = nesgames;
+        nes.querySelectorAll('[md5="7F7A89EF806464338B1722C120648E7D"]')[0].parentElement.getAttribute("name")
+        */
+        // console.log("res", nesgames);
+      });
 
   }
 
@@ -39,6 +49,27 @@ class App extends React.Component {
     if(!this.state.ready){
       return <div>Loading...</div>;
     }
+
+
+    let currentPage = "";
+    
+    switch(this.state.page){
+      case "romhacks":
+        currentPage = <RomHacks type="hacks" />;
+        break;
+      case "palette":
+        currentPage = <RomHacks type="palette"/>;
+        break;
+      default:
+        currentPage = <div className="col-md-8">
+          <div id="draw-canvas-container"><DrawCanvas /></div>
+          <DrawControls />
+          new canvas,
+          load canvas
+          save canvas
+        </div>;
+    }
+
 
   return(<div id="app">
     <DraggedBlock/>
@@ -51,13 +82,7 @@ class App extends React.Component {
       <div className="col-md-4">
         <ChrNav />
       </div>
-      <div className="col-md-8">
-        <div id="draw-canvas-container"><DrawCanvas /></div>
-        <DrawControls />
-        new canvas,
-        load canvas
-        save canvas
-      </div>
+      { currentPage }
     </div>
     <div className="row">
       <div className="col-md-4">
@@ -69,11 +94,15 @@ class App extends React.Component {
       </div>
       <div className="col-md-8">
         
-        Graphics editor | Palette editor | .nes Info | Rom hacks
+        <Button onClick={() => this.page("editor")}>Graphics editor</Button> | Palette editor | .nes Info | <Button onClick={()=>this.page("romhacks")}>Rom hacks</Button>
 
       </div>
     </div>
   </div>);
+  }
+
+  page(pg) {
+    this.setState({page: pg});
   }
 
   download = () => {

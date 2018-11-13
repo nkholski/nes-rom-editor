@@ -2,17 +2,10 @@ import React from "react";
 
 import {
   Button,
-  ButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
-  Input,
-  InputGroup,
-  InputGroupAddon
+  ModalFooter
 } from "reactstrap";
 
 export default function PaletteModal(props) {

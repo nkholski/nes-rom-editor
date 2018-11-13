@@ -28,5 +28,11 @@ export const download = (filename) => dispatch => {
         type: "DOWNLOAD",
         payload: filename
     });
+}
 
+export const setRomSettings = (romSettings) => dispatch => {
+    dispatch({
+        type: "SET_ROM_SETTINGS",
+        payload: romSettings
+    });
 }

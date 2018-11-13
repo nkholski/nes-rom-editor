@@ -1,5 +1,5 @@
 import * as jsnes from "jsnes";
-import md5 from "blueimp-md5";
+import md5 from "js-md5";
 
 export default class NesIO {
   constructor() {
@@ -40,14 +40,7 @@ export default class NesIO {
         );
 
         const md5correct = "673913a23cd612daf5ad32d4085e0760";
-
-        console.log(-1<[md5(arrayBuffer), md5(binary), md5(blob), md5(this.dataView.buffer)].indexOf(md5));
-
-        console.log("MD5",md5(arrayBuffer));
-        console.log("MD5", md5(binary));
-        console.log("MD5", md5(blob));
-        console.log("MD5", md5(this.dataView.buffer));
-        console.log("MD%", md5(new Uint8Array(arrayBuffer)));
+        // ---> Rätt  console.log("MD5", md5(this.dataView.buffer));
 
 
         /** 

@@ -1,10 +1,11 @@
 import renderBlock from "../services/renderBlock";
 import NesIO from "../services/nesIO";
+import md5 from "js-md5";
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { storeRom } from "../redux/actions/nesRomActions";
+import { storeRom, setRomSettings } from "../redux/actions/nesRomActions";
 import { setClipByte } from "../redux/actions/canvasActions";
 
 class ChrNav extends Component {
@@ -22,9 +23,18 @@ class ChrNav extends Component {
       this.chrSpan = nesIO.chrSpan;
       // const width = 9 * 8; // Eight block wide, line between
       this.setState({
-        height: 9 * (nesIO.chrSpan.len / 128),
-        md5: "673913a23cd612daf5ad32d4085e0760"
+        height: 9 * (nesIO.chrSpan.len / 128)
       });
+
+      // OH. It's Mario
+      fetch("/rom-data/games/Super Mario Bros.json").then(data => data.json()).then(data => {
+        // Convert all string-hex numbers to decimal ints
+        
+
+
+        this.props.setRomSettings(data);
+      });
+
     });
     this.nesIO = nesIO;
     this.state = {
@@ -97,6 +107,9 @@ const mapDispatchToProps = dispatch => {
     },
     setClipByte: byteIndex => {
       dispatch(setClipByte(byteIndex));
+    },
+    setRomSettings: romSettings => {
+      dispatch(setRomSettings(romSettings));
     }
   };
 };

@@ -18,7 +18,9 @@ class DrawCanvas extends Component {
   }
 
   componentDidUpdate() {
-    console.log("HEY!");
+    if(!this.props.romData || this.props.romData.length === 0){
+      return;
+    }
     this.props.renderBlocks(this.props.romData, this.props.colors);
   }
 

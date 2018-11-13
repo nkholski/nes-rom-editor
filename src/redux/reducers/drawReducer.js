@@ -5,7 +5,7 @@ const defaultState = {
         "#FCA044",
         "#AC7C00"
     ], // colors to use
-    activeColorIndex: 0 //Index (0-3) that is used
+    activeColorIndex: 0, //Index (0-3) that is used
 }
 
 export default (state = defaultState, action) => {
