@@ -1,7 +1,8 @@
-export const storeRom = (romData) => dispatch => {
+export const storeRom = (romData, chrSpan) => dispatch => {
+    console.log("Store", romData, chrSpan);
     dispatch({
         type: 'STORE_ROM',
-        payload: romData
+        payload: {romData, chrSpan}
     })
 }
 
@@ -34,5 +35,12 @@ export const setRomSettings = (romSettings) => dispatch => {
     dispatch({
         type: "SET_ROM_SETTINGS",
         payload: romSettings
+    });
+}
+
+export const setRomInfoIndex = (romInfoIndex) => dispatch => {
+    dispatch({
+        type: "SET_ROM_INFO_INDEX",
+        payload: romInfoIndex
     });
 }

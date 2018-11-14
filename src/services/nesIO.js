@@ -9,8 +9,8 @@ export default class NesIO {
     this.chrCanvas = null;
     console.log("jsnes", jsnes);
 
-    fetch("../files/NESPalette.json")
-    .then(response => {console.log(md5(response.body)); return response;})
+    fetch("/files/NESPalette.json")
+    .then(response => {console.log("palette OK"); return response;})
       .then(response => response.json())
       .then(NESPalette => {
         this.NESPalette = NESPalette;
@@ -18,11 +18,12 @@ export default class NesIO {
   }
 
   loadFile(fileName) {
-    fileName = "../files/smb.nes";
+    fileName = "/files/smb.nes";
     this.fileName = fileName;
     const promise = fetch(fileName)
       .then(response => this.checkStatus(response) && response.arrayBuffer())
       .then(arrayBuffer => {
+        console.log("ROM OK")
         this.dataView = new DataView(arrayBuffer);
         this.chrSpan = {
           first: 16 + 16384 * this.dataView.getUint8(4),

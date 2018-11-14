@@ -5,7 +5,8 @@ const defaultState = {
     chrData: { start: 0, len: 0 }, // Interesting part of DataView
     version: 0, // version of data, used to detect changes
     lastAltered: 0, // Index of (first)byte altered, used to render parts of canvas
-    romSettings: {} // External romsettings
+    romSettings: {}, // External romsettings (Palettes and hacks for current rom)
+    romInfoIndex: {} // Index over avaliable hacks
 }
 
 export default (state = defaultState, action) => {
@@ -13,8 +14,13 @@ export default (state = defaultState, action) => {
         type,
         payload
     } = action;
-    const newState = {...state};
+
     switch (type) {
+        case 'SET_ROM_INFO_INDEX':
+            return {
+                ...state,
+                romInfoIndex: payload
+            };
         case 'SET_ROM_SETTINGS':
             console.log("SET ROM SETTINGS", payload);
             return {
@@ -22,10 +28,13 @@ export default (state = defaultState, action) => {
                 romSettings: payload
             };
         case 'STORE_ROM':
-            newState.romData = payload;
-            newState.md5 = md5(payload.buffer);
-
-            return newState;
+            console.log("STORING");
+            return {
+                ...state,
+                ...payload,
+                md5: md5(payload.romData.buffer),
+                version: 1
+            };
         case 'PUT_PIXEL':
             return put_pixel(state, payload);
         case 'DEFINE_CHR_ADDR':

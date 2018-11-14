@@ -17,6 +17,7 @@ import { alterByte } from "../redux/actions/nesRomActions";
 import ColorSelect from "./colorSelect";
 import PaletteModal from "./paletteModal";
 import SaveCompositionModal from "./saveCompositionModal";
+import SelectCompositionModal from "./selectCompositionModal";
 
 import CompositionService from "./../services/compositionService";
 
@@ -68,10 +69,15 @@ class DrawControls extends Component {
 
     const paletteDropDown = this.getPaletteDropDown();
 
+    /*
+     <SelectCompositionModal isOpen={this.state.saveCompositionModal} close={this.saveComposition} compositions={{}}/>
+*/
+
     const zoom = this.getZoomDropDown();
     return <div className="draw-controls">
         <PaletteModal colorIndex={this.state.paletteModal.colorIndex} isOpen={this.state.paletteModal.isOpen} palette={this.props.nesPalette} callback={this.shiftPaletteRef.bind(this)} />
         <SaveCompositionModal isOpen={this.state.saveCompositionModal} close={this.saveComposition} />
+      
         <div className="md-12" id="colors">
           {colors}
           {paletteDropDown}
@@ -271,7 +277,7 @@ class DrawControls extends Component {
   }
 
   loadComposition() {
-    fetch("rom-data/games/Super Mario Bros.json").then(res =>res.json()).then((data)=>{
+    fetch("/rom-info/games/Super Mario Bros.json").then(res =>res.json()).then((data)=>{
       this.setState({compositions: data.compositions});
       this.props.setComposition(data.compositions[0]);
 

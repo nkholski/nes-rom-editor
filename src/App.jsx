@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { setPalette } from "./redux/actions/drawActions";
+import { setRomInfoIndex, storeRom } from "./redux/actions/nesRomActions";
 
 import ChrNav from "./components/chrNav";
 import DrawCanvas from "./components/drawCanvas";
@@ -12,6 +13,7 @@ import { Button } from "reactstrap";
 
 import DownloadNes from "./services/downloadNes"
 
+import NesIO from "./services/nesIO";
 
 import "./App.css";
 import "./bootstrap-cyborg.min.css";
@@ -32,21 +34,47 @@ class App extends React.Component {
           this.props.setPalette(palette);
           this.setState({ready: true});
         });
+    fetch("/rom-info/index.json")
+        .then(response => response.json())
+        .then(romInfo => {
+          this.props.setRomInfoIndex(romInfo)
+        });
     fetch("/files/nesgames.dat")
       .then(res => res.text())
       .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
       .then(nesgames => {
+        // this.
         /* window.nes = nesgames;
         nes.querySelectorAll('[md5="7F7A89EF806464338B1722C120648E7D"]')[0].parentElement.getAttribute("name")
         */
         // console.log("res", nesgames);
       });
 
+    const nesIO = new NesIO();
+    nesIO.loadFile("/files/smb.nes").then((romData) => {
+      console.log("LOAD", romData);
+      this.props.storeRom(romData, nesIO.chrSpan);
+      console.log("OK");
+      /*this.chrSpan = nesIO.chrSpan;
+      // const width = 9 * 8; // Eight block wide, line between*/
+      /*this.setState({
+        height: 9 * (nesIO.chrSpan.len / 128)
+      });*/
+
+      // OH. It's Mario
+      /*fetch("/rom-info/games/Super Mario Bros.json").then(data => data.json()).then(data => {
+        // Convert all string-hex numbers to decimal ints
+        this.props.setRomSettings(data);
+      });*/
+
+    });
+
+
   }
 
 
   render() {
-    if(!this.state.ready){
+    if(!this.state.ready || this.props.romVersion<1){
       return <div>Loading...</div>;
     }
 
@@ -112,14 +140,24 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { nesRomReducer: state.nesRomReducer, canvasReducer: state.canvasReducer, romData: state.nesRomReducer.romData };
+  return { nesRomReducer: state.nesRomReducer, canvasReducer: state.canvasReducer, romData: state.nesRomReducer.romData, romVersion: state.nesRomReducer.version };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     setPalette: palette => {
       dispatch(setPalette(palette));
-    }  
+    },
+    setRomInfoIndex: romInfoIndex => {
+      dispatch(setRomInfoIndex(romInfoIndex));
+    },
+    storeRom: (romData, chrSpan) => {
+      dispatch(storeRom(romData, chrSpan));
+    },
+    /*,
+    setGameList: gameList => {
+      dispatch(setGameList(gameList));
+    }  */
   };
 };
 
