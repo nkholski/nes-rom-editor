@@ -50,6 +50,37 @@ class App extends React.Component {
         // console.log("res", nesgames);
       });
 
+
+   /// return new Promise(resolve => { let i = new Image(); i.onload = () => { resolve(i) }; i.src = url; });
+    
+    
+
+
+    fetch("/screenshot-source.png")
+    .then(res => new Image(res))
+    .then(img => {
+      // console.log("img",img);
+      /*
+      const tmpCanvas = document.createElement("canvas");
+      const tmpCtx = tmpCanvas.getContext("2d");
+
+      let imageStr = '';
+      const bytes = [].slice.call(new Uint8Array(buffer));
+
+      bytes.forEach(b => (imageStr += String.fromCharCode(b)));
+
+      imageStr = window.btoa(imageStr);
+
+      const base64Flag = 'data:image/jpeg;base64,';
+      //const imageStr = arrayBufferToBase64(buffer);
+      const img = base64Flag + imageStr;*/
+
+     //  tmpCtx.drawImage(img, 0, 0, img.width, img.height);
+
+
+    });
+
+
     const nesIO = new NesIO();
     nesIO.loadFile("/files/smb.nes").then((romData) => {
       console.log("LOAD", romData);
@@ -68,6 +99,12 @@ class App extends React.Component {
       });*/
 
     });
+
+    // TEST
+    // row = [1,0,3,1,2,0,1,2];
+
+
+    //console.log("Varianter:", colorToIndex.length);  
 
 
   }

@@ -10,9 +10,22 @@ import {
 
 export default function SelectCompositionModal(props) {
   let compositions;
-  if(props.composition){
-    compositions = props.composition.map((comp, i) => {
-      return <tr key={comp.name + i} className="composition-row" onClick={() => { props.callback(props.colorIndex, 1) }}><td>{comp.name}</td><td>4 Palette links</td></tr>
+
+  console.log("compprops",props)
+
+  if(props.compositions){
+    const compIds = Object.keys(props.compositions);
+
+
+    compositions = compIds.map((id, i) => {
+      const comp = props.compositions[id];
+
+      return <tr key={id + i} className="composition-row" onClick={() => {
+            props.callback(props.colorIndex, 1);
+          }}>
+          <td>{id}</td>
+          <td>4 Palette links</td>
+        </tr>;
     });
   }
   else {
@@ -25,19 +38,19 @@ export default function SelectCompositionModal(props) {
     <Modal
       isOpen={isOpen}
     >
-      <ModalHeader>Select palette for color #{props.colorIndex}</ModalHeader>
+      <ModalHeader>Select a composition from the list{props.colorIndex}</ModalHeader>
       <ModalBody>
         <p>
           Select composition to edit. If palette link exists you may alter the rom palette settings from within the graphics editor.
         </p>
-        <table>{compositions}</table>
+        <table width="100%">{compositions}</table>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={()=>{isOpen = false}}>
-          Overwrite
-            </Button>{" "}
-        <Button color="secondary" /*onClick={this.toggle}*/>
+        <Button color ="secondary" onClick={()=>{isOpen = false}}>
           Cancel
+            </Button>{" "}
+        <Button color="primary" /*onClick={this.toggle}*/>
+          Select
             </Button>
       </ModalFooter>
     </Modal>

@@ -34,18 +34,7 @@ export default class NesIO {
           type: "octet/stream"
         });
 
-        /** INTEGRATE JSNES FIRST TEST */ 
-        const binary = String.fromCharCode.apply(
-          null,
-          new Uint8Array(arrayBuffer)
-        );
-
-        const md5correct = "673913a23cd612daf5ad32d4085e0760";
-        // ---> Rätt  console.log("MD5", md5(this.dataView.buffer));
-
-
-        /** 
-        console.log(binary.length);
+        /** INTEGRATE JSNES FIRST TEST 
 
         const nes = new jsnes.NES({
           onFrame: function(frameBuffer) {
@@ -55,10 +44,31 @@ export default class NesIO {
         // nes.romData = 0;
         nes.loadROM(binary);
       */
-
+        
+       // this.findPaletteInRom(this.dataView, [this.dataView.getUint8(1512), this.dataView.getUint8(1513), this.dataView.getUint8(1514)], this.chrSpan.first)
         return this.dataView;
       });
     return promise;
+  }
+
+  findPaletteInRom(romData, paletteArray, prgLen){ // Just a test for future feature, will move somwhere else
+    let step = 0;
+    console.log("Will try", prgLen, paletteArray);
+    for (let i = 0; i < prgLen; i++) {
+      if(romData.getUint8(i) === paletteArray[step]){
+        step++;
+      }
+      else if(romData.getUint8(i) === paletteArray[0]) {
+        step = 1;
+      }
+      else {
+        step = 0;
+      }
+      if(step===3){
+        console.log(`Possible byteIndex  ${i-2} to ${i}.`);
+      }
+
+    }
   }
 
   checkStatus(response) {

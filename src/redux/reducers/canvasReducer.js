@@ -133,12 +133,29 @@ const renderBlocks = (state, {
     console.log("RB", colors);
     const ctx = document.getElementById("draw-canvas").getContext("2d");
     for (let x = 0; x < state.blocks.length; x++) {
+        // Vertical line at x
+             ctx.beginPath();
+             ctx.moveTo(8 * x * state.scale, 0);
+             ctx.lineTo(8 * x * state.scale, 8 * state.blocks[0].length * state.scale);
+             ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+             ctx.stroke();
         for (let y = 0; y < state.blocks[x].length; y++) {
             if (state.blocks[x][y] > 0 && (!byteIndex || byteIndex === state.blocks[x][y])) {
                 renderBlock(state.blocks[x][y], romData, x * 8, y * 8, ctx, state.scale, colors);
             }
+            // Horizontal line at y, do it once per y (not for every x in this loop) and just for last x or lines will be covered by tile graphics
+            if(x === state.blocks.length-1){
+                   ctx.beginPath();
+                   ctx.moveTo(0, 8 * y * state.scale);
+                   ctx.lineTo(8 * state.blocks.length * state.scale , 8 * y * state.scale);
+                   // ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+                   ctx.stroke();
+            }
         }
+
     }
+
+
     return state;
 }
 

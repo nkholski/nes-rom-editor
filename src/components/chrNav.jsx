@@ -54,6 +54,11 @@ class ChrNav extends Component {
     );
   }
 
+  componentDidMount(){
+this.componentDidUpdate();
+
+  }
+
   copyChrToClip = event => {
     const rect = this.canvas.getBoundingClientRect();
     const scale = rect.width / this.canvas.offsetWidth;
@@ -67,19 +72,10 @@ class ChrNav extends Component {
     renderBlock(byteIndex, this.props.romData, 0, 0, this.clipContext, 1, this.props.colors);
   };
   componentDidUpdate() {
-    if (!this.props.chrSpan) {
-      console.log("HEY! DONT RENDER");
-      return;
-    }
-    console.log("WILL RENDER???")
-    if (!this.state.romCheckupDone && this.props.md5){
-      console.log("A", this.props.md5);
-      this.setState({romCheckupDone: true});
-    }
-    this.canvas = document.getElementById("chr-canvas");
-    this.context = this.canvas.getContext("2d");
-    this.clip = document.getElementById("clip");
-    this.clipContext = document.getElementById("clip").getContext("2d");
+      this.canvas = document.getElementById("chr-canvas");
+      this.context = this.canvas.getContext("2d");
+      this.clip = document.getElementById("clip");
+      this.clipContext = document.getElementById("clip").getContext("2d");
     this.drawCHR();
   }
 }

@@ -1,8 +1,10 @@
 import md5 from "js-md5";
+import ImageImporter from "../../services/imageImporter";
 
 const defaultState = {
     romData: [], // DataView
     chrData: { start: 0, len: 0 }, // Interesting part of DataView
+    chrSpan: {}, // ERSÄTTER OVAN?
     version: 0, // version of data, used to detect changes
     lastAltered: 0, // Index of (first)byte altered, used to render parts of canvas
     romSettings: {}, // External romsettings (Palettes and hacks for current rom)
@@ -29,6 +31,8 @@ export default (state = defaultState, action) => {
             };
         case 'STORE_ROM':
             console.log("STORING");
+         //   ImageImporter(payload.romData, payload.chrSpan);
+
             return {
                 ...state,
                 ...payload,

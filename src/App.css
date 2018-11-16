@@ -65,6 +65,12 @@ canvas {
 }
 
 
+colortest{
+  color: #5c94fc;
+  color: #fcfcfc;
+
+}
+
 
 #chrNavContiner {
   overflow-y: scroll;
@@ -91,6 +97,16 @@ canvas {
   padding: 72px 0;
     min-height: 400px;
 
+}
+
+
+.composition-row {
+  cursor: pointer;
+}
+
+.composition-row:hover {
+  background-color: #AAA;
+  color: #222;
 }
 
 

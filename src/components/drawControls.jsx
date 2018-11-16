@@ -43,6 +43,8 @@ class DrawControls extends Component {
   }
 
   render() {
+    const storedCompositions = JSON.parse(localStorage.getItem("compositions"));
+
     const colors = [0, 1, 2, 3].map(colorIndex => {
       console.log(this.props.activeColorIndex);
       return (
@@ -69,15 +71,15 @@ class DrawControls extends Component {
 
     const paletteDropDown = this.getPaletteDropDown();
 
-    /*
-     <SelectCompositionModal isOpen={this.state.saveCompositionModal} close={this.saveComposition} compositions={{}}/>
-*/
+    
+   
 
     const zoom = this.getZoomDropDown();
     return <div className="draw-controls">
         <PaletteModal colorIndex={this.state.paletteModal.colorIndex} isOpen={this.state.paletteModal.isOpen} palette={this.props.nesPalette} callback={this.shiftPaletteRef.bind(this)} />
         <SaveCompositionModal isOpen={this.state.saveCompositionModal} close={this.saveComposition} />
-      
+      <SelectCompositionModal isOpen={this.state.saveCompositionModal} close={() => this.saveComposition} compositions={storedCompositions} />
+   
         <div className="md-12" id="colors">
           {colors}
           {paletteDropDown}

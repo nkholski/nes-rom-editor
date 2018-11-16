@@ -29,4 +29,8 @@ export default function renderBlock(firstByteIndex, dataView, X, Y, ctx, scale =
             ctx.fillRect((X + x) * scale, (Y + i) * scale, scale, scale);
         }
     }
+
+
+
+
 }
