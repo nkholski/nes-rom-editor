@@ -1,4 +1,4 @@
-const ImageImporter = (romData, chrSpan, url = "/screenshot-source.png") => {
+const ImageImporter = (romData, chrSpan, url = "/screenshot-source2.png") => {
     new Promise((resolve) => {
         let i = new Image();
         i.onload = () => {
@@ -152,6 +152,10 @@ const ImageImporter = (romData, chrSpan, url = "/screenshot-source.png") => {
 const findInRom = (pattern, y, chrSpan, romData) => {
     let matches = [];
     for (let i = chrSpan.first; i < chrSpan.first + chrSpan.len; i += 16) {
+        if (i === 37456 || i === 36816 || i === 37472 || i === 37488 || i === 37504) {
+            continue;
+        }
+
         const bits = [];
         for (let o = 0; o < 2; o++) {
             const byte = romData.getUint8(i + o * 8 + y * 16);
@@ -182,6 +186,8 @@ const compareAtIndex = (pattern, index, y, romData) => {
         const byte = romData.getUint8(index + o * 8 + y);
         bits[o] = ("00000000" + byte.toString(2)).slice(-8).split("");
     }
+
+
 
 
     const indexRow = [];

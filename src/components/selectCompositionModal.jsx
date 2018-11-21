@@ -14,16 +14,14 @@ export default function SelectCompositionModal(props) {
   console.log("compprops",props)
 
   if(props.compositions){
-    const compIds = Object.keys(props.compositions);
 
 
-    compositions = compIds.map((id, i) => {
-      const comp = props.compositions[id];
+    compositions = props.compositions.map((comp, cI) => {
 
-      return <tr key={id + i} className="composition-row" onClick={() => {
-            props.callback(props.colorIndex, 1);
+      return <tr key={comp.name + cI} className="composition-row" onClick={() => {
+            props.callback(cI);
           }}>
-          <td>{id}</td>
+          <td>{comp.name}</td>
           <td>4 Palette links</td>
         </tr>;
     });
@@ -33,7 +31,7 @@ export default function SelectCompositionModal(props) {
   }
 
 
-  let isOpen = true || props.isOpen;
+  const isOpen = props.isOpen;
   return (
     <Modal
       isOpen={isOpen}
@@ -46,12 +44,10 @@ export default function SelectCompositionModal(props) {
         <table width="100%">{compositions}</table>
       </ModalBody>
       <ModalFooter>
-        <Button color ="secondary" onClick={()=>{isOpen = false}}>
+        <Button color ="primary" onClick={()=>{ props.callback()}}>
           Cancel
             </Button>{" "}
-        <Button color="primary" /*onClick={this.toggle}*/>
-          Select
-            </Button>
+       
       </ModalFooter>
     </Modal>
   );

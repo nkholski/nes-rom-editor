@@ -10,8 +10,16 @@ import {
   DropdownItem
 } from "reactstrap";
 
-import { expand, setZoom, setComposition } from "../redux/actions/canvasActions";
-import { setActiveColor, mapPaletteToColors, pushHEXToColors } from "../redux/actions/drawActions";
+import {
+  expand,
+  setZoom,
+  setComposition
+} from "../redux/actions/canvasActions";
+import {
+  setActiveColor,
+  mapPaletteToColors,
+  pushHEXToColors
+} from "../redux/actions/drawActions";
 import { alterByte } from "../redux/actions/nesRomActions";
 
 import ColorSelect from "./colorSelect";
@@ -25,25 +33,23 @@ class DrawControls extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dropdownOpen: {
-        expand: false
-      },
-      paletteModal: {
-        isOpen: false,
-        colorIndex: 0
-      },
-      saveCompositionModal: false
+      dropdownOpen: { expand: false },
+      paletteModal: { isOpen: false, colorIndex: 0 },
+      selectCompositionModal: false,
+      saveCompositionModal: false,
+      compositions: [
+        ...JSON.parse(localStorage.getItem("compositions")),
+        ...props.presetCompositions
+      ]
     };
-    this.loadComposition();
+    //    this.loadComposition();
 
-    const storedCompositions = JSON.parse(localStorage.getItem("compositions"));
-    console.log("compo",storedCompositions);
-
-
+    // const storedCompositions = JSON.parse(localStorage.getItem("compositions"));
+    //    console.log("compo", storedCompositions);
   }
 
   render() {
-    const storedCompositions = JSON.parse(localStorage.getItem("compositions"));
+    //   const storedCompositions = JSON.parse(localStorage.getItem("compositions"));
 
     const colors = [0, 1, 2, 3].map(colorIndex => {
       console.log(this.props.activeColorIndex);
@@ -60,7 +66,7 @@ class DrawControls extends Component {
     });
 
     const dropDownData = [
-      { title: "Move content", id: "move", top: "Up", bottom: "Down" },
+      /*{ title: "Move content", id: "move", top: "Up", bottom: "Down" },*/
       { title: "Expand canvas", id: "expand" },
       { title: "Crop canvas", id: "crop" }
     ];
@@ -71,15 +77,25 @@ class DrawControls extends Component {
 
     const paletteDropDown = this.getPaletteDropDown();
 
-    
-   
-
     const zoom = this.getZoomDropDown();
-    return <div className="draw-controls">
-        <PaletteModal colorIndex={this.state.paletteModal.colorIndex} isOpen={this.state.paletteModal.isOpen} palette={this.props.nesPalette} callback={this.shiftPaletteRef.bind(this)} />
-        <SaveCompositionModal isOpen={this.state.saveCompositionModal} close={this.saveComposition} />
-      <SelectCompositionModal isOpen={this.state.saveCompositionModal} close={() => this.saveComposition} compositions={storedCompositions} />
-   
+    return (
+      <div className="draw-controls">
+        <PaletteModal
+          colorIndex={this.state.paletteModal.colorIndex}
+          isOpen={this.state.paletteModal.isOpen}
+          palette={this.props.nesPalette}
+          callback={this.shiftPaletteRef.bind(this)}
+        />
+        <SaveCompositionModal
+          isOpen={this.state.saveCompositionModal}
+          close={this.saveComposition}
+        />
+        <SelectCompositionModal
+          isOpen={this.state.selectCompositionModal}
+          callback={cI => this.setComposition(cI)}
+          compositions={this.state.compositions}
+        />
+
         <div className="md-12" id="colors">
           {colors}
           {paletteDropDown}
@@ -92,15 +108,16 @@ class DrawControls extends Component {
           {zoom}
         </div>
         <div className="md-6">
-          <Button onClick={() => this.expand(1)}>Clear composition</Button> <Button
-            onClick={() => this.expand(1)}
-          >
+          <Button onClick={() => this.expand(1)}>Clear composition</Button>{" "}
+          <Button onClick={() => this.setComposition(-1)}>
             Load composition
-          </Button> <Button onClick={() => this.saveComposition(true)}>
+          </Button>{" "}
+          <Button onClick={() => this.saveComposition(true)}>
             Save composition
           </Button>
         </div>
-      </div>;
+      </div>
+    );
   }
 
   showPaletteModal(colorIndex) {
@@ -112,13 +129,11 @@ class DrawControls extends Component {
     });
   }
 
-
-
   saveComposition = (isOpen = false) => {
     this.setState({
       saveCompositionModal: isOpen
-    })
-  }
+    });
+  };
 
   shiftPaletteRef(colorIndex, HEXColor) {
     this.setState({
@@ -126,17 +141,14 @@ class DrawControls extends Component {
         isOpen: false
       }
     });
-    if(colorIndex === -1){
+    if (colorIndex === -1) {
       return;
-    }
-    else {
+    } else {
       const colors = [...this.props.colors];
       colors[colorIndex] = HEXColor;
       this.props.pushHEXToColors(colors);
     }
-
   }
-
 
   expand = direction => {
     this.props.expand(direction);
@@ -232,13 +244,15 @@ class DrawControls extends Component {
     const jobToDo = currentComposition.palettes[selectedTarget].address;
 
     jobToDo.forEach((address, colorIndex) => {
-      const value = this.props.nesPalette.indexOf(this.props.colors[colorIndex]);
-      if(address === -1 || value === -1){
+      const value = this.props.nesPalette.indexOf(
+        this.props.colors[colorIndex]
+      );
+      if (address === -1 || value === -1) {
         return;
       }
       // colors to index
-      console.log("PUSH",value,"to",address)
-      this.props.alterByte(address, value)
+      console.log("PUSH", value, "to", address);
+      this.props.alterByte(address, value);
     });
     console.log(this.state.compositions);
   }
@@ -279,17 +293,47 @@ class DrawControls extends Component {
   }
 
   loadComposition() {
-    fetch("/rom-info/games/Super Mario Bros.json").then(res =>res.json()).then((data)=>{
-      this.setState({compositions: data.compositions});
-      this.props.setComposition(data.compositions[0]);
+    fetch("/rom-info/games/Super Mario Bros.json")
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ compositions: data.compositions });
+        this.props.setComposition(data.compositions[0]);
+      });
+  }
 
+  setComposition(cI = -2) {
+    if (cI === -1) {
+      this.setState({ selectCompositionModal: true });
+      return;
+    }
+    this.setState({ selectCompositionModal: false });
+    if (cI === -2) {
+      return;
+    }
+    console.log("COMPOSITION", cI, this.state.compositions);
+    this.props.setComposition(this.state.compositions[cI]);
+  }
+
+  componentDidUpdate(prevProps) {
+
+    if (prevProps.presetCompositions !== this.props.presetCompositions) {
+    this.setState({
+      compositions: [
+        ...JSON.parse(localStorage.getItem("compositions")),
+        ...this.props.presetCompositions
+      ]
     });
   }
 
+  }
 }
 
 const mapStateToProps = state => {
-  return { ...state.canvasReducer, ...state.drawReducer };
+  return {
+    ...state.canvasReducer,
+    ...state.drawReducer,
+    presetCompositions: state.canvasReducer.presetCompositions
+  };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -304,7 +348,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(setActiveColor(colorIndex));
     },
     setComposition: compositionObj => {
-      dispatch(setComposition(compositionObj))
+      dispatch(setComposition(compositionObj));
     },
     mapPaletteToColors: palette => {
       dispatch(mapPaletteToColors(palette));

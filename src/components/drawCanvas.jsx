@@ -5,11 +5,15 @@ import { renderBlocks } from "../redux/actions/canvasActions";
 import { putPixel } from "../redux/actions/nesRomActions";
 
 class DrawCanvas extends Component {
+   
   render() {
-    const { width, height, scale } = this.props;
+    console.log("Render canvas");
+
+    const { width, height, scale, compositionName } = this.props;
     return (
       <canvas
         id="draw-canvas"
+        data-composition-name={compositionName}
         width={8 * scale * width}
         height={8 * scale * height}
         onClick={this.putPixel}
@@ -21,6 +25,7 @@ class DrawCanvas extends Component {
     if(!this.props.romData || this.props.romData.length === 0){
       return;
     }
+    console.log("UPDATE CANVAS  ")
     this.props.renderBlocks(this.props.romData, this.props.colors);
   }
 
@@ -65,6 +70,7 @@ const mapStateToProps = state => {
     lastAltered: state.nesRomReducer.lastAltered,
     version: state.nesRomReducer.version,
     blocks: state.canvasReducer.blocks,
+    compositionName: state.canvasReducer.compositionName,
     romData: state.nesRomReducer.romData,
     colors: state.drawReducer.colors,
     activeColorIndex: state.drawReducer.activeColorIndex

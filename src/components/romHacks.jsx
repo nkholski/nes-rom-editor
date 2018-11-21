@@ -12,11 +12,12 @@ class RomHacks extends Component {
   }
 
   render() {
-    const hacks = this.getHacks(this.props.hacks);
+    const hacks = this.props.hacks ? this.getHacks(this.props.hacks) : "No hacks for this rom";
 
     return <div>{hacks}
-    [ADD NEW] [RESET TO ROM DEFAULTS]  [SAVE TO ROM]
+    
     </div>;
+    /*[ADD NEW] [RESET TO ROM DEFAULTS]  [SAVE TO ROM]*/
   }
 
   getHacks = (data, key=null) => {

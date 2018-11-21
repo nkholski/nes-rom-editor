@@ -7,7 +7,9 @@ const defaultState = {
         [null]
     ],
     scale: 16,
-    clipByte: 0
+    clipByte: 0,
+    compositionName: "",
+    presetCompositions: []
 }
 
 export default (state = defaultState, action) => {
@@ -28,6 +30,10 @@ export default (state = defaultState, action) => {
             return renderBlocks(state, payload);
         case 'SET_COMPOSITION':
             return setComposition(state, payload);
+        case 'SET_PRESET_COMPOSITIONS':
+            return { ...state,
+                presetCompositions: payload
+            };
         case 'SET_ZOOM':
             return { ...state,
                 scale: payload
@@ -110,8 +116,10 @@ const dropBlock = (state, {
 
     const blocks = [...state.blocks];
     blocks[gridCoordinates.x][gridCoordinates.y] = byteIndex;
-    console.log("SET STATE", {...state, blocks});
-   // renderBlock(byteIndex, romData, gridCoordinates.x * 8, gridCoordinates.y * 8, canvas.getContext("2d"), state.scale, colors);
+    console.log("SET STATE", { ...state,
+        blocks
+    });
+    // renderBlock(byteIndex, romData, gridCoordinates.x * 8, gridCoordinates.y * 8, canvas.getContext("2d"), state.scale, colors);
 
     return { ...state,
         blocks
@@ -134,22 +142,22 @@ const renderBlocks = (state, {
     const ctx = document.getElementById("draw-canvas").getContext("2d");
     for (let x = 0; x < state.blocks.length; x++) {
         // Vertical line at x
-             ctx.beginPath();
-             ctx.moveTo(8 * x * state.scale, 0);
-             ctx.lineTo(8 * x * state.scale, 8 * state.blocks[0].length * state.scale);
-             ctx.strokeStyle = 'rgba(0,0,0,0.5)';
-             ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(8 * x * state.scale, 0);
+        ctx.lineTo(8 * x * state.scale, 8 * state.blocks[0].length * state.scale);
+        ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+        ctx.stroke();
         for (let y = 0; y < state.blocks[x].length; y++) {
             if (state.blocks[x][y] > 0 && (!byteIndex || byteIndex === state.blocks[x][y])) {
                 renderBlock(state.blocks[x][y], romData, x * 8, y * 8, ctx, state.scale, colors);
             }
             // Horizontal line at y, do it once per y (not for every x in this loop) and just for last x or lines will be covered by tile graphics
-            if(x === state.blocks.length-1){
-                   ctx.beginPath();
-                   ctx.moveTo(0, 8 * y * state.scale);
-                   ctx.lineTo(8 * state.blocks.length * state.scale , 8 * y * state.scale);
-                   // ctx.strokeStyle = 'rgba(0,0,0,0.5)';
-                   ctx.stroke();
+            if (x === state.blocks.length - 1) {
+                ctx.beginPath();
+                ctx.moveTo(0, 8 * y * state.scale);
+                ctx.lineTo(8 * state.blocks.length * state.scale, 8 * y * state.scale);
+                // ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+                ctx.stroke();
             }
         }
 
@@ -163,7 +171,12 @@ const setComposition = (state, compositionData) => {
     const blocks = compositionData.blocks;
     const width = blocks.length;
     const height = blocks[0].length;
-        console.log("COMPOSITION!", blocks);
+    console.log("COMPOSITION! >>> ", blocks, compositionData.name);
 
-    return {...state, blocks, width, height};
+    return { ...state,
+        blocks,
+        width,
+        height,
+        compositionName: compositionData.name
+    };
 }

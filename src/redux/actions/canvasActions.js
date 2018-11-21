@@ -26,10 +26,16 @@ export const setClipByte = (byteIndex) => dispatch => {
 
 export const setComposition = (compositionObject) => dispatch => {
     dispatch({
-            type: "SET_COMPOSITION",
-            payload: compositionObject
-        }
-    )
+        type: "SET_COMPOSITION",
+        payload: compositionObject
+    })
+}
+
+export const setPresetCompositions = (compositions) => dispatch => {
+    dispatch({
+        type: "SET_PRESET_COMPOSITIONS",
+        payload: compositions
+    });
 }
 
 // Render block of byteIndex or all (null)

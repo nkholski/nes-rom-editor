@@ -31,7 +31,7 @@ export default (state = defaultState, action) => {
             };
         case 'STORE_ROM':
             console.log("STORING");
-         //   ImageImporter(payload.romData, payload.chrSpan);
+           // ImageImporter(payload.romData, payload.chrSpan);
 
             return {
                 ...state,

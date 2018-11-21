@@ -15,6 +15,8 @@ const CompositionService = {
         if(typeof(compositions) === "string"){
             compositions = [];
         }
+                console.log("COMP", compositions);
+
         compositions.push(
             {
                 name,
@@ -23,11 +25,11 @@ const CompositionService = {
             }
         )
 
-        console.log("COMP", compositions);
-        compositions[name] = composition;
+        // console.log("COMP", compositions);
+        // compositions[name] = composition;
         localStorage.setItem("compositions" + md5, JSON.stringify(compositions));
     },
-    getList(full = false) {
+    getList(full = false) { // TO BE REMOVED
         const keys = Object.keys(localStorage);
         if(!full){
             return keys;
