@@ -76,16 +76,16 @@ const put_pixel = (state, payload) => {
 
     for (let i2 = 0; i2 < 2; i2++) {
         const index = firstByteIndex + i2 * 8 + y;
-        let byte = byteToBinary(romData.getUint8(index));
-        byte = byte.slice(0, x) + setBit[i2] + byte.slice(x + 1);
-        romData.setUint8(index, parseInt(byte, 2));
+        let byte = romData.getUint8(index);
+        if(setBit[i2] === 1){
+            byte |= (1 << (7-x));
+        }
+        else {
+            byte &= ~(1 << (7-x)); 
+        }
+        romData.setUint8(index, byte);
     }
 
     state.version++;
     return {...state, romData, lastAltered: firstByteIndex };
 }
-
-
-const byteToBinary = byte => {
-    return byte.toString(2).padStart(8, "0");
-};
