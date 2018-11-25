@@ -151,3 +151,30 @@ colortest{
   margin: 1px;
 
 }
+
+  .rc-slider-rail {
+  opacity: 0.5;
+  height: 10px;
+
+}
+
+.rc-slider-dot {
+  width: 10px;
+  height: 10px;
+  bottom: -6px;
+}
+
+.rc-slider-handle {
+  bottom: -3px;
+
+}
+
+.rc-slider {
+  height: 500px;
+
+}
+
+#draw-canvas-container {
+  overflow: auto;
+  max-width: 500px;
+}

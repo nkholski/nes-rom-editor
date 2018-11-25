@@ -2,22 +2,80 @@
 // import NesIO from "../services/nesIO";
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Button } from "reactstrap";
+
+import GameGenie from "../services/gameGenie";
 
 class RomHacks extends Component {
   constructor(props) {
     super(props);
     this.defaults = {};
-
-
+    
   }
 
   render() {
     const hacks = this.props.hacks ? this.getHacks(this.props.hacks) : "No hacks for this rom";
-
     return <div>{hacks}
     
+      Game Genie: <input type="text" id="gameGenieCode" />
+      <Button onClick={() => this.gameGenie()}>
+        Test it
+      </Button>
+
+      Search value: <input type="text" id="searchValue" />
+      <Button onClick={() => this.findValue()}>
+        Find it!
+      </Button>
+      
     </div>;
     /*[ADD NEW] [RESET TO ROM DEFAULTS]  [SAVE TO ROM]*/
+  }
+
+  findValue(tmpvalue){
+    console.log("SEARCH BEGAN");
+    const value = tmpvalue || parseInt(document.getElementById("searchValue").value);
+    let len = 1;
+    const values = [];
+    
+    const pieces = Math.ceil(value/255);
+      const binaryString = ("000000000000000000000" + (value).toString(2)).slice(-8*pieces);
+      console.log(binaryString);
+      for(let i=0;i<pieces;i++){
+        const binStr = binaryString.substr(i * 8, 8);
+        values.push(parseInt(binStr, 2));
+      }
+    
+
+    let occurances = 0;
+    for (let i = 0; i < this.props.romData.byteLength-pieces+1; i++) {
+      let found = true;
+      for(let l = 0; l < pieces; l++) {
+        if (this.props.romData.getUint8(i+l) !== value[l]) {
+          found = false;
+          break;
+        }
+      }
+      if(found){
+        occurances++;
+        console.log("Found",i);
+      }
+    }
+    console.log("SEARCH FINISHED, FOUND: " + occurances);
+  }
+
+
+  gameGenie() {
+    const result = GameGenie(document.getElementById("gameGenieCode").value)
+
+    console.log("code", result, this.props.romData.byteLength);
+    if(result){
+      console.log(this.props.romData.getUint8(result.address));
+      console.log(this.props.romData.getUint8(result.address+16));
+      console.log(this.props.romData.getUint8(result.address+16-16384));
+      console.log(this.props.romData.getUint8(result.address + 16 - 16384*2));
+      this.props.romData.setUint8(result.address + 16 - 16384 * 2, result.data);
+
+    }
   }
 
   getHacks = (data, key=null) => {
@@ -60,8 +118,10 @@ class RomHacks extends Component {
       }
     });
     return hacks;
-  };
+  }
 }
+
+
 
 
 const mapStateToProps = state => {

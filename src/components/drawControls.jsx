@@ -10,6 +10,10 @@ import {
   DropdownItem
 } from "reactstrap";
 
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
+
+
 import {
   expand,
   setZoom,
@@ -40,7 +44,8 @@ class DrawControls extends Component {
       compositions: [
         ...JSON.parse(localStorage.getItem("compositions")),
         ...props.presetCompositions
-      ]
+      ],
+      zoom: 1
     };
     //    this.loadComposition();
 
@@ -78,8 +83,24 @@ class DrawControls extends Component {
     const paletteDropDown = this.getPaletteDropDown();
 
     const zoom = this.getZoomDropDown();
+
+
+    const marks = {
+      1: 'x1',
+      2: 'x2',
+      4: 'x4',
+      6: 'x6',
+      8: 'x8',
+      10: 'x10',
+      12: 'x12',
+      14: 'x14',
+      16: 'x16'
+    };
+
     return (
       <div className="draw-controls">
+
+        <Slider vertical included={false} marks={marks} defaultValue={this.state.zoom} step={0.1} min={1} max={16} onChange={this.props.setZoom}/>
         <PaletteModal
           colorIndex={this.state.paletteModal.colorIndex}
           isOpen={this.state.paletteModal.isOpen}
@@ -325,6 +346,10 @@ class DrawControls extends Component {
     });
   }
 
+  }
+
+  sliderChange(what) {
+    console.log("SLIDER", what);
   }
 }
 

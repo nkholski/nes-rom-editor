@@ -1,13 +1,6 @@
-import renderBlock from "../../services/renderBlock";
-
 const defaultState = {
-    width: 1,
-    height: 1,
-    blocks: [
-        [null]
-    ],
-    scale: 16,
-    clipByte: 0
+    nesGames: null, // XML-file with game info
+    presets: null // 
 }
 
 export default (state = defaultState, action) => {

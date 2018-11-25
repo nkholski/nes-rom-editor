@@ -179,4 +179,4 @@ const setComposition = (state, compositionData) => {
         height,
         compositionName: compositionData.name
     };
-}
+}   

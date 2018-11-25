@@ -18,12 +18,15 @@ export default class NesIO {
   }
 
   loadFile(fileName) {
-    fileName = "/files/smb.nes";
+    fileName = "/rom/smb3.nes";
     this.fileName = fileName;
     const promise = fetch(fileName)
       .then(response => this.checkStatus(response) && response.arrayBuffer())
       .then(arrayBuffer => {
-        console.log("ROM OK")
+        console.log("ROM OK", arrayBuffer);
+
+
+
         this.dataView = new DataView(arrayBuffer);
         this.chrSpan = {
           first: 16 + 16384 * this.dataView.getUint8(4),

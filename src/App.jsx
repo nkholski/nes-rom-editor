@@ -30,7 +30,7 @@ class App extends React.Component {
     this.state = {
       ready: false,
       md5: null,
-      page: "importImage",
+      page: "",
       modal: {
         isOpen: false,
         title: null,
