@@ -11,7 +11,7 @@ class DrawCanvas extends Component {
 
     const { width, height, scale, compositionName } = this.props;
     return (
-      <div id="draw-canvas-container">
+
       <canvas
         id="draw-canvas"
         data-composition-name={compositionName}
@@ -19,7 +19,6 @@ class DrawCanvas extends Component {
         height={8 * scale * height}
         onClick={this.putPixel}
       />
-      </div>
     );
   }
 

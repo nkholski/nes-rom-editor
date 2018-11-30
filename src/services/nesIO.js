@@ -18,7 +18,7 @@ export default class NesIO {
   }
 
   loadFile(fileName) {
-    fileName = "/rom/smb3.nes";
+    fileName = "/rom/smb.nes";
     this.fileName = fileName;
     const promise = fetch(fileName)
       .then(response => this.checkStatus(response) && response.arrayBuffer())

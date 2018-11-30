@@ -37,7 +37,6 @@
   width: 100%;
 }
 
-
 /* Crisp pixels on all canvas*/
 
 canvas {
@@ -64,13 +63,10 @@ canvas {
   cursor: crosshair;
 }
 
-
-colortest{
+colortest {
   color: #5c94fc;
   color: #fcfcfc;
-
 }
-
 
 #chrNavContiner {
   overflow-y: scroll;
@@ -85,19 +81,11 @@ colortest{
   margin-right: 10px !important;
 }
 
-
 .dropdown {
   display: inline-block !important;
   margin: 5px;
 }
 
-
-#draw-canvas-container {
-  text-align: center;
-  padding: 72px 0;
-    min-height: 400px;
-
-}
 
 
 .composition-row {
@@ -105,10 +93,9 @@ colortest{
 }
 
 .composition-row:hover {
-  background-color: #AAA;
+  background-color: #aaa;
   color: #222;
 }
-
 
 .color-control {
   display: inline-block;
@@ -125,7 +112,6 @@ colortest{
   align-items: center;
   display: flex;
   justify-content: center;
-
 }
 
 #colors button {
@@ -136,9 +122,9 @@ colortest{
   border-width: 3px; /* Border-color: color ^ 0x00ffffff */
 }
 
-#clip {            
+#clip {
   position: absolute;
-  transform: scale(8); 
+  transform: scale(8);
   display: none;
   border: 1px solid red;
   z-index: 100;
@@ -149,13 +135,11 @@ colortest{
   height: 32px;
   display: inline-block;
   margin: 1px;
-
 }
 
-  .rc-slider-rail {
+.rc-slider-rail {
   opacity: 0.5;
   height: 10px;
-
 }
 
 .rc-slider-dot {
@@ -166,15 +150,45 @@ colortest{
 
 .rc-slider-handle {
   bottom: -3px;
-
 }
 
 .rc-slider {
   height: 500px;
+}
+
+
+
+
+.zoom-span {
+  display: block;
+  line-height: 0;
+}
+
+#zoom-container {
+  position: absolute;
+  top: -150px;
+  width: auto;
+  top: 0;
+  display: inline-block;
+  margin-right: 50px;
 
 }
 
 #draw-canvas-container {
-  overflow: auto;
-  max-width: 500px;
+  display: inline-block;
+  margin-left: 50px;
+  width: 100%;
+  max-height: 550px;
+  max-width: 700px;
+  min-height: 550px;
+    overflow: auto;
+  text-align: center;
+
+
 }
+
+/*#draw-canvas-container {
+  text-align: center;
+  padding: 72px 0;
+  min-height: 400px;
+}*/

@@ -117,9 +117,6 @@ class App extends React.Component {
       default:
         currentPage = (
           <div className="col-md-8">
-            <div id="draw-canvas-container">
-              <DrawCanvas />
-            </div>
             <DrawControls />
             new canvas, load canvas save canvas
           </div>

@@ -7,12 +7,16 @@ import {
   ButtonDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Container,
+  Row,
+  Col
 } from "reactstrap";
 
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 
+import DrawCanvas from "./drawCanvas";
 
 import {
   expand,
@@ -86,8 +90,6 @@ class DrawControls extends Component {
 
 
     const marks = {
-      1: 'x1',
-      2: 'x2',
       4: 'x4',
       6: 'x6',
       8: 'x8',
@@ -98,9 +100,28 @@ class DrawControls extends Component {
     };
 
     return (
-      <div className="draw-controls">
 
-        <Slider vertical included={false} marks={marks} defaultValue={this.state.zoom} step={0.1} min={1} max={16} onChange={this.props.setZoom}/>
+
+
+
+
+      <Container className="draw-controls">
+        <Row className="drawing-area">
+          <Col>
+          <div id="zoom-container">
+              <span className="zoom-span">zoom</span><br/>
+            <Slider vertical included={false} marks={marks} defaultValue={this.state.zoom} step={1} min={4} max={16} onChange={this.props.setZoom} />
+          </div>
+          <div id="draw-canvas-container">
+            <DrawCanvas />
+          </div>
+          </Col>
+        </Row>
+      
+      
+      
+        <Row>
+
         <PaletteModal
           colorIndex={this.state.paletteModal.colorIndex}
           isOpen={this.state.paletteModal.isOpen}
@@ -137,7 +158,8 @@ class DrawControls extends Component {
             Save composition
           </Button>
         </div>
-      </div>
+        </Row>
+      </Container>
     );
   }
 
