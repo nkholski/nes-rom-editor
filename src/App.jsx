@@ -30,14 +30,14 @@ class App extends React.Component {
     this.state = {
       ready: false,
       md5: null,
-      page: "",
+      page: "importImage",
       modal: {
         isOpen: false,
         title: null,
         body: null
       }
     };
-    fetch("/files/NESPalette.json")
+    fetch("/files/nespalette.json")
       .then(response => response.json())
       .then(palette => {
         this.props.setPalette(palette);
@@ -74,10 +74,8 @@ class App extends React.Component {
       });
 
     const nesIO = new NesIO();
-    nesIO.loadFile("/files/smb.nes").then(romData => {
-      console.log("LOAD", romData);
+    nesIO.loadFile("/files/smb-new.nes").then(romData => {
       this.props.storeRom(romData, nesIO.chrSpan);
-      console.log("OK");
       /*this.chrSpan = nesIO.chrSpan;
       // const width = 9 * 8; // Eight block wide, line between*/
       /*this.setState({

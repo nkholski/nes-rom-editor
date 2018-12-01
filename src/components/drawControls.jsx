@@ -40,17 +40,32 @@ import CompositionService from "./../services/compositionService";
 class DrawControls extends Component {
   constructor(props) {
     super(props);
+    console.log(props.presetCompositions);
+    const compositions = props.presetCompositions ? [...props.presetCompositions] : [];
+    
+    try {
+      const storedCompositions = JSON.parse(localStorage.getItem("compositions"));
+      compositions.push({...storedCompositions});
+    }
+    catch(error) { 
+    }
+
+          //  ...props.presetCompositions
+
+
+
+
     this.state = {
       dropdownOpen: { expand: false },
       paletteModal: { isOpen: false, colorIndex: 0 },
       selectCompositionModal: false,
       saveCompositionModal: false,
-      compositions: [
-        ...JSON.parse(localStorage.getItem("compositions")),
-        ...props.presetCompositions
-      ],
+      compositions,
       zoom: 1
     };
+
+
+
     //    this.loadComposition();
 
     // const storedCompositions = JSON.parse(localStorage.getItem("compositions"));
@@ -283,8 +298,13 @@ class DrawControls extends Component {
 
   savePaletteToRom() {
     const currentComposition = this.state.compositions[0];
-    const selectedTarget = 0;
-    const jobToDo = currentComposition.palettes[selectedTarget].address;
+    const selectedTarget = 2;
+
+    
+
+    //const jobToDo = currentComposition.palettes[selectedTarget].address;
+    const jobToDo = [-1, 1520, 1521, 1522];
+
 
     jobToDo.forEach((address, colorIndex) => {
       const value = this.props.nesPalette.indexOf(
@@ -362,7 +382,7 @@ class DrawControls extends Component {
     if (prevProps.presetCompositions !== this.props.presetCompositions) {
     this.setState({
       compositions: [
-        ...JSON.parse(localStorage.getItem("compositions")),
+        // ...JSON.parse(localStorage.getItem("compositions")),
         ...this.props.presetCompositions
       ]
     });

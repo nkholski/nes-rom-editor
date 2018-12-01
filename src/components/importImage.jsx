@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Progress } from "reactstrap";
+import CompositionService from "../services/compositionService";
 
 class ImportImage extends Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class ImportImage extends Component {
   componentDidUpdate() {
     if (this.task === 0) {
       this.task = 1;
-      this.loadFromFile("/screenshot-source2.png").then(img =>
+      this.loadFromFile("/smb-items.png").then(img =>
         this.tileCollector(img)
       );
     }
@@ -105,6 +106,8 @@ class ImportImage extends Component {
     })
 
     window.composition = composition;
+    CompositionService.save(Math.random(), composition);
+    return composition;
   }
 
   imageScan({ composition, img, tmpCtx, mappingVariants }) {

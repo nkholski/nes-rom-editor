@@ -1,4 +1,4 @@
-const ImageImporter = (romData, chrSpan, url = "/screenshot-source2.png") => {
+const ImageImporter = (romData, chrSpan, url = "/smb-items.png") => {
     new Promise((resolve) => {
         let i = new Image();
         i.onload = () => {
