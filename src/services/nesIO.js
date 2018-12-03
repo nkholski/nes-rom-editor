@@ -9,7 +9,7 @@ export default class NesIO {
     this.chrCanvas = null;
     console.log("jsnes", jsnes);
 
-    fetch("/files/NESPalette.json")
+    fetch("/files/nespalette.json")
     .then(response => {console.log("palette OK"); return response;})
       .then(response => response.json())
       .then(NESPalette => {
@@ -18,7 +18,7 @@ export default class NesIO {
   }
 
   loadFile(fileName) {
-    fileName = "/rom/smb.nes";
+    fileName = "/rom/hack.nes";
     this.fileName = fileName;
     const promise = fetch(fileName)
       .then(response => this.checkStatus(response) && response.arrayBuffer())

@@ -49,6 +49,7 @@ class RomHacks extends Component {
       }
     
 
+
     let occurances = 0;
     for (let i = 0; i < this.props.romData.byteLength-pieces+1; i++) {
       let found = true;
@@ -76,8 +77,13 @@ class RomHacks extends Component {
       console.log(this.props.romData.getUint8(result.address+16));
       console.log(this.props.romData.getUint8(result.address+16-16384));
       console.log(this.props.romData.getUint8(result.address + 16 - 16384*2));
+      if(result.data === 8) {
+        result.data = 44;
+      }
+      if(result.data === 206){
+        result.data = 0;
+      }
       this.props.romData.setUint8(result.address + 16 - 16384 * 2, result.data);
-
     }
   }
 

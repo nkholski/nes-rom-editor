@@ -30,13 +30,13 @@ export default (state = defaultState, action) => {
                 romSettings: payload
             };
         case 'STORE_ROM':
-            console.log("STORING");
+            console.log("STORING", md5(payload.romData.buffer));
            // ImageImporter(payload.romData, payload.chrSpan);
 
             return {
                 ...state,
                 ...payload,
-                md5: md5(payload.romData.buffer),
+                md5: "99e97730adbdd09b9ca8d0d6b38dd8bb", //md5(payload.romData.buffer),
                 version: 1
             };
         case 'PUT_PIXEL':
@@ -85,6 +85,15 @@ const put_pixel = (state, payload) => {
         }
         romData.setUint8(index, byte);
     }
+
+
+    console.log("MARIO",romData.getUint8(1893));
+    romData.setUint8(1893, "L".charCodeAt(0)-55);
+    romData.setUint8(1896, "S".charCodeAt(0)-55);
+    romData.setUint8(1897, "A".charCodeAt(0)-55);
+    romData.setUint8(0x379e, 0);
+//    379e skva vara noll
+
 
     state.version++;
     return {...state, romData, lastAltered: firstByteIndex };
