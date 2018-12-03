@@ -74,7 +74,7 @@ class App extends React.Component {
       });
 
     const nesIO = new NesIO();
-    nesIO.loadFile("/files/smb-new.nes").then(romData => {
+    nesIO.loadFile("/files/smb.nes").then(romData => {
       this.props.storeRom(romData, nesIO.chrSpan);
       /*this.chrSpan = nesIO.chrSpan;
       // const width = 9 * 8; // Eight block wide, line between*/
