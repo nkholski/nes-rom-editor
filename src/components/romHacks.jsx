@@ -14,8 +14,11 @@ class RomHacks extends Component {
   }
 
   render() {
+    console.log("HACK RENDER", this.props.hacks)
     const hacks = this.props.hacks ? this.getHacks(this.props.hacks) : "No hacks for this rom";
-    return <div>{hacks}
+    return <div>
+    
+      {hacks}
     
       Game Genie: <input type="text" id="gameGenieCode" />
       <Button onClick={() => this.gameGenie()}>
@@ -67,7 +70,7 @@ class RomHacks extends Component {
   gameGenie() {
     const result = GameGenie(document.getElementById("gameGenieCode").value)
 
-    console.log("code", result, this.props.romData.byteLength);
+    console.log("code", result, result.address + 16 - 16384 * 2, this.props.romData.byteLength);
     if(result){
       console.log(this.props.romData.getUint8(result.address));
       console.log(this.props.romData.getUint8(result.address+16));
@@ -79,6 +82,9 @@ class RomHacks extends Component {
   }
 
   getHacks = (data, key=null) => {
+    console.log("SKAFFA HACK", data);
+
+
     if(!data.map){
       let setting;
       if(!this.defaults.hasOwnProperty(data.address)){

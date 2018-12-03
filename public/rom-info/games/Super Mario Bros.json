@@ -768,135 +768,152 @@
         }]
     }],
     "hacks": [{
-        "name": "Player mechanics",
-        "children": [{
-                "name": "Max running velocity left",
-                "address": 13392,
-                "number": {
-                    "min": 5,
-                    "max": 55
-                }
-
-
-            },
-            {
-                "name": "Max walking velocity left",
-                "address": 13393,
-                "number": {
-                    "min": 5,
-                    "max": 55
-                }
-
-
-            },
-            {
-                "name": "Max swimming velocity left (guess)",
-                "address": 13394,
-                "number": {
-                    "min": 5,
-                    "max": 55
-                }
-            },
-            {
-                "name": "Max running velocity right",
-                "address": 13395,
-                "number": {
-                    "min": 5,
-                    "max": 55
-                }
-
-
-            },
-            {
-                "name": "Max walking velocity right",
-                "address": 13396,
-                "number": {
-                    "min": 5,
-                    "max": 55
-                }
-
-
-            },
-            {
-                "name": "Max swimming velocity right",
-                "address": 13397,
-                "number": {
-                    "min": 5,
-                    "max": 55
-                }
-
-
-            },
-            {
-                "name": "Fire ball movement",
-                "address": 25058,
-                "dropdown": [{
-                        "name": "Explode on contact, but no damage",
-                        "value": "10"
-                    },
-                    {
-                        "value": "13",
-                        "name": "Straight forward but bounces off blocks "
-                    },
-                    {
-                        "value": "15",
-                        "name": "Straight forward"
-                    },
-                    {
-                        "value": "19",
-                        "name": "Appear in air then bounce along top of sky "
-                    },
-                    {
-                        "value": "1B",
-                        "name": "Explode on contact"
-                    },
-                    {
-                        "value": "1C",
-                        "name": "Normal"
-                    },
-                    {
-                        "value": "9F",
-                        "name": "Wierd jump - shoot"
-                    },
-                    {
-                        "value": "CF",
-                        "name": "Kill first enemy even if you miss it"
-                    },
-                    {
-                        "value": "FF",
-                        "name": "Explode on Mario, but no damage"
+            "name": "Game settings",
+            "children": [{
+                    "name": "Start lives (start with n+1 lives)",
+                    "address": 4218,
+                    "number": {
+                        "min": 0,
+                        "max": 255
                     }
-                ]
-            },
-            {
-                "name": "Fire ball position",
-                "address": 25083,
-                "dropdown": [{
-                        "name": "3 blocks above Mario",
-                        "value": "CA"
-                    },
-                    {
-                        "value": "D0",
-                        "name": "2 blocks above Mario "
-                    },
-                    {
-                        "value": "F7",
-                        "name": "Straight ahead, misses Goombas but sometimes hits Koopa Troopas"
-                    },
-                    {
-                        "value": "F8",
-                        "name": "Normal"
-                    },
-                    {
-                        "value": "FC",
-                        "name": "Shoot much farther"
-                    },
-                    {
-                        "value": "FE",
-                        "name": "Shoot slightly farther"
+                },
+                {
+                    "name": "Infinite lives (bool -1 ==> loadedwith",
+                    "address": 4585,
+                    "true": 173,
+                    "false": -1
+                }
+            ]
+        },
+        {
+            "name": "Player mechanics",
+            "children": [{
+                    "name": "Max running velocity left",
+                    "address": 13392,
+                    "number": {
+                        "min": 5,
+                        "max": 55
                     }
-                ]
-            }
-        ]
-    }]
+                },
+                {
+                    "name": "Max walking velocity left",
+                    "address": 13393,
+                    "number": {
+                        "min": 5,
+                        "max": 55
+                    }
+
+
+                },
+                {
+                    "name": "Max swimming velocity left (guess)",
+                    "address": 13394,
+                    "number": {
+                        "min": 5,
+                        "max": 55
+                    }
+                },
+                {
+                    "name": "Max running velocity right",
+                    "address": 13395,
+                    "number": {
+                        "min": 5,
+                        "max": 55
+                    }
+
+
+                },
+                {
+                    "name": "Max walking velocity right",
+                    "address": 13396,
+                    "number": {
+                        "min": 5,
+                        "max": 55
+                    }
+
+
+                },
+                {
+                    "name": "Max swimming velocity right",
+                    "address": 13397,
+                    "number": {
+                        "min": 5,
+                        "max": 55
+                    }
+
+
+                },
+                {
+                    "name": "Fire ball movement",
+                    "address": 25058,
+                    "dropdown": [{
+                            "name": "Explode on contact, but no damage",
+                            "value": "10"
+                        },
+                        {
+                            "value": "13",
+                            "name": "Straight forward but bounces off blocks "
+                        },
+                        {
+                            "value": "15",
+                            "name": "Straight forward"
+                        },
+                        {
+                            "value": "19",
+                            "name": "Appear in air then bounce along top of sky "
+                        },
+                        {
+                            "value": "1B",
+                            "name": "Explode on contact"
+                        },
+                        {
+                            "value": "1C",
+                            "name": "Normal"
+                        },
+                        {
+                            "value": "9F",
+                            "name": "Wierd jump - shoot"
+                        },
+                        {
+                            "value": "CF",
+                            "name": "Kill first enemy even if you miss it"
+                        },
+                        {
+                            "value": "FF",
+                            "name": "Explode on Mario, but no damage"
+                        }
+                    ]
+                },
+                {
+                    "name": "Fire ball position",
+                    "address": 25083,
+                    "dropdown": [{
+                            "name": "3 blocks above Mario",
+                            "value": "CA"
+                        },
+                        {
+                            "value": "D0",
+                            "name": "2 blocks above Mario "
+                        },
+                        {
+                            "value": "F7",
+                            "name": "Straight ahead, misses Goombas but sometimes hits Koopa Troopas"
+                        },
+                        {
+                            "value": "F8",
+                            "name": "Normal"
+                        },
+                        {
+                            "value": "FC",
+                            "name": "Shoot much farther"
+                        },
+                        {
+                            "value": "FE",
+                            "name": "Shoot slightly farther"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

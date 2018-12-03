@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { setPalette } from "./redux/actions/drawActions";
 import { setPresetCompositions } from "./redux/actions/canvasActions";
-import { setRomInfoIndex, storeRom } from "./redux/actions/nesRomActions";
+import { setRomInfoIndex, storeRom, setRomSettings } from "./redux/actions/nesRomActions";
 
 import ChrNav from "./components/chrNav";
 import DrawCanvas from "./components/drawCanvas";
@@ -85,10 +85,10 @@ class App extends React.Component {
       });*/
 
       // OH. It's Mario
-      /*fetch("/rom-info/games/Super Mario Bros.json").then(data => data.json()).then(data => {
+      fetch("/rom-info/games/Super Mario Bros.json").then(data => data.json()).then(data => {
         // Convert all string-hex numbers to decimal ints
         this.props.setRomSettings(data);
-      });*/
+      });
     });
 
     // TEST
@@ -265,6 +265,9 @@ const mapDispatchToProps = dispatch => {
     },
     setPresetCompositions: (compositions) => {
       dispatch(setPresetCompositions(compositions));
+    },
+    setRomSettings: (data) => {
+      dispatch(setRomSettings(data))
     }
     /*,
     setGameList: gameList => {
