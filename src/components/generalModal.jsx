@@ -9,7 +9,7 @@ import {
 } from "reactstrap";
 
 export default function GeneralModal(props) {
-  let compositions;
+ // let compositions;
 
   return (
     <Modal

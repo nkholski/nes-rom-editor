@@ -9,11 +9,13 @@ import { setClipByte } from "../redux/actions/canvasActions";
 
 class ChrNav extends Component {
   constructor(props) {
+    console.log("INIT CHR NAV")
     super(props);
     this.canvas = null;
     this.context = null;
     this.clip = null;
     this.clipContext = null;
+    this.renderedVersion = -1;
     
     this.state = {
       height: 9 * (props.chrSpan.len / 128),
@@ -33,6 +35,9 @@ class ChrNav extends Component {
   }
   drawCHR() {
     const correctX = this.props.chrSpan.first % 128;
+
+    console.log(this.context);
+
     for (
       let i = this.props.chrSpan.first;
       i < this.props.chrSpan.first + this.props.chrSpan.len;
@@ -46,12 +51,19 @@ class ChrNav extends Component {
   }
 
   render() {
-    console.log("MADE CANVAS");
+    console.log("Made CHR", this.renderedVersion, this.props.version);
+    this.renderedVersion = this.props.version;
     return (
       <div id="chr-nav" onClick={this.copyChrToClip}>
+        <h4>CHR-Rom</h4>
         <canvas id="chr-canvas" width={9 * 8 - 1} height={this.state.height} />
       </div>
     );
+  }
+
+
+  shouldComponentUpdate(){
+    return this.props.version !== this.renderedVersion;
   }
 
   componentDidMount(){
@@ -72,6 +84,7 @@ this.componentDidUpdate();
     renderBlock(byteIndex, this.props.romData, 0, 0, this.clipContext, 1, this.props.colors);
   };
   componentDidUpdate() {
+    console.log("RENDER CHR")
       this.canvas = document.getElementById("chr-canvas");
       this.context = this.canvas.getContext("2d");
       this.clip = document.getElementById("clip");

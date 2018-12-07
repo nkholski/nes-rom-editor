@@ -108,16 +108,7 @@ class DrawControls extends Component {
     };
 
     return (
-      <Container className="draw-controls">
-        <Row className="drawing-area">
-          <Col>
-            <div id="draw-canvas-container">
-              <DrawCanvas />
-            </div>
-          </Col>
-        </Row>
-
-        <Row>
+        <div>
           <PaletteModal
             colorIndex={this.state.paletteModal.colorIndex}
             isOpen={this.state.paletteModal.isOpen}
@@ -154,8 +145,7 @@ class DrawControls extends Component {
               Save composition
             </Button>
           </div>
-        </Row>
-      </Container>
+        </div>
     );
   }
 

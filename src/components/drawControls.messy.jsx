@@ -13,6 +13,9 @@ import {
   Col
 } from "reactstrap";
 
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
+
 import DrawCanvas from "./drawCanvas";
 
 import {
@@ -38,18 +41,19 @@ class DrawControls extends Component {
   constructor(props) {
     super(props);
     console.log(props.presetCompositions);
-    const compositions = props.presetCompositions
-      ? [...props.presetCompositions]
-      : [];
-
+    const compositions = props.presetCompositions ? [...props.presetCompositions] : [];
+    
     try {
-      const storedCompositions = JSON.parse(
-        localStorage.getItem("compositions")
-      );
-      compositions.push({ ...storedCompositions });
-    } catch (error) {}
+      const storedCompositions = JSON.parse(localStorage.getItem("compositions"));
+      compositions.push({...storedCompositions});
+    }
+    catch(error) { 
+    }
 
-    //  ...props.presetCompositions
+          //  ...props.presetCompositions
+
+
+
 
     this.state = {
       dropdownOpen: { expand: false },
@@ -59,6 +63,8 @@ class DrawControls extends Component {
       compositions,
       zoom: 1
     };
+
+
 
     //    this.loadComposition();
 
@@ -97,63 +103,76 @@ class DrawControls extends Component {
 
     const zoom = this.getZoomDropDown();
 
+
     const marks = {
-      4: "x4",
-      6: "x6",
-      8: "x8",
-      10: "x10",
-      12: "x12",
-      14: "x14",
-      16: "x16"
+      4: 'x4',
+      6: 'x6',
+      8: 'x8',
+      10: 'x10',
+      12: 'x12',
+      14: 'x14',
+      16: 'x16'
     };
 
     return (
+
+
+
+
+
       <Container className="draw-controls">
         <Row className="drawing-area">
           <Col>
-            <div id="draw-canvas-container">
-              <DrawCanvas />
-            </div>
+          <div id="zoom-container">
+              <span className="zoom-span">zoom</span><br/>
+            <Slider vertical included={false} marks={marks} defaultValue={this.state.zoom} step={1} min={4} max={16} onChange={this.props.setZoom} />
+          </div>
+          <div id="draw-canvas-container">
+            <DrawCanvas />
+          </div>
           </Col>
         </Row>
-
+      
+      
+      
         <Row>
-          <PaletteModal
-            colorIndex={this.state.paletteModal.colorIndex}
-            isOpen={this.state.paletteModal.isOpen}
-            palette={this.props.nesPalette}
-            callback={this.shiftPaletteRef.bind(this)}
-          />
-          <SaveCompositionModal
-            isOpen={this.state.saveCompositionModal}
-            close={this.saveComposition}
-          />
-          <SelectCompositionModal
-            isOpen={this.state.selectCompositionModal}
-            callback={cI => this.setComposition(cI)}
-            compositions={this.state.compositions}
-          />
 
-          <div className="md-12" id="colors">
-            {colors}
-            {paletteDropDown}
-            <Button onClick={() => this.savePaletteToRom()}>
-              Save palette to rom
-            </Button>
-          </div>
-          <div className="md-6">
-            {dropDown}
-            {zoom}
-          </div>
-          <div className="md-6">
-            <Button onClick={() => this.expand(1)}>Clear composition</Button>{" "}
-            <Button onClick={() => this.setComposition(-1)}>
-              Load composition
-            </Button>{" "}
-            <Button onClick={() => this.saveComposition(true)}>
-              Save composition
-            </Button>
-          </div>
+        <PaletteModal
+          colorIndex={this.state.paletteModal.colorIndex}
+          isOpen={this.state.paletteModal.isOpen}
+          palette={this.props.nesPalette}
+          callback={this.shiftPaletteRef.bind(this)}
+        />
+        <SaveCompositionModal
+          isOpen={this.state.saveCompositionModal}
+          close={this.saveComposition}
+        />
+        <SelectCompositionModal
+          isOpen={this.state.selectCompositionModal}
+          callback={cI => this.setComposition(cI)}
+          compositions={this.state.compositions}
+        />
+
+        <div className="md-12" id="colors">
+          {colors}
+          {paletteDropDown}
+          <Button onClick={() => this.savePaletteToRom()}>
+            Save palette to rom
+          </Button>
+        </div>
+        <div className="md-6">
+          {dropDown}
+          {zoom}
+        </div>
+        <div className="md-6">
+          <Button onClick={() => this.expand(1)}>Clear composition</Button>{" "}
+          <Button onClick={() => this.setComposition(-1)}>
+            Load composition
+          </Button>{" "}
+          <Button onClick={() => this.saveComposition(true)}>
+            Save composition
+          </Button>
+        </div>
         </Row>
       </Container>
     );
@@ -281,8 +300,11 @@ class DrawControls extends Component {
     const currentComposition = this.state.compositions[0];
     const selectedTarget = 2;
 
+    
+
     //const jobToDo = currentComposition.palettes[selectedTarget].address;
     const jobToDo = [-1, 1520, 1521, 1522];
+
 
     jobToDo.forEach((address, colorIndex) => {
       const value = this.props.nesPalette.indexOf(
@@ -356,14 +378,16 @@ class DrawControls extends Component {
   }
 
   componentDidUpdate(prevProps) {
+
     if (prevProps.presetCompositions !== this.props.presetCompositions) {
-      this.setState({
-        compositions: [
-          // ...JSON.parse(localStorage.getItem("compositions")),
-          ...this.props.presetCompositions
-        ]
-      });
-    }
+    this.setState({
+      compositions: [
+        // ...JSON.parse(localStorage.getItem("compositions")),
+        ...this.props.presetCompositions
+      ]
+    });
+  }
+
   }
 
   sliderChange(what) {
