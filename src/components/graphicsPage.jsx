@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import ChrNav from "./chrNav";
-import DrawControls from "./drawControls";
+import DrawControls from "./graphicsPage/drawControls";
 import ZoomControl from "./graphicsPage/zoomControl";
-import DrawCanvas from "./drawCanvas";
+import DrawCanvas from "./graphicsPage/drawCanvas";
 
 class GraphicsPage extends Component {
   render() {
@@ -14,12 +14,11 @@ class GraphicsPage extends Component {
         </div>
         <div className="drawView col col-xl-">
           <div class="drawing">
-
             <ZoomControl />
             <DrawCanvas />
           </div>
           <div>
-    
+            <DrawControls/>
           </div>
         </div>
       </div>

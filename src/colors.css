@@ -1,0 +1,28 @@
+#colors {
+    align-items: center;
+    display: flex;
+}
+
+.palette {
+    font-size: 0.7em;
+}
+
+
+#colors .selected {
+    border-width: 3px;
+    /* Border-color: color ^ 0x00ffffff */
+}
+
+
+.flip {
+    font-size: 40px;
+    text-align: center;
+    padding: 0 !important;
+    line-height: 0.7em;
+    background: #DDD;
+}
+
+
+.color {
+    cursor: pointer;
+}

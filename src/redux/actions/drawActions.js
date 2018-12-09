@@ -26,3 +26,10 @@ export const pushHEXToColors = (palette) => dispatch => {
         payload: palette
     })
 }
+
+export const setMode = (mode) => dispatch => {
+    dispatch({
+        type: 'SET_MODE',
+        payload: mode
+    })
+}

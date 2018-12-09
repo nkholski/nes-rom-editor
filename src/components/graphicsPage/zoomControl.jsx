@@ -9,6 +9,7 @@ import "rc-slider/assets/index.css";
 class ZoomControl extends Component {
     constructor(props) {
         super(props);
+        console.log("z", props);
     }
     render(){
 
@@ -19,7 +20,8 @@ class ZoomControl extends Component {
             10: 'x10',
             12: 'x12',
             14: 'x14',
-            16: 'x16'
+            16: 'x16',
+            32: 'x32'
         };
         return  <div id="zoom-container">
             <span className="zoom-span">zoom</span><br />

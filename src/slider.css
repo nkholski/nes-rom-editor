@@ -1,0 +1,27 @@
+div.rc-slider-rail {
+    background-color: black;
+
+}
+
+div.rc-slider-handle,
+span.rc-slider-dot {
+    border-color: black;
+}
+
+
+#zoom-container span {
+    color: black;
+    font-size: 1.1em;
+
+}
+
+.drawing #zoom-container {
+    background-color: lightgreen;
+    color: black !important;
+    height: 500px;
+    display: block;
+    float: left;
+    border: 4px solid black;
+    padding: 1em 5px 3em 5px;
+
+}

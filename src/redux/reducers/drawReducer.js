@@ -6,6 +6,7 @@ const defaultState = {
         "#AC7C00"
     ], // colors to use
     activeColorIndex: 0, //Index (0-3) that is used
+    mode: "draw"
 }
 
 export default (state = defaultState, action) => {
@@ -24,6 +25,7 @@ export default (state = defaultState, action) => {
         case "SET_ACTIVE_COLOR":
             const activeColorIndex = payload;
             return { ...state,
+                mode: "draw",
                 activeColorIndex
             };
         
@@ -36,6 +38,8 @@ export default (state = defaultState, action) => {
             console.log("PAYLOAD HEX", payload);
             return { ...state, colors: payload
             };
+        case "SET_MODE":
+            return { ...state, mode: payload };
         default:
             return state;
     }

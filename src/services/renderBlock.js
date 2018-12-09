@@ -14,6 +14,8 @@ export default function renderBlock(firstByteIndex, dataView, X, Y, ctx, scale =
         "#AC7C00"
     ];
 
+    console.log("RENDER BLOCK");
+
     for(let y = 0; y<8; y++){
         const c = bytesToColorIndexArray(firstByteIndex, y, dataView);
         for (let x = 0; x < 8; x++) {

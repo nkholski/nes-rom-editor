@@ -34,9 +34,115 @@ class RomHacks extends Component {
     /*[ADD NEW] [RESET TO ROM DEFAULTS]  [SAVE TO ROM]*/
   }
 
-  findValue(tmpvalue){
+  findTextValue(searchString) {
+    searchString = searchString.toUpperCase();
+    const lastCheck = this.props.romData.byteLength - searchString.length;
+    const firstLetter = searchString.charCodeAt(0);
+    const sequence = searchString.split("").map((letter,i) => {
+      if(i === 0) {
+        return;
+      }
+      if(!letter.match(/[a-zA-Z]/)) {
+        console.log("NULL")
+        return null;
+      } 
+      return letter.charCodeAt(0) - firstLetter;
+    });
+
+    let step = 0;
+    let baseValue; 
+    let found = false;
+    for (let i = 0; i < lastCheck; i++) {
+      const value = this.props.romData.getUint8(i);
+      if(!sequence[step] && step>0){
+        step++;
+        return;
+      }
+      if(step === 0) {
+        baseValue = value;
+        step++;
+      }
+      else {
+        if(value-baseValue === sequence[step]){
+          step++;
+          if(found){
+            console.log("INDING");
+            found = false;
+          }
+        }
+        else {
+          step=0;
+        }
+      }
+      if(step === sequence.length ) {
+        const startAddress = i - sequence.length + 1;
+        // this.props.romData.setUint8(startAddress, value);
+        const letterDiff = searchString.charCodeAt(0) - baseValue;
+        console.log("LETTERDIF", baseValue, letterDiff, searchString.charCodeAt(0));
+
+        const alphabeth = {};
+        for(let chr=0; chr<25; chr++) {
+          alphabeth[chr + 10] = String.fromCharCode(65+chr);
+
+        }
+
+        this.findStrings(alphabeth);
+        step = 0;
+        found = true;
+      }
+
+    }
+
+
+
+  }
+
+  findStrings(alphabeth) {
+    const minLength = 3;
+    let treshold = 2;
+    const lastCheck = this.props.romData.byteLength - minLength;
+    console.log("CHECKING", alphabeth);
+    let step = 0;
+    let string = "";
+    for (let i = 0; i < lastCheck; i++) {
+      const value = this.props.romData.getUint8(i);
+      if(alphabeth.hasOwnProperty(value)) {
+        string+=alphabeth[value];
+        step++;
+        treshold = 2;
+      }
+      else {
+        treshold--;
+        if(step>=minLength){
+          if(treshold > 0) {
+            string+="?";
+            continue;
+          }
+          else {
+            console.log(string);
+          }
+        }
+        string = "";
+        step = 0;
+      }
+
+    }
+
+  }
+
+
+  findValue(){
+    const inputValue = document.getElementById("searchValue").value;
+    console.log(inputValue);
+    if (inputValue.match(/[^0-9]/)) {
+      this.findTextValue(inputValue);
+      return;
+    }
+    const value = parseInt(document.getElementById("searchValue").value);
+
+
+
     console.log("SEARCH BEGAN");
-    const value = tmpvalue || parseInt(document.getElementById("searchValue").value);
     let len = 1;
     const values = [];
     

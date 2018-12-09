@@ -1,0 +1,61 @@
+h1.main {
+    padding: 10px 20px;
+    margin: 0;
+    background-color: #FFFF88;
+}
+
+.nav {
+    background-color: yellow;
+}
+
+.nav-tabs {
+    border-color: black;
+    border-width: 2px;
+}
+
+.nav-link.active {
+    color: black !important;
+    border-color: #000 #000 #FFF #000 !important;
+    border-width: 2px;
+    margin-bottom: -1px;
+}
+
+.nav-link:not(.active) {
+    color: #555 !important;
+    border: none;
+}
+
+.nav-link:not(.active):hover {
+    cursor: pointer;
+    color: black !important;
+}
+
+.tab-pane {
+    padding-top: 20px;
+}
+
+.nav-link.disabled {
+
+        color:#AAA !important;
+        cursor: not-allowed !important;
+
+}
+/*
+.nav-tabs {
+    border-color: black;
+    border-width: 4px;
+    border-bottom: none;
+}
+
+.nav-link.active {
+    color: black !important;
+    background-color: red;
+    border-color: #000 #000 #FFF #000 !important;
+    border-width: 2px;
+}
+
+.nav-link:not(.active) {
+    color: #555 !important;
+    border-bottom: 2px solid black !important;
+}
+*/

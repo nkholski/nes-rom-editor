@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import CompositionService from "../services/compositionService";
+import CompositionService from "../../services/compositionService";
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, Input } from "reactstrap";
 

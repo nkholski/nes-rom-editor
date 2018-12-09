@@ -3,24 +3,50 @@ import { connect } from "react-redux";
 
 import { setPalette } from "./redux/actions/drawActions";
 import { setPresetCompositions } from "./redux/actions/canvasActions";
-import { setRomInfoIndex, storeRom, setRomSettings } from "./redux/actions/nesRomActions";
+import {
+  setRomInfoIndex,
+  storeRom,
+  setRomSettings
+} from "./redux/actions/nesRomActions";
+
+import classnames from "classnames";
+import {
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+  Card,
+  Button,
+  CardTitle,
+  CardText,
+  Row,
+  Col
+} from "reactstrap";
 
 import ChrNav from "./components/chrNav";
-import DrawCanvas from "./components/drawCanvas";
-import DrawControls from "./components/drawControls";
 import RomHacks from "./components/romHacks";
 import GeneralModal from "./components/generalModal";
 import ImportImage from "./components/importImage";
+import Emulator from "./components/emulator";
 
-import { Button } from "reactstrap";
+// import { Button } from "reactstrap";
 
 import DownloadNes from "./services/downloadNes";
 
 import NesIO from "./services/nesIO";
 
 import "./App.css";
-import "./bootstrap-cyborg.min.css";
+import "nes.css/css/nes.css";
+import "./tabs.css";
+import "./chr-nav.css";
+import "./slider.css";
+import "./colors.css";
+import "./draw-canvas.css";
+import "./emulator.css";
+// import "./bootstrap-cyborg.min.css";
 import DraggedBlock from "./components/draggedBlock";
+import GraphicsPage from "./components/graphicsPage";
 
 // http://datomatic.no-intro.org/index.php?page=download&fun=dat
 
@@ -31,11 +57,13 @@ class App extends React.Component {
       ready: false,
       md5: null,
       page: "importImage",
+      activeTab: "Graphics",
       modal: {
         isOpen: false,
         title: null,
         body: null
-      }
+      },
+      disabled: []
     };
     fetch("/files/nespalette.json")
       .then(response => response.json())
@@ -48,7 +76,6 @@ class App extends React.Component {
       .then(romInfo => {
         this.props.setRomInfoIndex(romInfo);
       });
-    
 
     /// return new Promise(resolve => { let i = new Image(); i.onload = () => { resolve(i) }; i.src = url; });
 
@@ -83,10 +110,12 @@ class App extends React.Component {
       });*/
 
       // OH. It's Mario
-      fetch("/rom-info/games/Super Mario Bros.json").then(data => data.json()).then(data => {
-        // Convert all string-hex numbers to decimal ints
-        this.props.setRomSettings(data);
-      });
+      fetch("/rom-info/games/Super Mario Bros.json")
+        .then(data => data.json())
+        .then(data => {
+          // Convert all string-hex numbers to decimal ints
+          this.props.setRomSettings(data);
+        });
     });
 
     // TEST
@@ -96,76 +125,100 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.state.activeTab);
+    const pageIds = ["File", "Graphics", "Palettes", "Hacks", "Emulator", "Rom info", "Help"];
+    const disabled = this.state.disabled;
+    
+    pageIds.forEach(page => { 
+      if(page==="Help") {
+        disabled[page] = true; 
+
+      }
+      else {
+        disabled[page] = false; 
+
+      }
+    });
+    this.setState({disabled});
+
     if (!this.state.ready || this.props.romVersion < 1) {
       return <div>Loading...</div>;
     }
+    const tabs = pageIds.map(page => (
+      <NavItem key={page}>
+        <NavLink
+          className={classnames({
+            active: this.state.activeTab === page,
+            disabled: disabled[page]
+          })}
+          onClick={() => {
+            this.toggle(page);
+          }}
+          
+        >
+          {page}
+        </NavLink>
+      </NavItem>
+    ));
 
-    let currentPage = "";
+    const pages = pageIds.map(page => {
+      let pageTag;
 
-    switch (this.state.page) {
-      case "importImage":
-        currentPage = <ImportImage/>;
-        break;
-      case "romhacks":
-        currentPage = <RomHacks type="hacks" />;
-        break;
-      case "palette":
-        currentPage = <RomHacks type="palette" />;
-        break;
-      default:
-        currentPage = (
-          <div className="col-md-8">
-            <DrawControls />
-            new canvas, load canvas save canvas
-          </div>
-        );
-    }
+      if(page === this.state.activeTab) {
+      switch(page){
+        case "Graphics":
+          pageTag = <GraphicsPage />;
+          break;
+        case "Hacks":
+          pageTag = <RomHacks/>;
+          break;
+        case "Emulator":
+          pageTag = <Emulator/>;
+          break;
+        default:
+          pageTag = <h1>{page}</h1>;
+          break;
+      }
+      }
+      else {
+        // I want the page to reset render when visited
+        pageTag = <div>Waiting...</div>;
+      }
 
-    const { modal } = this.state;
+     
+      return (
+        <TabPane key={page} tabId={page}>
+            {pageTag} 
+        </TabPane>
+      );
+    });
 
     return (
-      <div id="app">
+      <div>
         <DraggedBlock />
-        <GeneralModal
-          isOpen={modal.isOpen}
-          title={modal.title}
-          body={modal.body}
-          close={() => {
-            const modal = this.state.modal;
-            modal.isOpen = false;
-            this.setState({ modal });
-          }}
-        />
-        <div className="row">
-          <div className="col-md-12">
-            <h1>NES Edit</h1>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-4">
-            <ChrNav />
-          </div>
-          {currentPage}
-        </div>
-        <div className="row">
-          <div className="col-md-4">
-            Show all ROM Load .nes
-            <Button onClick={this.download}>Download .nes</Button>
-            Download .nes Identify game
-          </div>
-          <div className="col-md-8">
-            <Button onClick={() => this.page("editor")}>Graphics editor</Button>{" "}
-            | Palette editor | .nes Info |{" "}
-            <Button onClick={() => this.page("romhacks")}>Rom hacks</Button>
-          </div>
-        </div>
+
+        <h1 class="main">Nintamptor</h1>
+        <Nav tabs>{tabs}</Nav>
+        <TabContent activeTab={this.state.activeTab}>{pages}</TabContent>
       </div>
     );
   }
 
-  page(pg) {
-    this.setState({ page: pg });
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(nextState.activeTab, nextState.ready, nextProps.romVersion);
+    return nextState.activeTab !== this.state.activeTab ||
+      nextState.ready !== this.state.ready ||
+      this.props.romVersion !== nextProps.romVersion;
   }
+
+  /*page(pg) {
+    alert("USED PAGE(PG)");
+    console.log("disabled",this.disabled);
+    if(this.disabled[pg]){
+      return;
+    }
+    this.setState({ page: pg });
+  }*/
 
   download = () => {
     console.log(this.props);
@@ -184,7 +237,16 @@ class App extends React.Component {
     }
   }
 
-  getRomSpecificStuff(){
+  toggle(activeTab){
+    
+    if (this.state.disabled[activeTab]) {
+      return;
+    }
+    this.setState({activeTab});
+
+  }
+
+  getRomSpecificStuff() {
     if (this.props.romInfoIndex.md5.hasOwnProperty(this.props.md5)) {
       const romFile = this.props.romInfoIndex.md5[this.props.md5];
       fetch("/rom-info/games/" + romFile + ".json")
@@ -212,7 +274,7 @@ class App extends React.Component {
           let hacks = counter(res.hacks);
           let palettes = counter(res.palettes);
           let compositionCount = res.compositions.length;
-          
+
           this.props.setPresetCompositions(res.compositions);
 
           this.setState({
@@ -221,7 +283,7 @@ class App extends React.Component {
               title: "Game identified!",
               body: `The Game was identified as ${
                 res.name
-                }. Loaded ${compositionCount} compositions, ${hacks} hacks and ${palettes} palette connections. Happy hacking!`
+              }. Loaded ${compositionCount} compositions, ${hacks} hacks and ${palettes} palette connections. Happy hacking!`
             }
           });
         });
@@ -236,7 +298,6 @@ class App extends React.Component {
       });
     }
   }
-
 }
 
 const mapStateToProps = state => {
@@ -261,11 +322,11 @@ const mapDispatchToProps = dispatch => {
     storeRom: (romData, chrSpan) => {
       dispatch(storeRom(romData, chrSpan));
     },
-    setPresetCompositions: (compositions) => {
+    setPresetCompositions: compositions => {
       dispatch(setPresetCompositions(compositions));
     },
-    setRomSettings: (data) => {
-      dispatch(setRomSettings(data))
+    setRomSettings: data => {
+      dispatch(setRomSettings(data));
     }
     /*,
     setGameList: gameList => {

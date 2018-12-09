@@ -19,20 +19,22 @@ import {
   expand,
   setZoom,
   setComposition
-} from "../redux/actions/canvasActions";
+} from "../../redux/actions/canvasActions";
 import {
   setActiveColor,
   mapPaletteToColors,
-  pushHEXToColors
-} from "../redux/actions/drawActions";
-import { alterByte } from "../redux/actions/nesRomActions";
+  pushHEXToColors,
+  setMode
+} from "../../redux/actions/drawActions";
+import { alterByte } from "../../redux/actions/nesRomActions";
 
 import ColorSelect from "./colorSelect";
 import PaletteModal from "./paletteModal";
 import SaveCompositionModal from "./saveCompositionModal";
 import SelectCompositionModal from "./selectCompositionModal";
 
-import CompositionService from "./../services/compositionService";
+import CompositionService from "../../services/compositionService";
+import classnames from "classnames";
 
 class DrawControls extends Component {
   constructor(props) {
@@ -76,7 +78,7 @@ class DrawControls extends Component {
           setActiveColor={this.props.setActiveColor}
           colorIndex={colorIndex}
           color={this.props.colors[colorIndex]}
-          selected={this.props.activeColorIndex === colorIndex}
+          selected={this.props.activeColorIndex === colorIndex && this.props.mode === "draw"}
           showPaletteModal={this.showPaletteModal.bind(this)}
           key={colorIndex}
         />
@@ -95,57 +97,54 @@ class DrawControls extends Component {
 
     const paletteDropDown = this.getPaletteDropDown();
 
-    const zoom = this.getZoomDropDown();
-
-    const marks = {
-      4: "x4",
-      6: "x6",
-      8: "x8",
-      10: "x10",
-      12: "x12",
-      14: "x14",
-      16: "x16"
-    };
-
     return (
-        <div>
-          <PaletteModal
-            colorIndex={this.state.paletteModal.colorIndex}
-            isOpen={this.state.paletteModal.isOpen}
-            palette={this.props.nesPalette}
-            callback={this.shiftPaletteRef.bind(this)}
-          />
-          <SaveCompositionModal
-            isOpen={this.state.saveCompositionModal}
-            close={this.saveComposition}
-          />
-          <SelectCompositionModal
-            isOpen={this.state.selectCompositionModal}
-            callback={cI => this.setComposition(cI)}
-            compositions={this.state.compositions}
-          />
+      <div id="draw-controls">
+        <PaletteModal
+          colorIndex={this.state.paletteModal.colorIndex}
+          isOpen={this.state.paletteModal.isOpen}
+          palette={this.props.nesPalette}
+          callback={this.shiftPaletteRef.bind(this)}
+        />
+        <SaveCompositionModal
+          isOpen={this.state.saveCompositionModal}
+          close={this.saveComposition}
+        />
+        <SelectCompositionModal
+          isOpen={this.state.selectCompositionModal}
+          callback={cI => this.setComposition(cI)}
+          compositions={this.state.compositions}
+        />
 
-          <div className="md-12" id="colors">
-            {colors}
-            {paletteDropDown}
-            <Button onClick={() => this.savePaletteToRom()}>
-              Save palette to rom
-            </Button>
+        <div className="md-12" id="colors">
+          <p>Tools</p> {colors}
+          <div class="color-control">
+            <div onClick={()=>this.props.setMode('flipX')} className = { classnames({ color: true, flip: true, selected: this.props.mode === "flipX"})} >&harr;</div>
+            <div class="palette">&nbsp;</div>
           </div>
-          <div className="md-6">
-            {dropDown}
-            {zoom}
+          <div class="color-control">
+            <div class="color flip" onClick={() => this.props.setMode('flipY')} className={classnames({ color: true, flip: true, selected: this.props.mode === "flipY" })}>&uarr; &darr;</div>
+            <div class="palette">&nbsp;</div>
           </div>
-          <div className="md-6">
-            <Button onClick={() => this.expand(1)}>Clear composition</Button>{" "}
-            <Button onClick={() => this.setComposition(-1)}>
-              Load composition
-            </Button>{" "}
-            <Button onClick={() => this.saveComposition(true)}>
-              Save composition
-            </Button>
-          </div>
+          <Button className="selected" onClick={() => this.savePaletteToRom()}>
+            &harr;
+          </Button>
+          <Button onClick={() => this.savePaletteToRom()}>FlipY</Button>
+          {paletteDropDown}
+          <Button onClick={() => this.savePaletteToRom()}>
+            Save palette to rom
+          </Button>
         </div>
+        <div className="md-6">{dropDown}</div>
+        <div className="md-6">
+          <Button onClick={() => this.expand(1)}>Clear composition</Button>{" "}
+          <Button onClick={() => this.setComposition(-1)}>
+            Load composition
+          </Button>{" "}
+          <Button onClick={() => this.saveComposition(true)}>
+            Save composition
+          </Button>
+        </div>
+      </div>
     );
   }
 
@@ -240,29 +239,6 @@ class DrawControls extends Component {
             Left
           </DropdownItem>
         </DropdownMenu>
-      </ButtonDropdown>
-    );
-  }
-  getZoomDropDown() {
-    const levels = [1, 2, 4, 8, 16].map(level => {
-      return (
-        <DropdownItem
-          key={level}
-          onClick={() => {
-            this.props.setZoom(level);
-          }}
-        >
-          x{level}
-        </DropdownItem>
-      );
-    });
-    return (
-      <ButtonDropdown
-        isOpen={this.state.dropdownOpen.zoom}
-        toggle={() => this.toggleDropDown("zoom")}
-      >
-        <DropdownToggle caret>Zoom</DropdownToggle>
-        <DropdownMenu>{levels}</DropdownMenu>
       </ButtonDropdown>
     );
   }
@@ -391,6 +367,9 @@ const mapDispatchToProps = dispatch => {
     },
     alterByte: (address, value) => {
       dispatch(alterByte(address, value));
+    },
+    setMode: (mode) => {
+      dispatch(setMode(mode))
     }
   };
 };

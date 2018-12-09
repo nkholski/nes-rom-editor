@@ -46,32 +46,25 @@ canvas {
   image-rendering: crisp-edges;
 }
 
-#chr-nav {
-  width: 100%;
-  text-align: center;
-  max-height: 500px;
-  overflow-y: scroll;
-}
-#chr-canvas {
-  transform-origin: top;
-  border: 1px solid black;
-  transform: scale(4);
-}
+
 
 #draw-canvas {
   border: 1px solid pink;
-  cursor: crosshair;
 }
 
-colortest {
-  color: #5c94fc;
-  color: #fcfcfc;
+.draw #draw-canvas {
+    cursor: crosshair;
 }
 
-#chrNavContiner {
-  overflow-y: scroll;
-  overflow-x: hidden;
+.flipX #draw-canvas {
+    cursor: e-resize;
 }
+
+.flipY #draw-canvas {
+    cursor: n-resize;
+}
+
+
 
 .panel {
   padding: 10px;
@@ -108,7 +101,7 @@ colortest {
   border: 1px dotted black;
 }
 
-#colors {
+/*#colors {
   align-items: center;
   display: flex;
   justify-content: center;
@@ -119,8 +112,8 @@ colortest {
 }
 
 #colors .selected {
-  border-width: 3px; /* Border-color: color ^ 0x00ffffff */
-}
+  border-width: 3px; /* Border-color: color ^ 0x00ffffff * /
+}*/
 
 #clip {
   position: absolute;
@@ -176,15 +169,13 @@ colortest {
 
 #draw-canvas-container {
   display: inline-block;
-  margin-left: 50px;
-  width: 100%;
+  margin-left: 100px;
+  width: 90%;
+  max-width: 1000px;
   max-height: 550px;
-  max-width: 700px;
   min-height: 550px;
-    overflow: auto;
+  overflow: auto;
   text-align: center;
-
-
 }
 
 /*#draw-canvas-container {

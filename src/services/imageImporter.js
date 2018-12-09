@@ -14,9 +14,9 @@ const ImageImporter = (romData, chrSpan, url = "/smb-items.png") => {
             for (let i2 = 0; i2 < 4; i2++) {
                 if (i2 !== i1) {
                     for (let i3 = 0; i3 < 4; i3++) {
-                        if (i3 != i1 && i3 != i2) {
+                        if (i3 !== i1 && i3 !== i2) {
                             for (let i4 = 0; i4 < 4; i4++) {
-                                if (i4 != i1 && i4 != i2 && i4 != i3) {
+                                if (i4 !== i1 && i4 !== i2 && i4 !== i3) {
                                     mappingVariants.push([i1, i2, i3, i4]);
                                 }
                             }
@@ -214,7 +214,7 @@ Array.prototype.equals = function (array) {
         return false;
 
     // compare lengths - can save a lot of time 
-    if (this.length != array.length)
+    if (this.length !== array.length)
         return false;
 
     for (var i = 0, l = this.length; i < l; i++) {
@@ -223,8 +223,8 @@ Array.prototype.equals = function (array) {
             // recurse into the nested arrays
             if (!this[i].equals(array[i]))
                 return false;
-        } else if (this[i] != array[i]) {
-            // Warning - two different object instances will never be equal: {x:20} != {x:20}
+        } else if (this[i] !== array[i]) {
+            // Warning - two different object instances will never be equal: {x:20} !== {x:20}
             return false;
         }
     }

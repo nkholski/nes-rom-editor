@@ -1,17 +1,18 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { renderBlocks } from "../redux/actions/canvasActions";
-import { putPixel } from "../redux/actions/nesRomActions";
+import { renderBlocks } from "../../redux/actions/canvasActions";
+import { putPixel } from "../../redux/actions/nesRomActions";
 
 class DrawCanvas extends Component {
    
   render() {
     console.log("Render canvas");
-
+    
     const { width, height, scale, compositionName } = this.props;
     return (
-      <div id="draw-canvas-container">
+      <div id="draw-canvas-container" className={this.props.mode}>
+      mode: {this.props.mode}
       <canvas
         id="draw-canvas"
         data-composition-name={compositionName}
@@ -75,7 +76,8 @@ const mapStateToProps = state => {
     compositionName: state.canvasReducer.compositionName,
     romData: state.nesRomReducer.romData,
     colors: state.drawReducer.colors,
-    activeColorIndex: state.drawReducer.activeColorIndex
+    activeColorIndex: state.drawReducer.activeColorIndex,
+    mode: state.drawReducer.mode
   };
 };
 

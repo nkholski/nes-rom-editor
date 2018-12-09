@@ -6,7 +6,7 @@ const defaultState = {
     blocks: [
         [null]
     ],
-    scale: 16,
+    scale: 32,
     clipByte: 0,
     compositionName: "",
     presetCompositions: []
@@ -105,12 +105,15 @@ const dropBlock = (state, {
     console.log("DROP BLOCK");
     const canvas = document.getElementById("draw-canvas");
     const rect = canvas.getBoundingClientRect();
+    console.log(rect);  
+    console.log(canvas.offsetLeft);
     const gridCoordinates = {
         x: Math.floor((globalCoords.x - rect.left) / (state.scale * 8)),
         y: Math.floor((globalCoords.y - rect.top) / (state.scale * 8))
     };
     if (gridCoordinates.x < 0 || gridCoordinates.y < 0 || gridCoordinates.x >= state.width || gridCoordinates.y >= state.height) {
         // Dropped outside canvas, ignore silently
+        console.log("MISSED CANVAS", gridCoordinates);
         return state;
     }
 

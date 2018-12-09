@@ -7,7 +7,6 @@ export default class NesIO {
     this.chrSpan = null;
     this.dataView = null;
     this.chrCanvas = null;
-    console.log("jsnes", jsnes);
 
     fetch("/files/nespalette.json")
     .then(response => {console.log("palette OK"); return response;})
@@ -25,7 +24,12 @@ export default class NesIO {
       .then(arrayBuffer => {
         console.log("ROM OK", arrayBuffer);
 
+      const binary = String.fromCharCode.apply(
+        null,
+        new Uint8Array(arrayBuffer)
+      );
 
+      console.log("BIN",typeof(binary));
 
         this.dataView = new DataView(arrayBuffer);
         this.chrSpan = {
@@ -37,6 +41,21 @@ export default class NesIO {
           type: "octet/stream"
         });
 
+
+        // const binary2 = new Uint8Array(this.dataView.buffer);
+        // const binary2 = new TextDecoder("utf-8").decode(new Uint8Array(this.dataView));
+    const binary2 = String.fromCharCode.apply(
+      null,
+      new Uint8Array(this.dataView.buffer)
+    );
+
+
+
+              console.log("BIN2", typeof (binary2));
+
+        console.log("IS BINARY SAME", (binary == binary2));
+
+// debugger;
         /** INTEGRATE JSNES FIRST TEST 
 
         const nes = new jsnes.NES({

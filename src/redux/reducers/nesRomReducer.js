@@ -86,12 +86,12 @@ const put_pixel = (state, payload) => {
         romData.setUint8(index, byte);
     }
 
-
-    console.log("MARIO",romData.getUint8(1893));
-    romData.setUint8(1893, "L".charCodeAt(0)-55);
-    romData.setUint8(1896, "S".charCodeAt(0)-55);
-    romData.setUint8(1897, "A".charCodeAt(0)-55);
-    romData.setUint8(0x379e, 0);
+    // LARSA
+    //console.log("MARIO",romData.getUint8(1893));
+    //romData.setUint8(1893, "L".charCodeAt(0)-55);
+    //romData.setUint8(1896, "S".charCodeAt(0)-55);
+    //romData.setUint8(1897, "A".charCodeAt(0)-55);
+    //romData.setUint8(0x379e, 0);
 //    379e skva vara noll
 
 
