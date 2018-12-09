@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ChrNav from "./chrNav";
+import ChrNav from "./graphicsPage/chrNav";
 import DrawControls from "./graphicsPage/drawControls";
 import ZoomControl from "./graphicsPage/zoomControl";
 import DrawCanvas from "./graphicsPage/drawCanvas";

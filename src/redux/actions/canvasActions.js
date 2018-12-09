@@ -39,12 +39,12 @@ export const setPresetCompositions = (compositions) => dispatch => {
 }
 
 // Render block of byteIndex or all (null)
-export const renderBlocks = (romData, colors, byteIndex = null) => dispatch => {
+export const renderBlocks = (romData, colors, excludeByteIndex = null) => dispatch => {
     dispatch({
         type: 'RENDER_BLOCKS',
         payload: {
             romData,
-            byteIndex,
+            excludeByteIndex,
             colors
         }
     })

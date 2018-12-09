@@ -118,7 +118,7 @@ const dropBlock = (state, {
     }
 
     const blocks = [...state.blocks];
-    blocks[gridCoordinates.x][gridCoordinates.y] = byteIndex;
+    blocks[gridCoordinates.x][gridCoordinates.y] = {byteIndex, flipX: false, flipY: false};
     console.log("SET STATE", { ...state,
         blocks
     });
@@ -137,7 +137,7 @@ const setClipByte = (state, byteIndex) => {
 }
 
 const renderBlocks = (state, {
-    byteIndex,
+    excludeByteIndex,
     romData,
     colors
 }) => {
@@ -151,8 +151,15 @@ const renderBlocks = (state, {
         ctx.strokeStyle = 'rgba(0,0,0,0.5)';
         ctx.stroke();
         for (let y = 0; y < state.blocks[x].length; y++) {
-            if (state.blocks[x][y] > 0 && (!byteIndex || byteIndex === state.blocks[x][y])) {
-                renderBlock(state.blocks[x][y], romData, x * 8, y * 8, ctx, state.scale, colors);
+            console.log("BLCKS",state.blocks[x][y]);
+            if (!state.blocks[x][y]){
+                continue;
+            }
+            const {byteIndex, flipX, flipY} = state.blocks[x][y];
+            console.log("by",byteIndex);
+            if (byteIndex > 0 && (!excludeByteIndex || excludeByteIndex === byteIndex)) {
+                console.log("RENDERING");
+                renderBlock(byteIndex, romData, x * 8, y * 8, ctx, state.scale, colors, true, false);
             }
             // Horizontal line at y, do it once per y (not for every x in this loop) and just for last x or lines will be covered by tile graphics
             if (x === state.blocks.length - 1) {

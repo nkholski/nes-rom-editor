@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Button } from "reactstrap";
 
 import GameGenie from "../services/gameGenie";
+import { copyFile } from "fs";
 
 class RomHacks extends Component {
   constructor(props) {
@@ -30,11 +31,82 @@ class RomHacks extends Component {
         Find it!
       </Button>
       
+      Possible strings <input type="text" id="searchValue" />
+      <Button onClick={() => this.findStrings()}>
+        Find it!
+      </Button>
+
+
+      <textarea id="tblDump">
+
+
+      </textarea>
+      <Button onClick={() => this.importTbl()}>
+        Import tbl
+      </Button>
+
+
     </div>;
     /*[ADD NEW] [RESET TO ROM DEFAULTS]  [SAVE TO ROM]*/
   }
 
   findTextValue(searchString) {
+    const searchArrayLetters = searchString.toUpperCase().split("");
+    const lastCheck = this.props.romData.byteLength - searchString.length;
+    const searchArray = searchArrayLetters.map(letter => {
+      let found = -1;
+      Object.keys(this.props.textTables[0].tbl).some(addr => {
+        console.log(addr, letter, this.props.textTables[0].tbl[addr], letter === this.props.textTables[0].tbl[addr]);
+        if (this.props.textTables[0].tbl[addr] === letter) {
+          found = addr;
+          return true;
+        }
+      });
+      return parseInt(found, 10);
+    });
+    console.log("arr", searchArray);
+    
+    let step = 0;
+    for (let i = 0; i < lastCheck; i++) {
+      const value = this.props.romData.getUint8(i);
+      if(value === searchArray[step]){
+        step++;
+      }
+      else {
+        step = 0;
+      }
+      if (step === searchString.length){
+        const addr = i - searchString.length + 1;
+        console.log("FOUND", i - searchString.length + 1);
+        this.extractString(addr)
+        step = 0; 
+      }
+
+    }
+
+
+  }
+  extractString(addr){
+    const tbl = this.props.textTables[0].tbl;
+    const romData = this.props.romData;
+
+    // 1. Go backwards
+    while (tbl.hasOwnProperty(romData.getUint8(addr))){
+      addr--;
+    }
+    addr++;
+    // 2. Advance
+    let foundString = "";
+    while (tbl.hasOwnProperty(romData.getUint8(addr))) {
+      foundString += tbl[romData.getUint8(addr)];
+      addr++;
+    }
+    console.log(foundString);
+
+  }
+
+
+  findTextValueNoAlpha(searchString) {
     searchString = searchString.toUpperCase();
     const lastCheck = this.props.romData.byteLength - searchString.length;
     const firstLetter = searchString.charCodeAt(0);
@@ -80,13 +152,13 @@ class RomHacks extends Component {
         const letterDiff = searchString.charCodeAt(0) - baseValue;
         console.log("LETTERDIF", baseValue, letterDiff, searchString.charCodeAt(0));
 
-        const alphabeth = {};
+        const alphabet = {};
         for(let chr=0; chr<25; chr++) {
-          alphabeth[chr + 10] = String.fromCharCode(65+chr);
+          alphabet[chr + 10] = String.fromCharCode(65+chr);
 
         }
 
-        this.findStrings(alphabeth);
+        this.findStrings(alphabet);
         step = 0;
         found = true;
       }
@@ -97,17 +169,19 @@ class RomHacks extends Component {
 
   }
 
-  findStrings(alphabeth) {
+  findStrings(alphabet = this.props.textTables[0].tbl) {
+    console.log( this.props.textTables)
+    console.log(alphabet);
     const minLength = 3;
     let treshold = 2;
     const lastCheck = this.props.romData.byteLength - minLength;
-    console.log("CHECKING", alphabeth);
+    console.log("CHECKING", alphabet);
     let step = 0;
     let string = "";
     for (let i = 0; i < lastCheck; i++) {
       const value = this.props.romData.getUint8(i);
-      if(alphabeth.hasOwnProperty(value)) {
-        string+=alphabeth[value];
+      if(alphabet.hasOwnProperty(value)) {
+        string+=alphabet[value];
         step++;
         treshold = 2;
       }
@@ -237,6 +311,28 @@ class RomHacks extends Component {
     });
     return hacks;
   }
+
+  importTbl() {
+
+    const inputValue = document.getElementById("tblDump").value;
+    const charsData = inputValue.split("\n");
+    const chars = {};
+    charsData.forEach((char) => {
+      const [addr, letter] = char.split("=");
+      chars[parseInt(addr, 16)] = letter;
+    })
+
+    if (!this.props.hacks.hasOwnProperty("textTables")){
+      this.props.hacks.textTables = [];
+    }
+    this.props.hacks.textTables[0] = {
+      title: "Standard",
+      tbl: chars
+    }
+
+    window.hacks = this.props.hacks;
+
+  }
 }
 
 
@@ -245,6 +341,7 @@ class RomHacks extends Component {
 const mapStateToProps = state => {
   return { 
     hacks: state.nesRomReducer.romSettings.hacks,
+    textTables: state.nesRomReducer.romSettings.textTables,
     romData: state.nesRomReducer.romData
   };
 };

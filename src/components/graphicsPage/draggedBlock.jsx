@@ -2,7 +2,7 @@
 // import NesIO from "../services/nesIO";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { dropBlock } from "../redux/actions/canvasActions";
+import { dropBlock } from "../../redux/actions/canvasActions";
 
 class DraggedBlock extends Component {
   constructor(props) {

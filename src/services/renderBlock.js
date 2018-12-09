@@ -1,4 +1,4 @@
-export default function renderBlock(firstByteIndex, dataView, X, Y, ctx, scale = 1, color) {
+export default function renderBlock(firstByteIndex, dataView, X, Y, ctx, scale = 1, color, flipX=false, flipY=false) {
     /*
         firstByteIndex   Address to first byte in CHR
         X, Y        Coordinates for the block
@@ -14,13 +14,13 @@ export default function renderBlock(firstByteIndex, dataView, X, Y, ctx, scale =
         "#AC7C00"
     ];
 
-    console.log("RENDER BLOCK");
-
     for(let y = 0; y<8; y++){
         const c = bytesToColorIndexArray(firstByteIndex, y, dataView);
         for (let x = 0; x < 8; x++) {
+            const rx = flipX ? 7 - x : x;            
+            const ry = flipY ? 7 - y : y;
             ctx.fillStyle = color[c[x]];
-            ctx.fillRect((X + x) * scale, (Y + y) * scale, scale, scale);
+            ctx.fillRect((X + rx) * scale, (Y + ry) * scale, scale, scale);
         }
     }
 

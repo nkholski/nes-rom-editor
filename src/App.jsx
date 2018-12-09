@@ -24,7 +24,7 @@ import {
   Col
 } from "reactstrap";
 
-import ChrNav from "./components/chrNav";
+// import ChrNav from "./components/chrNav";
 import RomHacks from "./components/romHacks";
 import GeneralModal from "./components/generalModal";
 import ImportImage from "./components/importImage";
@@ -45,7 +45,7 @@ import "./colors.css";
 import "./draw-canvas.css";
 import "./emulator.css";
 // import "./bootstrap-cyborg.min.css";
-import DraggedBlock from "./components/draggedBlock";
+import DraggedBlock from "./components/graphicsPage/draggedBlock";
 import GraphicsPage from "./components/graphicsPage";
 
 // http://datomatic.no-intro.org/index.php?page=download&fun=dat

@@ -1,22 +1,21 @@
-import renderBlock from "../services/renderBlock";
-import NesIO from "../services/nesIO";
+import renderBlock from "../../services/renderBlock";
+import NesIO from "../../services/nesIO";
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { storeRom, setRomSettings } from "../redux/actions/nesRomActions";
-import { setClipByte } from "../redux/actions/canvasActions";
+import { storeRom, setRomSettings } from "../../redux/actions/nesRomActions";
+import { setClipByte } from "../../redux/actions/canvasActions";
 
 class ChrNav extends Component {
   constructor(props) {
-    console.log("INIT CHR NAV")
     super(props);
     this.canvas = null;
     this.context = null;
     this.clip = null;
     this.clipContext = null;
     this.renderedVersion = -1;
-    
+        
     this.state = {
       height: 9 * (props.chrSpan.len / 128),
       romCheckupDone: false
