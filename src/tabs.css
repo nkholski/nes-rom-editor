@@ -1,7 +1,17 @@
+#titlebar {
+    background-color: #FFFF88;
+    display: block;
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+#titlebar h1.main, #titlebar span {
+    display: inline-block;
+}
+
 h1.main {
     padding: 10px 20px;
     margin: 0;
-    background-color: #FFFF88;
 }
 
 .nav {

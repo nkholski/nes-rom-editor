@@ -38,6 +38,12 @@ export default (state = defaultState, action) => {
             return { ...state,
                 scale: payload
             };
+        case 'FLIP_BLOCK':
+            return {...state,
+            blocks: flipBlock(payload, state.blocks)
+            } ;  
+
+
         default:
             return state;
     }
@@ -159,7 +165,7 @@ const renderBlocks = (state, {
             console.log("by",byteIndex);
             if (byteIndex > 0 && (!excludeByteIndex || excludeByteIndex === byteIndex)) {
                 console.log("RENDERING");
-                renderBlock(byteIndex, romData, x * 8, y * 8, ctx, state.scale, colors, true, false);
+                renderBlock(byteIndex, romData, x * 8, y * 8, ctx, state.scale, colors, flipX, flipY);
             }
             // Horizontal line at y, do it once per y (not for every x in this loop) and just for last x or lines will be covered by tile graphics
             if (x === state.blocks.length - 1) {
@@ -190,3 +196,11 @@ const setComposition = (state, compositionData) => {
         compositionName: compositionData.name
     };
 }   
+
+
+const flipBlock = (action, blocks) => {
+    const block = blocks[action.x][action.y];
+    block[action.dir] = !block[action.dir];
+    blocks[action.x][action.y] = block;
+    return blocks;
+}

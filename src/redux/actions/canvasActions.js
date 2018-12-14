@@ -59,3 +59,14 @@ export const setZoom = (zoom) => dispatch => {
         payload: zoom
     })
 }
+
+export const flipBlock = (x, y, dir) => dispatch => {
+    dispatch({
+        type: 'FLIP_BLOCK',
+        payload: {
+            x,
+            y,
+            dir
+        }
+    })
+}

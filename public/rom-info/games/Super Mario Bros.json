@@ -51,7 +51,265 @@
             }
         }
     ],
+
     "compositions": [
+        {
+            "name": "fliptest",
+            "blocks": [
+                [
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34672
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34704
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 39520
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 39552
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 37696
+                    },
+                    null
+                ],
+                [
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34688
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34720
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 39536
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 39568
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34816
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 37696
+                    }
+                ],
+                [
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 36208
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 36256
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34336
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34336
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34128
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34160
+                    }
+                ],
+                [
+                    {
+                        "flipX": true,
+                        "flipY": false,
+                        "byteIndex": 36208
+                    },
+                    {
+                        "flipX": true,
+                        "flipY": false,
+                        "byteIndex": 36256
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34320
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34320
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34144
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34176
+                    }
+                ],
+                [
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 35040
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 36432
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34352
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34352
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 38848
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 38880
+                    }
+                ],
+                [
+                    {
+                        "flipX": true,
+                        "flipY": false,
+                        "byteIndex": 35040
+                    },
+                    {
+                        "flipX": true,
+                        "flipY": false,
+                        "byteIndex": 36432
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 36720
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 36752
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 38864
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 38896
+                    }
+                ],
+                [
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 38208
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 38240
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 36800
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 36768
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 36784
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 36832
+                    }
+                ],
+                [
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 38224
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 38256
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 36736
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34064
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 34064
+                    },
+                    {
+                        "flipX": false,
+                        "flipY": false,
+                        "byteIndex": 36848
+                    }
+                ]
+            ]
+        },
         {
 
             "name": "Items",

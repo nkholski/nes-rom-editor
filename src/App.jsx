@@ -29,6 +29,7 @@ import RomHacks from "./components/romHacks";
 import GeneralModal from "./components/generalModal";
 import ImportImage from "./components/importImage";
 import Emulator from "./components/emulator";
+import Tools from "./components/tools";
 
 // import { Button } from "reactstrap";
 
@@ -126,7 +127,7 @@ class App extends React.Component {
 
   render() {
     console.log(this.state.activeTab);
-    const pageIds = ["File", "Graphics", "Palettes", "Hacks", "Emulator", "Rom info", "Help"];
+    const pageIds = ["File", "Graphics", "Palettes", "Hacks", "Emulator", "Tools", "Rom info", "Help"];
     const disabled = this.state.disabled;
     
     pageIds.forEach(page => { 
@@ -175,6 +176,9 @@ class App extends React.Component {
         case "Emulator":
           pageTag = <Emulator/>;
           break;
+        case "Tools":
+          pageTag = <Tools/>;
+          break;
         default:
           pageTag = <h1>{page}</h1>;
           break;
@@ -193,11 +197,16 @@ class App extends React.Component {
       );
     });
 
+   // return <ImportImage/>;
+
     return (
       <div>
         <DraggedBlock />
-
-        <h1 class="main">Nintamptor</h1>
+        <a className="github-link" href="https://github.com/nkholski/nes-rom-editor" target="_blank">
+          <p className="balloon from-right">Fork me<br/>on GitHub</p>
+          <i className="octocat"></i>
+        </a>
+        <div id="titlebar"><h1 className="main">NEStamptation</h1><span className="version">beta</span></div>
         <Nav tabs>{tabs}</Nav>
         <TabContent activeTab={this.state.activeTab}>{pages}</TabContent>
       </div>

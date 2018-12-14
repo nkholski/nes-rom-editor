@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { renderBlocks } from "../../redux/actions/canvasActions";
+import { renderBlocks, flipBlock } from "../../redux/actions/canvasActions";
 import { putPixel } from "../../redux/actions/nesRomActions";
 
 class DrawCanvas extends Component {
@@ -18,7 +18,7 @@ class DrawCanvas extends Component {
         data-composition-name={compositionName}
         width={8 * scale * width}
         height={8 * scale * height}
-        onClick={this.putPixel}
+        onClick={this.manipulate}
       />
       </div>
     );
@@ -32,7 +32,7 @@ class DrawCanvas extends Component {
     this.props.renderBlocks(this.props.romData, this.props.colors);
   }
 
-  putPixel = event => {
+  manipulate = event => {
     const { scale, blocks } = this.props;
     const x = event.clientX;
     const y = event.clientY;
@@ -42,25 +42,43 @@ class DrawCanvas extends Component {
       x: Math.floor((x - rect.left) / (scale * 8)),
       y: Math.floor((y - rect.top) / (scale * 8))
     };
-    const byteIndex = blocks[gridCoordinates.x][gridCoordinates.y];
 
-    console.log("grid", gridCoordinates);
-    // No byte in grid, just return
-    if (!byteIndex) {
-      return;
+    if (this.props.mode === "flipX" || this.props.mode === "flipY") {
+      this.props.flipBlock(gridCoordinates.x, gridCoordinates.y, this.props.mode);
+      this.props.renderBlocks(this.props.romData, this.props.colors);
+    }
+    else {
+      const pixelCoordinates = {
+        x: Math.floor((x - rect.left) / scale) % 8,
+        y: Math.floor((y - rect.top) / scale) % 8
+      };
+      this.putPixel(gridCoordinates.x, gridCoordinates.y,pixelCoordinates.x,pixelCoordinates.y);
     }
 
-    // Find pixel
-    const pixelCoordinates = {
-      x: Math.floor((x - rect.left) / scale) % 8,
-      y: Math.floor((y - rect.top) / scale) % 8
-    };
 
-    // Update CHR-rom
+  }
+  
+
+  putPixel = (X,Y,x,y) => {
+    const block = this.props.blocks[X][Y];
+    
+    // No byte in grid, just return
+    if (!block) {
+      return;
+    }
+    const byteIndex = block.byteIndex;
+
+    if(block.flipX) {
+      x = 7-x;
+    }
+    if(block.flipY) {
+      y = 7-y;
+    }
+
     this.props.putPixel(
       byteIndex,
-      pixelCoordinates.x,
-      pixelCoordinates.y,
+      x,
+      y,
       this.props.activeColorIndex
     );
     // Update draw canvas
@@ -88,6 +106,9 @@ const mapDispatchToProps = dispatch => {
     },
     putPixel(byteIndex, x, y, colorIndex) {
       dispatch(putPixel(byteIndex, x, y, colorIndex));
+    },
+    flipBlock(x,y,dir) {
+      dispatch(flipBlock(x,y,dir));
     }
   };
 };

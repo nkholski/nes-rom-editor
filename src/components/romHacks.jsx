@@ -21,17 +21,17 @@ class RomHacks extends Component {
     
       {hacks}
     
-      Game Genie: <input type="text" id="gameGenieCode" />
+      Game Genie: <input type="text" id="gameGenieCode" className="input"/>
       <Button onClick={() => this.gameGenie()}>
         Test it
       </Button>
 
-      Search value: <input type="text" id="searchValue" />
+      Search value: <input type="text" id="searchValue" className="input"/>
       <Button onClick={() => this.findValue()}>
         Find it!
       </Button>
       
-      Possible strings <input type="text" id="searchValue" />
+      Possible strings <input type="text" id="searchValue" className="input"/>
       <Button onClick={() => this.findStrings()}>
         Find it!
       </Button>

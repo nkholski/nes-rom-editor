@@ -6,6 +6,7 @@ import CompositionService from "../services/compositionService";
 class ImportImage extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       skipped: 0,
       identified: 0,
@@ -20,15 +21,21 @@ class ImportImage extends Component {
   render() {
     return (
       <div>
+        <img id="testar" />
         <h2>Parsing the image</h2>
         Skipped tiles: {this.state.skipped}
         <br />
         Identified tiles: {this.state.identified}
         <br />
-            Unknown tiles: {this.state.total - this.state.skipped - this.state.identified }
+        Unknown tiles:{" "}
+        {this.state.total - this.state.skipped - this.state.identified}
         <br />
         <div className="text-center">Progress {this.state.progress}%</div>
         <Progress value={this.state.progress} />
+        <div>
+          Possible palettes: 1. [c1][c2][c3] - [Highligth] alternative 1: input
+          ett namn ör alterntivet
+        </div>
       </div>
     );
   }
@@ -39,13 +46,20 @@ class ImportImage extends Component {
   componentDidUpdate() {
     if (this.task === 0) {
       this.task = 1;
-      this.loadFromFile("/smb-items.png").then(img =>
-        this.tileCollector(img)
-      );
+
+      if (this.props.imageBinaryData) {
+        const img = document.getElementById("testar");
+        img.src = "data:image/png;base64," + btoa(this.props.imageBinaryData);
+        this.tileCollector(img);
+      } else {
+        this.loadFromFile("/smb-items.png").then(img =>
+          this.tileCollector(img)
+        );
+      }
     }
   }
 
-   /* componentWillReceiveProps(){
+  /* componentWillReceiveProps(){
         console.log("YUP");
     }*/
 
@@ -57,18 +71,23 @@ class ImportImage extends Component {
       this.setState({
         progress
       });
-     // this.forceUpdate();
+      // this.forceUpdate();
     }
   }
 
   loadFromFile(url) {
     return new Promise(resolve => {
-      let i = new Image();
+      const i = new Image();
       i.onload = () => {
         resolve(i);
       };
       i.src = url;
     });
+  }
+
+  binaryToImg(bin) {
+    const i = new Image();
+    //        i.src = url;
   }
 
   tileCollector(img) {
@@ -102,8 +121,8 @@ class ImportImage extends Component {
     });
 
     this.setState({
-        total: img.width * img.height / 64
-    })
+      total: (img.width * img.height) / 64
+    });
 
     window.composition = composition;
     CompositionService.save(Math.random(), composition);
@@ -116,6 +135,7 @@ class ImportImage extends Component {
     let skipped = 0;
     // X, Y is the tile coordinates (jumps 8 pixels)
     // x, y is the coordinates within the tile (0-7)
+
     for (let X = 0; X < img.width / 8; X++) {
       composition[X] = [];
       for (let Y = 0; Y < img.height / 8; Y++) {
@@ -124,25 +144,30 @@ class ImportImage extends Component {
 
         // Get tile from bitmap
         const tile = tmpCtx.getImageData(X * 8, Y * 8, 8, 8).data;
+        let backgroundExists = false;
 
-        // Skip if tile is one colored:
+        // Skip if tile is has just one color:
         let diffExists = false;
         for (let y = 0; y < 8; y++) {
-            if(diffExists) {
-                break;
+          if (diffExists) {
+            break;
+          }
+          for (let x = 0; x < 8; x++) {
+            const i = (x + y * 8) * 4;
+            if (
+              tile[i] !== tile[0] ||
+              tile[i + 1] !== tile[1] ||
+              tile[i + 2] !== tile[2]
+            ) {
+              diffExists = true;
+              break;
             }
-            for (let x = 0; x < 8; x++) {
-                const i = (x + y * 8) * 4;
-                if(tile[i] !== tile[0] || tile[i+1] !== tile[1] || tile[i+2] !== tile[2] ){
-                    diffExists = true;
-                    break;
-                }
-            }
+          }
         }
-        if(!diffExists){
-            skipped++;
-            this.setState({skipped});
-            continue;
+        if (!diffExists) {
+          skipped++;
+          this.setState({ skipped });
+          continue;
         }
 
         // Each tile need to define its own colorIndex
@@ -151,101 +176,166 @@ class ImportImage extends Component {
         // We often start of with multiple matches, and then they drop off for each horizontal line that's analysed
         let matches = [];
 
-        // Scan through the tile from the rom data, compare it to the tile from the bitmap
-        for (let y = 0; y < 8; y++) {
-          const compareArray = [];
-          // Get a slice
-          for (let x = 0; x < 8; x++) {
-            // Get pixel from tile, c[0] = red, 1 = g, 2 = b
-            let color = "";
-            for (let c = 0; c < 3; c++) {
-              const dec = tile[(x + y * 8) * 4 + c]; // * 4 to skip alpha (rgba)
-              color += ("00" + dec.toString(16)).slice(-2);
+        [false, true].forEach(flipX => {
+          [false, true].forEach(flipY => {
+            if (composition[X][Y] != null) {
+              console.log("GOT IT");
+              return;
             }
-            // Update index for this bitmap tile
-            if (!colorToTempIndex.hasOwnProperty(color)) {
-              colorToTempIndex[color] = colorToIndex++;
+            if (flipY) {
+              console.log("flipl");
             }
-            // Push the temporary index number of the color to the compareArray
-            compareArray.push(colorToTempIndex[color]);
-          }
-          /*if (matches.equals([
-                        [],
-                        [],
-                        [],
-                        [],
-                        [],
-                        [],
-                        [],
-                        []
-                    ])) {
-                        console.warn("NO MATCHES!!!");
-                    }*/
+            // Scan through the tile from the rom data, compare it to the tile from the bitmap
+            for (let stepY = 0; stepY < 8; stepY++) {
+              const compareArray = [];
+              // Get a slice
+              const y = flipY ? 7 - stepY : stepY;
 
-          // Check slice, we need to do this for all possible indices for the first row,
-          // because the indicies we got is just by the order the color appears and has
-          // nothing to do with indices to expect in the rom. However, because the tile
-          // will use the same indices for all rows this rigous test is just needed for
-          // the first row.
-          if (y === 0) {
-            mappingVariants.forEach((indexMapping, mI) => {
-              const testArray = [];
-              compareArray.forEach(pixel => {
-                //console.log(pixel);
-                testArray.push(indexMapping[pixel]);
-              });
+              for (let stepX = 0; stepX < 8; stepX++) {
+                // Get pixel from tile, c[0] = red, 1 = g, 2 = b
+                const x = flipX ? 7 - stepX : stepX;
+                let color = "";
 
-              matches[mI] = findInRom(testArray, 0, chrSpan, romData);
-            });
-          } else {
-            // We already got some matches, lets build on that.
-            let newMatches = [...matches];
-            matches.forEach((match, mI) => {
-              // mI = match index, but and the variant index of mappingVariants to use
-              // to do the comparsion using the same palette to color index mapping as
-              // for the first row. We reset it and will loose anything that fail to
-              // continue matching.
-              newMatches[mI] = [];
+                const alpha = tile[(x + y * 8) * 4 + 3];
 
-              if (match.length === 0) {
-                return;
+                if (alpha !== 255) {
+                  //color = "background";
+                  color = "background";
+                  backgroundExists = true;
+                  /*if(colorToTempIndex.length != 0){
+                continue;
+              }*/
+                } else {
+                  for (let c = 0; c < 3; c++) {
+                    const dec = tile[(x + y * 8) * 4 + c]; // * 4 to skip alpha (rgba)
+                    color += ("00" + dec.toString(16)).slice(-2);
+                  }
+                }
+
+                // Update index for this bitmap tile
+                if (!colorToTempIndex.hasOwnProperty(color)) {
+                  colorToTempIndex[color] = colorToIndex++;
+                }
+                // Push the temporary index number of the color to the compareArray
+                compareArray.push(colorToTempIndex[color]);
               }
-              const testArray = [];
-              compareArray.forEach(pixel => {
-                testArray.push(mappingVariants[mI][pixel]);
-              });
-              match.forEach(index => {
-                if (compareAtIndex(testArray, index, y, romData)) {
-                  newMatches[mI].push(index);
+              if (colorToTempIndex.length > 4) {
+                alert(
+                  "Found a tile with more than four colors!\nRead the instructions for parsing images."
+                );
+              }
+              console.log(colorToTempIndex, backgroundExists);
+
+              // Check slice, we need to do this for all possible indices for the first row,
+              // because the indicies we got is just by the order the color appears and has
+              // nothing to do with indices to expect in the rom. However, because the tile
+              // will use the same indices for all rows this rigous test is just needed for
+              // the first row.
+              if (stepY === 0) {
+                mappingVariants.forEach((indexMapping, mI) => {
+                  const testArray = [];
+                  compareArray.forEach(pixel => {
+                    //console.log(pixel);
+                    testArray.push(indexMapping[pixel]);
+                  });
+                  // console.log(compareIndex, testArray);
+                  debugger;
+
+                  matches[mI] = findInRom(testArray, 0, chrSpan, romData);
+                });
+              } else {
+                // We already got some matches, lets build on that.
+                let newMatches = [...matches];
+                matches.forEach((match, mI) => {
+                  // mI = match index, but and the variant index of mappingVariants to use
+                  // to do the comparsion using the same palette to color index mapping as
+                  // for the first row. We reset it and will loose anything that fail to
+                  // continue matching.
+                  newMatches[mI] = [];
+
+                  if (match.length === 0) {
+                    return;
+                  }
+                  const testArray = [];
+                  compareArray.forEach(pixel => {
+                    testArray.push(mappingVariants[mI][pixel]);
+                  });
+                  match.forEach(index => {
+                    if (compareAtIndex(testArray, index, stepY, romData)) {
+                      newMatches[mI].push(index);
+                    }
+                  });
+                });
+                matches = newMatches;
+
+                // y === 7 means that the tile is fully scanned!
+                if (stepY === 7) {
+                  matches.some((match, mI) => {
+                    // If we have a match, push it to the composition. First match is taken,
+                    // in the future it should notice this somehow.
+                    if (match.length > 0) {
+                      composition[X][Y] = {
+                        flipX,
+                        flipY,
+                        byteIndex: match[0]
+                      };
+                      identified++;
+
+                      console.log(
+                        "COLORS",
+                        colorToTempIndex,
+                        mappingVariants[mI]
+                      );
+
+                      this.setState({ identified });
+
+                      return true;
+                    }
+                  });
                 }
-              });
-            });
-            matches = newMatches;
-
-            // y === 7 means that the tile is fully scanned!
-            if (y === 7) {
-              matches.some(match => {
-                // If we have a match, push it to the composition. First match is taken,
-                // in the future it should notice this somehow.
-                if (match.length > 0) {
-                  composition[X][Y] = match[0];
-                    identified++;
-
-                        this.setState({
-                            identified
-                        });
-                    
-
-                  return true;
-                }
-              });
-            }
-          }
-        }
+              } // x
+            } // y
+          }); // flipY
+        }); // flipX
       }
     }
 
     return composition;
+  }
+
+  getClosestColor(rgbString) {
+    // Shortest distance in euclidian 3d-space.
+    // (Skipped sqrt because the actual distance is irrelevant, we just need the shortest)
+    const rgb = [];
+    for (let i = 0; i < 3; i++) {
+      rgb[i] = parseInt(rgbString.substring(i * 2, 2));
+    }
+
+    // LOOP
+    const colorIndex = 0;
+    const cmp = [0, 0, 0];
+    let shortestDist = 1e10;
+    let closestColor;
+
+    let dist = 0;
+    for (let i = 0; i < 3; i++) {
+      dist += Math.pow(rgb[i] - cmp[i], 2);
+    }
+
+    if (dist < shortestDist) {
+      shortestDist = dist;
+      closestColor = colorIndex;
+    }
+
+    /*distance = function (v1, v2) {
+      var i,
+        d = 0;
+
+      for (i = 0; i < v1.length; i++) {
+        d += (v1[i] - v2[i]) * (v1[i] - v2[i]);
+      }
+      return Math.sqrt(d);
+    };*/
   }
 
   /**/
@@ -276,31 +366,40 @@ class ImportImage extends Component {
   return matches;
 };*/
 
-
 const findInRom = (pattern, y, chrSpan, romData) => {
-    let matches = [];
-    for (let i = chrSpan.first; i < chrSpan.first + chrSpan.len; i += 16) {
-        const byte = [];
-        for (let o = 0; o < 2; o++) {
-            byte[o] = romData.getUint8(i + o * 8 + y * 16);
-        }
-        const indexRow = [];
-        let match = true;
-        for (let i2 = 0; i2 < 8; i2++) {
-            // Bitwise operators, generally discouraged but very much motivated here
-            // get the bit on first byte and second byte at the position, count first one as 1 and second as 2 and add togehter
-            const nesColorIndex = (((byte[0] & (1 << (7 - i2))) > 0) ? 1 : 0) + (((byte[1] & (1 << (7 - i2))) > 0) ? 2 : 0);
-            if(pattern[i2] !== nesColorIndex){
-                match = false;
-                break;
-            }
-        }
-        if (match) {
-            matches.push(i);
-        }
+  let matches = [];
+  for (
+    let i = chrSpan.first;
+    i < chrSpan.first + chrSpan.len - 8 * 2;
+    i += 16
+  ) {
+    const byte = [];
+    for (let o = 0; o < 2; o++) {
+      try {
+        byte[o] = romData.getUint8(i + o * 8 + y * 2);
+      } catch (err) {
+        console.log("ERRROR", y, o, i, romData.byteLength);
+      }
     }
-    return matches;
-}
+    const indexRow = [];
+    let match = true;
+    for (let i2 = 0; i2 < 8; i2++) {
+      // Bitwise operators, generally discouraged but very much motivated here
+      // get the bit on first byte and second byte at the position, count first one as 1 and second as 2 and add togehter
+      const nesColorIndex =
+        ((byte[0] & (1 << (7 - i2))) > 0 ? 1 : 0) +
+        ((byte[1] & (1 << (7 - i2))) > 0 ? 2 : 0);
+      if (pattern[i2] !== nesColorIndex) {
+        match = false;
+        break;
+      }
+    }
+    if (match) {
+      matches.push(i);
+    }
+  }
+  return matches;
+};
 
 const compareAtIndex = (pattern, index, y, romData) => {
   const bits = [];

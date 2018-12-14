@@ -9,7 +9,10 @@ export default class NesIO {
     this.chrCanvas = null;
 
     fetch("/files/nespalette.json")
-    .then(response => {console.log("palette OK"); return response;})
+      .then(response => {
+        console.log("palette OK");
+        return response;
+      })
       .then(response => response.json())
       .then(NESPalette => {
         this.NESPalette = NESPalette;
@@ -17,45 +20,58 @@ export default class NesIO {
   }
 
   loadFile(fileName) {
-    fileName = "/rom/smb.nes";
+    //fileName = "/rom/smb.nes";
+    //const rom = "Mega\ Man\ 2\ \(U\)";
+      const rom = "smb";
+    fileName = "/rom/" + rom + ".nes";
     this.fileName = fileName;
     const promise = fetch(fileName)
       .then(response => this.checkStatus(response) && response.arrayBuffer())
       .then(arrayBuffer => {
         console.log("ROM OK", arrayBuffer);
 
-      const binary = String.fromCharCode.apply(
-        null,
-        new Uint8Array(arrayBuffer)
-      );
+       /* const binary = String.fromCharCode.apply(
+          null,
+          new Uint8Array(arrayBuffer)
+        );*/
 
-      console.log("BIN",typeof(binary));
+       /* console.log("BIN", typeof (binary));*/
+
 
         this.dataView = new DataView(arrayBuffer);
-        this.chrSpan = {
-          first: 16 + 16384 * this.dataView.getUint8(4),
-          len: 8192 * this.dataView.getUint8(5)
-        };
+        const chrRomBlocks = this.dataView.getUint8(5);
 
-        const blob = new Blob(new Uint8Array(this.dataView.buffer), {
+        if (chrRomBlocks > 0) {
+          this.chrSpan = {
+            first: 16 + 16384 * this.dataView.getUint8(4),
+            len: 8192 * this.dataView.getUint8(5)
+          };
+        } else {
+          this.chrSpan = {
+            first: 16,
+            len: this.dataView.byteLength - 100
+          };
+        }
+
+      /*  const blob = new Blob(new Uint8Array(this.dataView.buffer), {
           type: "octet/stream"
-        });
+        });*/
 
 
         // const binary2 = new Uint8Array(this.dataView.buffer);
         // const binary2 = new TextDecoder("utf-8").decode(new Uint8Array(this.dataView));
-    const binary2 = String.fromCharCode.apply(
-      null,
-      new Uint8Array(this.dataView.buffer)
-    );
+       /* const binary2 = String.fromCharCode.apply(
+          null,
+          new Uint8Array(this.dataView.buffer)
+        );*/
 
 
 
-              console.log("BIN2", typeof (binary2));
+     //   console.log("BIN2", typeof (binary2));
 
-        console.log("IS BINARY SAME", (binary == binary2));
+    //    console.log("IS BINARY SAME", (binary == binary2));
 
-// debugger;
+        // debugger;
         /** INTEGRATE JSNES FIRST TEST 
 
         const nes = new jsnes.NES({
@@ -66,27 +82,25 @@ export default class NesIO {
         // nes.romData = 0;
         nes.loadROM(binary);
       */
-        
-       // this.findPaletteInRom(this.dataView, [this.dataView.getUint8(1512), this.dataView.getUint8(1513), this.dataView.getUint8(1514)], this.chrSpan.first)
+
+        // this.findPaletteInRom(this.dataView, [this.dataView.getUint8(1512), this.dataView.getUint8(1513), this.dataView.getUint8(1514)], this.chrSpan.first)
         return this.dataView;
       });
     return promise;
   }
 
-  findPaletteInRom(romData, paletteArray, prgLen){ // Just a test for future feature, will move somwhere else
+  findPaletteInRom(romData, paletteArray, prgLen) { // Just a test for future feature, will move somwhere else
     let step = 0;
     console.log("Will try", prgLen, paletteArray);
     for (let i = 0; i < prgLen; i++) {
-      if(romData.getUint8(i) === paletteArray[step]){
+      if (romData.getUint8(i) === paletteArray[step]) {
         step++;
-      }
-      else if(romData.getUint8(i) === paletteArray[0]) {
+      } else if (romData.getUint8(i) === paletteArray[0]) {
         step = 1;
-      }
-      else {
+      } else {
         step = 0;
       }
-      if(step===3){
+      if (step === 3) {
         console.log(`Possible byteIndex  ${i-2} to ${i}.`);
       }
 

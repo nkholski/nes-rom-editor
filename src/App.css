@@ -183,3 +183,23 @@ canvas {
   padding: 72px 0;
   min-height: 400px;
 }*/
+
+.github-link {
+  top: 0;
+  right: 0;
+  display: inline-block;
+  position: absolute;
+
+}
+
+.github-link>p.balloon {
+  transform: translate(10px, -40px);
+  align-self: flex-start;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  color: #333;
+}
+
+.github-link>i {
+  transform: translateY(20px);
+}
