@@ -12,7 +12,6 @@ class DrawCanvas extends Component {
     const { width, height, scale, compositionName } = this.props;
     return (
       <div id="draw-canvas-container" className={this.props.mode}>
-      mode: {this.props.mode}
       <canvas
         id="draw-canvas"
         data-composition-name={compositionName}
@@ -43,7 +42,7 @@ class DrawCanvas extends Component {
       y: Math.floor((y - rect.top) / (scale * 8))
     };
 
-    if (this.props.mode === "flipX" || this.props.mode === "flipY") {
+    if (this.props.mode !== "draw") {
       this.props.flipBlock(gridCoordinates.x, gridCoordinates.y, this.props.mode);
       this.props.renderBlocks(this.props.romData, this.props.colors);
     }

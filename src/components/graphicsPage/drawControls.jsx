@@ -80,6 +80,7 @@ class DrawControls extends Component {
           color={this.props.colors[colorIndex]}
           selected={this.props.activeColorIndex === colorIndex && this.props.mode === "draw"}
           showPaletteModal={this.showPaletteModal.bind(this)}
+          palette={this.props.nesPalette}
           key={colorIndex}
         />
       );
@@ -116,7 +117,7 @@ class DrawControls extends Component {
         />
 
         <div className="md-12" id="colors">
-          <p>Tools</p> {colors}
+           {colors}
           <div class="color-control">
             <div onClick={()=>this.props.setMode('flipX')} className = { classnames({ color: true, flip: true, selected: this.props.mode === "flipX"})} >&harr;</div>
             <div class="palette">&nbsp;</div>
@@ -124,11 +125,7 @@ class DrawControls extends Component {
           <div class="color-control">
             <div class="color flip" onClick={() => this.props.setMode('flipY')} className={classnames({ color: true, flip: true, selected: this.props.mode === "flipY" })}>&uarr; &darr;</div>
             <div class="palette">&nbsp;</div>
-          </div>
-          <Button className="selected" onClick={() => this.savePaletteToRom()}>
-            &harr;
-          </Button>
-          <Button onClick={() => this.savePaletteToRom()}>FlipY</Button>
+          </div>  
           {paletteDropDown}
           <Button onClick={() => this.savePaletteToRom()}>
             Save palette to rom

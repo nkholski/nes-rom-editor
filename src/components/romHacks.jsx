@@ -11,14 +11,33 @@ class RomHacks extends Component {
   constructor(props) {
     super(props);
     this.defaults = {};
-    
+    this.hexValues = [null,null,null];
   }
 
   render() {
+    const colorOptions = this.props.nesPalette.map((color, index) => {
+      let hexString = index.toString(16).toUpperCase();
+      hexString = hexString.length % 2 ? "0" + hexString : hexString;
+
+      return <option value={index} key={index + "." + color} style={{ backgroundColor: color }}>{hexString}</option>;
+
+    }
+    );
+    const paletteDropdown = [0,1,2].map(index => {
+      return <select key={index} onChange={(e) => this.paletteChange(index, e.target.value)}>
+        {colorOptions}
+      </select>;
+    }
+    );
+
+
+    
+
     console.log("HACK RENDER", this.props.hacks)
     const hacks = this.props.hacks ? this.getHacks(this.props.hacks) : "No hacks for this rom";
     return <div>
-    
+      {paletteDropdown}
+     
       {hacks}
     
       Game Genie: <input type="text" id="gameGenieCode" className="input"/>
@@ -44,6 +63,8 @@ class RomHacks extends Component {
       <Button onClick={() => this.importTbl()}>
         Import tbl
       </Button>
+
+      
 
 
     </div>;
@@ -82,6 +103,18 @@ class RomHacks extends Component {
         step = 0; 
       }
 
+    }
+
+
+  }
+
+  paletteChange(order, paletteIndex) {
+    console.log(order,paletteIndex);
+    this.hexValues[order] = parseInt(paletteIndex, 10);
+    console.log(this.hexValues);
+    if(this.hexValues.indexOf(null) === -1) {
+      console.log("GO hACK");
+      this.findValueArray(this.hexValues);
     }
 
 
@@ -230,25 +263,34 @@ class RomHacks extends Component {
     
 
 
+    this.findValueArray(values)
+  }
+
+  findValueArray(values){
+    console.log(this.props);
+    const chrRom = false;
+    const pieces = values.length;
+    const endValue = chrRom ? this.props.romData.byteLength - pieces + 1 : this.props.chrSpan.first;
     let occurances = 0;
-    for (let i = 0; i < this.props.romData.byteLength-pieces+1; i++) {
+    for (let i = 0; i < endValue; i++) {
       let found = true;
-      for(let l = 0; l < pieces; l++) {
-        if (this.props.romData.getUint8(i+l) !== value[l]) {
+      for (let l = 0; l < pieces; l++) {
+        if (this.props.romData.getUint8(i + l) !== values[l]) {
           found = false;
           break;
         }
       }
-      if(found){
+      if (found) {
         occurances++;
-        console.log("Found",i);
+        console.log("Found", i);
+        this.props.romData.setUint8(i, 1)
       }
     }
     console.log("SEARCH FINISHED, FOUND: " + occurances);
   }
-
-
-  gameGenie() {
+    
+    
+    gameGenie() {
     const result = GameGenie(document.getElementById("gameGenieCode").value)
 
     console.log("code", result, result.address + 16 - 16384 * 2, this.props.romData.byteLength);
@@ -342,7 +384,9 @@ const mapStateToProps = state => {
   return { 
     hacks: state.nesRomReducer.romSettings.hacks,
     textTables: state.nesRomReducer.romSettings.textTables,
-    romData: state.nesRomReducer.romData
+    romData: state.nesRomReducer.romData,
+    nesPalette: state.drawReducer.nesPalette,
+    chrSpan: state.nesRomReducer.chrSpan
   };
 };
 

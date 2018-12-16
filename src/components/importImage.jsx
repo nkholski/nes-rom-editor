@@ -2,6 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Progress } from "reactstrap";
 import CompositionService from "../services/compositionService";
+import { timingSafeEqual } from "crypto";
+
+
+import {
+  Input,
+  FormGroup,
+  Label
+} from "reactstrap";
 
 class ImportImage extends Component {
   constructor(props) {
@@ -13,22 +21,89 @@ class ImportImage extends Component {
       unknown: 0,
       task: 0,
       total: 0,
-      progress: 0
+      progress: 0,
+      palette: [],
+      composition: [],
+      checkedPalettes: []
     };
     this.task = 0;
   }
 
   render() {
+    if(this.state.progress !== 100) {
+      return <h2>Parsing the image (this might take a while)</h2>
+    }
+
+    const unknownTiles = this.state.total - this.state.skipped - this.state.identified;
+    let text = "The image was successfully scanned. ";
+    if(unknownTiles === 0){
+      text += "All tiles was mapped to the rom. ";
+    }
+    else {
+      text += "I could'nt make head or tail of " + unknownTiles + "tiles. Either the tiles are generated in an unknown way or more likely the tiles isn't totally pure (like some grass pixels by the characters shoe) or the entire tile is aligned wrong in a 8x8 grid.";
+      text += "However, "+this.state.identified+" tiles was found and mapped to the rom. "
+    }
+    if (this.state.skipped !== 0) {
+      text += this.state.skipped + " one colored or transparent tiles was found and was skipped.";
+    }
+
+    let paletteText = "";
+    const checkedPalettes = [];
+    if(this.state.palettes.length>0){
+      const paletteTable = this.state.palettes.map((palette, i) => {
+        checkedPalettes[i] = this.state.checkedPalettes.hasOwnProperty(i) ? this.state.checkedPalettes[i] : (palette[3] === 0);
+        const className = "palette-boxes " + (checkedPalettes[i] ? "" : "unchecked ") + (palette[3] === 1 ? "grouped" : "");
+        return <tr key={i + "." + palette[0] + "."+palette[1]+"."+palette[2]}>
+
+            <td>
+              <input type="checkbox" checked={checkedPalettes[i]} id={"palette-checkbox-"+i} onChange={this.togglePalette} />
+            </td>
+            <td class={className}>
+              <div style={{ backgroundColor: this.props.nesPalette[palette[0]] }}>{palette[0]}</div> 
+              <div style={{ backgroundColor: this.props.nesPalette[palette[1]] }}>{palette[1]}</div>
+              <div style={{ backgroundColor: this.props.nesPalette[palette[2]] }}>{palette[2]}</div>
+            </td>
+            <td>
+            <Input type="text" name="email" placeholder="Palette name" />
+
+            </td>
+        
+  
+        </tr>
+      });
+      paletteText = <div>
+          <p>
+            {this.state.palettes.length} palettes was identified and mapped to the NES Color table. It's suggested to save this for easier graphical rendering, and change the palette in the actual game. Not all colors are used in all parts of a sprite. The suggested approach is to save the longest unique combinations, if you have one 16-27-18 palette and a 16-??-18 palette, the latter one is probably be the same as the former and you're adviced to skip it.
+            <Input type="text" name="compositionName" placeholder="Composition name" />
+          </p>
+          <table>
+            <tbody>{paletteTable}</tbody>
+          </table>
+        </div>;
+    }
+
+    const rgbOptions = this.props.nesPalette.map((color,i) => {
+      return <option style={{backgroundColor: color}} key={i+color}>{i}</option>;
+    });
+
     return (
       <div>
         <img id="testar" />
-        <h2>Parsing the image</h2>
-        Skipped tiles: {this.state.skipped}
-        <br />
+
+      {this.state.identified}
+        {this.state.total}
+        <h2>Result</h2>
+        <p>{text}</p>
+        {paletteText}
+        <button>Save composition</button>
+        <select>{rgbOptions}</select>
+      </div>);
+
+/*        <br />
         Identified tiles: {this.state.identified}
         <br />
-        Unknown tiles:{" "}
-        {this.state.total - this.state.skipped - this.state.identified}
+        Unknown tiles:
+        {}
         <br />
         <div className="text-center">Progress {this.state.progress}%</div>
         <Progress value={this.state.progress} />
@@ -37,7 +112,7 @@ class ImportImage extends Component {
           ett namn ör alterntivet
         </div>
       </div>
-    );
+    );*/
   }
   componentDidMount() {
     this.componentDidUpdate();
@@ -73,6 +148,16 @@ class ImportImage extends Component {
       });
       // this.forceUpdate();
     }
+  }
+
+  togglePalette = (e) => {
+    const {id, checked} = e.target;
+    const index = parseInt(id.match(/[0-9]+/),10);
+    const checkedPalettes = [...this.state.checkedPalettes];
+    checkedPalettes[index] = checked;
+    this.setState({
+      checkedPalettes
+    })
   }
 
   loadFromFile(url) {
@@ -113,25 +198,39 @@ class ImportImage extends Component {
     tmpCanvas.width = img.width;
     tmpCanvas.height = img.height;
     tmpCtx.drawImage(img, 0, 0, img.width, img.height);
-    const composition = this.imageScan({
+    const { composition, palettes} = this.imageScan({
       composition: [],
       img,
       tmpCtx,
       mappingVariants
     });
 
+
+    console.log("DONE", composition, palettes);
+
+
+
+
+
     this.setState({
-      total: (img.width * img.height) / 64
+      total: (img.width * img.height) / 64,
+      composition,
+      palettes,
+      progress: 100
     });
 
-    window.composition = composition;
-    CompositionService.save(Math.random(), composition);
-    return composition;
+
+
+    // window.composition = composition;
+    // CompositionService.save(Math.random(), composition);
+    ;
   }
 
   imageScan({ composition, img, tmpCtx, mappingVariants }) {
     const { chrSpan, romData } = this.props;
-    let identified = 0;
+    const foundPalettes = [];
+    let identified = 0; // ?
+
     let skipped = 0;
     // X, Y is the tile coordinates (jumps 8 pixels)
     // x, y is the coordinates within the tile (0-7)
@@ -175,7 +274,9 @@ class ImportImage extends Component {
         let colorToIndex = 0;
         // We often start of with multiple matches, and then they drop off for each horizontal line that's analysed
         let matches = [];
+        let backgroundIndex = -1;
 
+// eslint-disable-next-line
         [false, true].forEach(flipX => {
           [false, true].forEach(flipY => {
             if (composition[X][Y] != null) {
@@ -188,9 +289,9 @@ class ImportImage extends Component {
             // Scan through the tile from the rom data, compare it to the tile from the bitmap
             for (let stepY = 0; stepY < 8; stepY++) {
               const compareArray = [];
+
               // Get a slice
               const y = flipY ? 7 - stepY : stepY;
-
               for (let stepX = 0; stepX < 8; stepX++) {
                 // Get pixel from tile, c[0] = red, 1 = g, 2 = b
                 const x = flipX ? 7 - stepX : stepX;
@@ -200,7 +301,8 @@ class ImportImage extends Component {
 
                 if (alpha !== 255) {
                   //color = "background";
-                  color = "background";
+                  
+                   color = "background";
                   backgroundExists = true;
                   /*if(colorToTempIndex.length != 0){
                 continue;
@@ -210,10 +312,13 @@ class ImportImage extends Component {
                     const dec = tile[(x + y * 8) * 4 + c]; // * 4 to skip alpha (rgba)
                     color += ("00" + dec.toString(16)).slice(-2);
                   }
-                }
+                 }
 
                 // Update index for this bitmap tile
                 if (!colorToTempIndex.hasOwnProperty(color)) {
+                  if(color === "background") {
+                    backgroundIndex = colorToIndex;
+                  }
                   colorToTempIndex[color] = colorToIndex++;
                 }
                 // Push the temporary index number of the color to the compareArray
@@ -224,7 +329,8 @@ class ImportImage extends Component {
                   "Found a tile with more than four colors!\nRead the instructions for parsing images."
                 );
               }
-              console.log(colorToTempIndex, backgroundExists);
+             
+             // console.log(compareArray, backgroundIndex, colorToTempIndex);
 
               // Check slice, we need to do this for all possible indices for the first row,
               // because the indicies we got is just by the order the color appears and has
@@ -234,12 +340,18 @@ class ImportImage extends Component {
               if (stepY === 0) {
                 mappingVariants.forEach((indexMapping, mI) => {
                   const testArray = [];
+
                   compareArray.forEach(pixel => {
                     //console.log(pixel);
                     testArray.push(indexMapping[pixel]);
                   });
                   // console.log(compareIndex, testArray);
-                  debugger;
+                  ;
+                  if (backgroundIndex > -1 && indexMapping[backgroundIndex] !== 0) {
+                  //  console.log("BG", compareArray,testArray, backgroundIndex, indexMapping);
+                    return;
+                  }
+
 
                   matches[mI] = findInRom(testArray, 0, chrSpan, romData);
                 });
@@ -251,9 +363,11 @@ class ImportImage extends Component {
                   // to do the comparsion using the same palette to color index mapping as
                   // for the first row. We reset it and will loose anything that fail to
                   // continue matching.
+
                   newMatches[mI] = [];
 
-                  if (match.length === 0) {
+                  
+                  if (!match || match.length === 0) {
                     return;
                   }
                   const testArray = [];
@@ -270,9 +384,10 @@ class ImportImage extends Component {
 
                 // y === 7 means that the tile is fully scanned!
                 if (stepY === 7) {
+                  // eslint-disable-next-line
                   matches.some((match, mI) => {
                     // If we have a match, push it to the composition. First match is taken,
-                    // in the future it should notice this somehow.
+                    // in the future it should notice this somehow and suggest tiles that are close to eachother in the rom first.
                     if (match.length > 0) {
                       composition[X][Y] = {
                         flipX,
@@ -286,8 +401,19 @@ class ImportImage extends Component {
                         colorToTempIndex,
                         mappingVariants[mI]
                       );
+                      const paletteMapping = [-1,-1,-1,-1];
+                      mappingVariants[mI].forEach((from, to)=>{
+                        Object.keys(colorToTempIndex).forEach((hexColor) => {
+                          if(colorToTempIndex[hexColor] === to) {
+                            paletteMapping[from] = hexColor;
+                          }
 
-                      this.setState({ identified });
+                        });
+                      });
+                      const nesPalette = this.paletteToNESIndex(paletteMapping);
+                      if ((foundPalettes.map(nesI => nesI[0] + "." + nesI[1] + "." + nesI[2])).indexOf(nesPalette[0]+"."+nesPalette[1]+"."+nesPalette[2])===-1) {
+                        foundPalettes.push(nesPalette);
+                      }
 
                       return true;
                     }
@@ -300,7 +426,79 @@ class ImportImage extends Component {
       }
     }
 
-    return composition;
+    this.setState({
+      identified,
+      skipped
+    })
+
+    let palettes = foundPalettes.sort((a, b) => {
+      // Sort in best order possible, first step (higher to lower)
+      if (a[0] !== b[0]) {
+        return a[0] - b[0];
+      }
+      else if (a[1] !== b[1]) {
+        return a[1] - b[1];
+      }
+      else {
+        return a[2] - b[2];
+      }
+    }).sort((a,b) => {
+      // Change the sort to rank most complete mappings on top
+      let [aMinus, bMinus] = [0,0];
+      for(let i=0;i<3;i++){
+        aMinus += a[i] === -1 ? 1 : 0;
+        bMinus += b[i] === -1 ? 1 : 0;
+      }
+      return aMinus-bMinus;
+
+    });
+
+    // Try to bubble up
+    for(let i=0; i<palettes.length; i++) {
+      if(palettes[i].length === 3) {
+        palettes[i][3] = 0; // 0 = original, 1 = grouped with above
+      }
+      const currentColor = palettes[i];
+      if(currentColor[0]===-1 ||currentColor[1] === -1 || currentColor[2] === -1) {
+        // Try to move it upwards to a complete combo
+        for(let i2=0; i2<palettes.length; i2++){
+          const fullColor = palettes[i2];
+          if (fullColor[0] !== -1 && fullColor[1] !== -1 && fullColor[2] !== -1) {
+            if (
+              (fullColor[0] === currentColor[0] || currentColor[0] === -1)
+              &&  (fullColor[1] === currentColor[1] || currentColor[1] === -1)
+              && (fullColor[2] === currentColor[2] || currentColor[2] === -1)
+            ){
+              // Moved value
+              const movedValue = palettes.splice(i,1)[0];
+              movedValue[3] = 1;
+              palettes.splice(i2+1, 0, 1);
+              palettes[i2+1] = movedValue;
+            }
+
+          }
+        }
+
+      }
+
+
+    }
+
+
+    return { composition, palettes };
+  }
+
+  paletteToNESIndex(paletteMapping) {
+    const nesIndicies = [];
+    paletteMapping.forEach(rgbString => {
+      if(rgbString === -1){
+        nesIndicies.push(-1);
+      }
+      else if(rgbString !== "background") {
+        nesIndicies.push(this.getClosestColor(rgbString));
+      }
+    });
+    return nesIndicies;
   }
 
   getClosestColor(rgbString) {
@@ -308,37 +506,33 @@ class ImportImage extends Component {
     // (Skipped sqrt because the actual distance is irrelevant, we just need the shortest)
     const rgb = [];
     for (let i = 0; i < 3; i++) {
-      rgb[i] = parseInt(rgbString.substring(i * 2, 2));
+      
+      try {
+        rgb[i] = parseInt(rgbString.substring(i * 2, i * 2 + 2), 16);
+
+      }
+      catch(err) {console.log(err, rgbString); debugger}
     }
 
-    // LOOP
-    const colorIndex = 0;
-    const cmp = [0, 0, 0];
     let shortestDist = 1e10;
     let closestColor;
 
-    let dist = 0;
-    for (let i = 0; i < 3; i++) {
-      dist += Math.pow(rgb[i] - cmp[i], 2);
-    }
-
-    if (dist < shortestDist) {
-      shortestDist = dist;
-      closestColor = colorIndex;
-    }
-
-    /*distance = function (v1, v2) {
-      var i,
-        d = 0;
-
-      for (i = 0; i < v1.length; i++) {
-        d += (v1[i] - v2[i]) * (v1[i] - v2[i]);
+    this.props.nesPalette.forEach((hexColor, nesIndex) => {
+      const nesHex = [];
+      for (let i = 0; i < 3; i++) {
+        nesHex[i] = parseInt(hexColor.substring(i * 2 + 1, i * 2 + 2 + 1), 16);
       }
-      return Math.sqrt(d);
-    };*/
+      let dist = 0;
+      for (let i = 0; i < 3; i++) {
+        dist += Math.pow(rgb[i] - nesHex[i], 2);
+      }
+      if (dist < shortestDist) {
+        shortestDist = dist;
+        closestColor = nesIndex;
+      }
+    });
+    return closestColor;
   }
-
-  /**/
 }
 
 // String instead of bitwise operators, very slow
@@ -424,11 +618,21 @@ const compareAtIndex = (pattern, index, y, romData) => {
 const mapStateToProps = state => {
   return {
     chrSpan: state.nesRomReducer.chrSpan,
-    romData: state.nesRomReducer.romData
+    romData: state.nesRomReducer.romData,
+    nesPalette: state.drawReducer.nesPalette
   };
 };
 
 export default connect(mapStateToProps)(ImportImage);
+
+
+
+
+
+
+
+
+
 
 // Warn if overriding existing method
 if (Array.prototype.equals)

@@ -1,0 +1,21 @@
+.grouped {
+    padding-left: 15px;
+}
+
+.unchecked {
+        color: #777;
+
+}
+
+.palette-boxes {
+    min-width: 8em;
+}
+
+.palette-boxes div {
+    float: left;
+    margin-left: 3px;
+    text-align: center;
+    padding-top: 0.2em;
+    width: 2em;
+    height: 2em;
+}

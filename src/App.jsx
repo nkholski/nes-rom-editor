@@ -45,6 +45,8 @@ import "./slider.css";
 import "./colors.css";
 import "./draw-canvas.css";
 import "./emulator.css";
+import "./importImage.css";
+
 // import "./bootstrap-cyborg.min.css";
 import DraggedBlock from "./components/graphicsPage/draggedBlock";
 import GraphicsPage from "./components/graphicsPage";
