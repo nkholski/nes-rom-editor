@@ -64,7 +64,7 @@ class ImportImage extends Component {
               <div style={{ backgroundColor: this.props.nesPalette[palette[2]] }}>{palette[2]}</div>
             </td>
             <td>
-            <Input type="text" name="email" placeholder="Palette name" />
+            <Input type="text" id={"palette-name-"+i} data-index={i} className="palette-name" placeholder="Palette name" />
 
             </td>
         
@@ -74,7 +74,7 @@ class ImportImage extends Component {
       paletteText = <div>
           <p>
             {this.state.palettes.length} palettes was identified and mapped to the NES Color table. It's suggested to save this for easier graphical rendering, and change the palette in the actual game. Not all colors are used in all parts of a sprite. The suggested approach is to save the longest unique combinations, if you have one 16-27-18 palette and a 16-??-18 palette, the latter one is probably be the same as the former and you're adviced to skip it.
-            <Input type="text" name="compositionName" placeholder="Composition name" />
+            <Input type="text" id="composition-name" placeholder="Composition name" />
           </p>
           <table>
             <tbody>{paletteTable}</tbody>
@@ -95,9 +95,10 @@ class ImportImage extends Component {
         <h2>Result</h2>
         <p>{text}</p>
         {paletteText}
-        <button>Save composition</button>
+        <button onClick={this.saveComposition}>Save composition</button>
         <select>{rgbOptions}</select>
-      </div>);
+      </div>)
+      ;
 
 /*        <br />
         Identified tiles: {this.state.identified}
@@ -132,6 +133,36 @@ class ImportImage extends Component {
         );
       }
     }
+  }
+
+
+  saveComposition = () => {
+    const paletteNames = document.getElementsByClassName("palette-name");
+    const palettes = []; // Palettes to save
+    for(let i=0; i<paletteNames.length; i++){
+      if(this.state.checkedPalettes[i]){
+        const colors = [
+          -1,
+          this.state.palettes[i][0],
+          this.state.palettes[i][1],
+          this.state.palettes[i][2]
+        ];
+        palettes.push(
+          {
+            name: paletteNames[i].value,
+            colors,
+            addr: null
+          }
+        )
+      }
+    }
+    console.log(palettes);
+    // parseInt(document.getElementsByClassName("palette-name")[0].getAttribute("data-index"),10);
+
+
+    console.log(paletteNames);
+
+
   }
 
   /* componentWillReceiveProps(){
@@ -208,7 +239,10 @@ class ImportImage extends Component {
 
     console.log("DONE", composition, palettes);
 
-
+    const checkedPalettes = [];
+    for(let i=0; i<palettes.length; i++) {
+      checkedPalettes[i] = palettes[i][3] === 0;
+    }
 
 
 
@@ -216,6 +250,7 @@ class ImportImage extends Component {
       total: (img.width * img.height) / 64,
       composition,
       palettes,
+      checkedPalettes,
       progress: 100
     });
 
