@@ -84,6 +84,7 @@ const ImageImporter = (romData, chrSpan, url = "/smb-items.png") => {
                     }
 
                     if (y === 0) {
+                        /*jshint loopfunc: true */
                         mappingVariants.forEach((indexMapping, mI) => {
                             const testArray = [];
                             compareArray.forEach(pixel => {
