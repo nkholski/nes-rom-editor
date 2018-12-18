@@ -38,6 +38,13 @@ export const setPresetCompositions = (compositions) => dispatch => {
     });
 }
 
+export const addPresetComposition = (composition) => dispatch => {
+    dispatch({
+        type: "ADD_PRESET_COMPOSITION",
+        payload: composition
+    });
+}
+
 // Render block of byteIndex or all (null)
 export const renderBlocks = (romData, colors, excludeByteIndex = null) => dispatch => {
     dispatch({

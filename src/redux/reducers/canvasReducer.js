@@ -34,6 +34,13 @@ export default (state = defaultState, action) => {
             return { ...state,
                 presetCompositions: payload
             };
+        case 'ADD_PRESET_COMPOSITION':
+        console.log([...state.presetCompositions, payload]);
+        debugger;
+            return {
+                ...state,
+                presetCompositions: [...state.presetCompositions, payload]
+            }
         case 'SET_ZOOM':
             return { ...state,
                 scale: payload

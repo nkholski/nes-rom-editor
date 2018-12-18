@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Progress } from "reactstrap";
 import CompositionService from "../services/compositionService";
 import { timingSafeEqual } from "crypto";
-
+import { addPresetComposition } from "../redux/actions/canvasActions";
 
 import {
   Input,
@@ -137,6 +137,7 @@ class ImportImage extends Component {
 
 
   saveComposition = () => {
+    const compositionName = document.getElementById("composition-name").value;
     const paletteNames = document.getElementsByClassName("palette-name");
     const palettes = []; // Palettes to save
     for(let i=0; i<paletteNames.length; i++){
@@ -156,11 +157,17 @@ class ImportImage extends Component {
         )
       }
     }
-    console.log(palettes);
-    // parseInt(document.getElementsByClassName("palette-name")[0].getAttribute("data-index"),10);
 
+    const composition = {
+        name: compositionName,
+        blocks: this.state.composition,
+        palettes
+      };
 
-    console.log(paletteNames);
+      console.log(composition);
+      
+
+    this.props.addPresetComposition(composition);
 
 
   }
@@ -650,6 +657,15 @@ const compareAtIndex = (pattern, index, y, romData) => {
   return pattern.equals(indexRow);
 };
 
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addPresetComposition: composition => {
+      dispatch(addPresetComposition(composition));
+    },
+  };
+}
+
 const mapStateToProps = state => {
   return {
     chrSpan: state.nesRomReducer.chrSpan,
@@ -658,7 +674,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(ImportImage);
+export default connect(mapStateToProps, mapDispatchToProps)(ImportImage);
 
 
 
