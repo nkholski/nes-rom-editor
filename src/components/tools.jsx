@@ -17,8 +17,12 @@ class Tools extends Component {
     }
 
     render() {
-        if(this.state.page === null) {
+        if(this.state.page === 2) {
             return <div id="tools-page">
+
+                <ImportImage />
+
+
             <div class="grid">
                     <Container className="nes-container with-title is-centered">
                         <p class="title">Import image</p>
@@ -78,10 +82,12 @@ class Tools extends Component {
                 <input type="file" id="input" onChange={e => this.parseImage(e.target.files)} />;
             
 
+        //             <ImportImage/>
 
         return <div>
             <h1>Tools</h1>
-            <ImportImage/>
+             <ImportImage />
+            <img id="source-image" />
             {importImage}
           </div>;
     }

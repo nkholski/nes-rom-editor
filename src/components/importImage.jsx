@@ -20,7 +20,7 @@ class ImportImage extends Component {
       task: 0,
       total: 0,
       progress: 0,
-      palette: [],
+      palettes: [],
       composition: [],
       checkedPalettes: []
     };
@@ -87,7 +87,6 @@ class ImportImage extends Component {
 
     return (
       <div>
-        <img id="testar" alt="rendered"/>
 
       {this.state.identified}
         {this.state.total}
@@ -123,11 +122,11 @@ class ImportImage extends Component {
       this.task = 1;
 
       if (this.props.imageBinaryData) {
-        const img = document.getElementById("testar");
+        const img = document.getElementById("source-image");
         img.src = "data:image/png;base64," + btoa(this.props.imageBinaryData);
         this.tileCollector(img);
       } else {
-        this.loadFromFile("/smb-items.png").then(img =>
+        this.loadFromFile("/screenshot-source2.png").then(img =>
           this.tileCollector(img)
         );
       }
@@ -316,11 +315,7 @@ class ImportImage extends Component {
         [false, true].forEach(flipX => {
           [false, true].forEach(flipY => {
             if (composition[X][Y] != null) {
-              console.log("GOT IT");
               return;
-            }
-            if (flipY) {
-              console.log("flipl");
             }
             // Scan through the tile from the rom data, compare it to the tile from the bitmap
             for (let stepY = 0; stepY < 8; stepY++) {
@@ -424,6 +419,9 @@ class ImportImage extends Component {
                     // If we have a match, push it to the composition. First match is taken,
                     // in the future it should notice this somehow and suggest tiles that are close to eachother in the rom first.
                     if (match.length > 0) {
+                      if(match.length>1) {
+                        console.log("MATCHED LENGHT", match.length);
+                      }
                       composition[X][Y] = {
                         flipX,
                         flipY,
@@ -431,11 +429,6 @@ class ImportImage extends Component {
                       };
                       identified++;
 
-                      console.log(
-                        "COLORS",
-                        colorToTempIndex,
-                        mappingVariants[mI]
-                      );
                       const paletteMapping = [-1,-1,-1,-1];
                       mappingVariants[mI].forEach((from, to)=>{
                         Object.keys(colorToTempIndex).forEach((hexColor) => {
@@ -566,6 +559,10 @@ class ImportImage extends Component {
         closestColor = nesIndex;
       }
     });
+    if(closestColor === 2) {
+      console.log("DIST 2:",rgbString);
+    }
+
     return closestColor;
   }
 }
