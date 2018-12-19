@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Progress } from "reactstrap";
-import CompositionService from "../services/compositionService";
-import { timingSafeEqual } from "crypto";
+// import { Progress } from "reactstrap";
+// import CompositionService from "../services/compositionService";
+// import { timingSafeEqual } from "crypto";
 import { addPresetComposition } from "../redux/actions/canvasActions";
 
 import {
-  Input,
-  FormGroup,
-  Label
+  Input
 } from "reactstrap";
 
 class ImportImage extends Component {
@@ -82,13 +80,14 @@ class ImportImage extends Component {
         </div>;
     }
 
+// eslint-disable-next-line
     const rgbOptions = this.props.nesPalette.map((color,i) => {
       return <option style={{backgroundColor: color}} key={i+color}>{i}</option>;
     });
 
     return (
       <div>
-        <img id="testar" />
+        <img id="testar" alt="rendered"/>
 
       {this.state.identified}
         {this.state.total}
@@ -138,6 +137,7 @@ class ImportImage extends Component {
 
   saveComposition = () => {
     const compositionName = document.getElementById("composition-name").value;
+  
     const paletteNames = document.getElementsByClassName("palette-name");
     const palettes = []; // Palettes to save
     for(let i=0; i<paletteNames.length; i++){
@@ -165,7 +165,7 @@ class ImportImage extends Component {
       };
 
       console.log(composition);
-      
+
 
     this.props.addPresetComposition(composition);
 
@@ -206,11 +206,6 @@ class ImportImage extends Component {
       };
       i.src = url;
     });
-  }
-
-  binaryToImg(bin) {
-    const i = new Image();
-    //        i.src = url;
   }
 
   tileCollector(img) {
@@ -285,7 +280,6 @@ class ImportImage extends Component {
 
         // Get tile from bitmap
         const tile = tmpCtx.getImageData(X * 8, Y * 8, 8, 8).data;
-        let backgroundExists = false;
 
         // Skip if tile is has just one color:
         let diffExists = false;
@@ -345,7 +339,6 @@ class ImportImage extends Component {
                   //color = "background";
                   
                    color = "background";
-                  backgroundExists = true;
                   /*if(colorToTempIndex.length != 0){
                 continue;
               }*/
@@ -617,7 +610,6 @@ const findInRom = (pattern, y, chrSpan, romData) => {
         console.log("ERRROR", y, o, i, romData.byteLength);
       }
     }
-    const indexRow = [];
     let match = true;
     for (let i2 = 0; i2 < 8; i2++) {
       // Bitwise operators, generally discouraged but very much motivated here

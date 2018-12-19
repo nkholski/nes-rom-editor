@@ -1,6 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 
+// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+
 import { setPalette } from "./redux/actions/drawActions";
 import { setPresetCompositions } from "./redux/actions/canvasActions";
 import {
@@ -46,6 +49,8 @@ import "./colors.css";
 import "./draw-canvas.css";
 import "./emulator.css";
 import "./importImage.css";
+import "./tools.css";
+
 
 // import "./bootstrap-cyborg.min.css";
 import DraggedBlock from "./components/graphicsPage/draggedBlock";
@@ -180,6 +185,34 @@ class App extends React.Component {
           break;
         case "Tools":
           pageTag = <Tools/>;
+          break;
+          case "Rom info":
+          pageTag = <p>
+            filename:
+            prg-rom: bytes
+            chr-rom: x banks x bytes || No CHR-Rom see note
+
+            Hacks: 15
+            Palette references: 10
+            Compostions: 5 (20% of CHR-Rom mapped)
+            Text tables: 1
+            Text references: 10
+
+
+            Note: This rom has no CHR-Rom which means it uses CHR-Ram. You will need to dig through PRG-Rom to manipulate GFX.
+          </p>
+          
+          
+          
+          
+    
+
+
+
+
+
+
+
           break;
         default:
           pageTag = <h1>{page}</h1>;

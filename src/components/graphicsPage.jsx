@@ -6,7 +6,6 @@ import DrawCanvas from "./graphicsPage/drawCanvas";
 
 class GraphicsPage extends Component {
   render() {
-    const { width, height, scale, compositionName } = this.props;
     return (
       <div id="graphics-page" className="row">
         <div className="chrView col col-md-auto">

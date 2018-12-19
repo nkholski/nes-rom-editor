@@ -1,10 +1,9 @@
 import renderBlock from "../../services/renderBlock";
-import NesIO from "../../services/nesIO";
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { storeRom, setRomSettings } from "../../redux/actions/nesRomActions";
+import { setRomSettings } from "../../redux/actions/nesRomActions";
 import { setClipByte } from "../../redux/actions/canvasActions";
 
 class ChrNav extends Component {

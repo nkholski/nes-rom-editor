@@ -32,7 +32,7 @@ class DrawCanvas extends Component {
   }
 
   manipulate = event => {
-    const { scale, blocks } = this.props;
+    const { scale } = this.props;
     const x = event.clientX;
     const y = event.clientY;
     const canvas = document.getElementById("draw-canvas");

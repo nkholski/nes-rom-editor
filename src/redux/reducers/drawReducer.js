@@ -35,7 +35,6 @@ export default (state = defaultState, action) => {
             });
         case "PUSH_HEX_TO_COLORS":
             colors = colors ? colors : payload;
-            console.log("PAYLOAD HEX", payload);
             return { ...state, colors: payload
             };
         case "SET_MODE":

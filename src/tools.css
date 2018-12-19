@@ -1,0 +1,17 @@
+div.actions {
+    padding-top: 20px;
+}
+
+div.actions .col {
+    text-align: right;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+
+
+}

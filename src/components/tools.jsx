@@ -1,18 +1,74 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ImportImage from "./importImage";
+import { Button, Container, Row, Col } from "reactstrap";
 
 class Tools extends Component {
     constructor(props) {
         super(props);
-        this.state = {
+        /* this.state = {
             width: props.width,
             height: props.height,
             imageBinaryData: null
+        }*/
+        this.state = {
+            page: null
         }
     }
 
     render() {
+        if(this.state.page === null) {
+            return <div id="tools-page">
+            <div class="grid">
+                    <Container className="nes-container with-title is-centered">
+                        <p class="title">Import image</p>
+                        <Row>
+                            <Col>Identitify tile compositions and palettes from an imported image. Please read the instructions for best result.</Col>
+                        </Row>
+                        <Row className="actions">
+                            <Col><Button className="nes-btn is-primary">Go to import!</Button></Col>
+                        </Row>
+                    </Container>
+                    <Container className="nes-container with-title is-centered">
+                        <p class="title">Find palette address</p>
+                        <Row>
+                            <Col>Search PRG ROM for possible palette defining addresses. Export to hack section.</Col>
+                        </Row>
+                        <Row className="actions">
+                            <Col><Button className="nes-btn is-primary">Find palette</Button></Col>
+                        </Row>
+                    </Container>
+                    <Container className="nes-container with-title is-centered">
+                        <p class="title">Text tools</p>
+                        <Row>
+                            <Col>Identify text tables and addresses to exåprt to the hack section.</Col>
+                        </Row>
+                        <Row className="actions">
+                            <Col><Button className="nes-btn is-primary">Do text stuff</Button></Col>
+                        </Row>
+                    </Container>
+                    <Container className="nes-container with-title is-centered">
+                        <p class="title">Game Genie</p>
+                        <Row>
+                            <Col>Decode Game Genie codes, manipulate them and export to the hack sextion..</Col>
+                        </Row>
+                        <Row className="actions">
+                            <Col><Button className="nes-btn is-primary">Go Game Genie</Button></Col>
+                        </Row>
+                    </Container>
+            
+            </div>
+            
+
+           
+            
+            
+            
+            </div>;
+
+
+        }
+
 
 
         const importImage = 

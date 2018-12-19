@@ -7,13 +7,8 @@ const SCREEN_HEIGHT = 240;
 const FRAMEBUFFER_SIZE = SCREEN_WIDTH * SCREEN_HEIGHT;
 
 class Emulator extends Component {
-  constructor(props) {
-    super(props);
-    // this.componentDidUpdate();
-  }
 
   render() {
-    const { width, height, scale, compositionName } = this.props;
     return <div id="emulator-page" className="row">
         <div class="tv">
           <canvas id="screen" className="Screen" width={SCREEN_WIDTH} height={SCREEN_HEIGHT} onMouseDown={this.handleMouseDown} onMouseUp={this.props.onMouseUp} ref={canvas => {

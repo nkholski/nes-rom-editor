@@ -1,5 +1,4 @@
 import md5 from "js-md5";
-import ImageImporter from "../../services/imageImporter";
 
 const defaultState = {
     romData: [], // DataView
@@ -30,9 +29,6 @@ export default (state = defaultState, action) => {
                 romSettings: payload
             };
         case 'STORE_ROM':
-            console.log("STORING", md5(payload.romData.buffer));
-           // ImageImporter(payload.romData, payload.chrSpan);
-
             return {
                 ...state,
                 ...payload,

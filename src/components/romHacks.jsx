@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { Button } from "reactstrap";
 
 import GameGenie from "../services/gameGenie";
-import { copyFile } from "fs";
 
 class RomHacks extends Component {
   constructor(props) {
@@ -77,15 +76,14 @@ class RomHacks extends Component {
     const searchArray = searchArrayLetters.map(letter => {
       let found = -1;
       Object.keys(this.props.textTables[0].tbl).some(addr => {
-        console.log(addr, letter, this.props.textTables[0].tbl[addr], letter === this.props.textTables[0].tbl[addr]);
         if (this.props.textTables[0].tbl[addr] === letter) {
           found = addr;
           return true;
         }
+        return false;
       });
       return parseInt(found, 10);
     });
-    console.log("arr", searchArray);
     
     let step = 0;
     for (let i = 0; i < lastCheck; i++) {
