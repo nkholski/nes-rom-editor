@@ -7,7 +7,8 @@ const defaultState = {
     version: 0, // version of data, used to detect changes
     lastAltered: 0, // Index of (first)byte altered, used to render parts of canvas
     romSettings: {}, // External romsettings (Palettes and hacks for current rom)
-    romInfoIndex: {} // Index over avaliable hacks
+    romInfoIndex: {}, // Index over avaliable hacks
+    romInfo: {} // Info about the rom, mapper and stuff
 }
 
 export default (state = defaultState, action) => {
@@ -22,6 +23,11 @@ export default (state = defaultState, action) => {
                 ...state,
                 romInfoIndex: payload
             };
+              case 'SET_ROM_INFO':
+              return {
+                  ...state,
+                  romInfo: payload
+              };
         case 'SET_ROM_SETTINGS':
             console.log("SET ROM SETTINGS", payload);
             return {

@@ -8,6 +8,7 @@ import { setPalette } from "./redux/actions/drawActions";
 import { setPresetCompositions } from "./redux/actions/canvasActions";
 import {
   setRomInfoIndex,
+  setRomInfo,
   storeRom,
   setRomSettings
 } from "./redux/actions/nesRomActions";
@@ -33,6 +34,7 @@ import GeneralModal from "./components/generalModal";
 import ImportImage from "./components/importImage";
 import Emulator from "./components/emulator";
 import Tools from "./components/tools";
+import File from "./components/file";
 
 // import { Button } from "reactstrap";
 
@@ -123,6 +125,7 @@ class App extends React.Component {
         .then(data => {
           // Convert all string-hex numbers to decimal ints
           this.props.setRomSettings(data);
+          this.props.setRomInfo(nesIO.romInfo);
         });
     });
 
@@ -174,6 +177,9 @@ class App extends React.Component {
 
       if(page === this.state.activeTab) {
       switch(page){
+        case "File":
+          pageTag = <File />;
+          break;
         case "Graphics":
           pageTag = <GraphicsPage />;
           break;
@@ -200,6 +206,7 @@ class App extends React.Component {
 
 
             Note: This rom has no CHR-Rom which means it uses CHR-Ram. You will need to dig through PRG-Rom to manipulate GFX.
+            
           </p>
           
           
@@ -371,6 +378,9 @@ const mapDispatchToProps = dispatch => {
     },
     setRomSettings: data => {
       dispatch(setRomSettings(data));
+    },
+    setRomInfo: romInfo => {
+      dispatch(setRomInfo(romInfo));
     }
     /*,
     setGameList: gameList => {

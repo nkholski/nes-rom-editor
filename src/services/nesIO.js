@@ -7,6 +7,7 @@ export default class NesIO {
     this.chrSpan = null;
     this.dataView = null;
     this.chrCanvas = null;
+    this.romInfo = null;
 
     fetch("/files/nespalette.json")
       .then(response => {
@@ -37,8 +38,21 @@ export default class NesIO {
 
        /* console.log("BIN", typeof (binary));*/
 
-
+        
         this.dataView = new DataView(arrayBuffer);
+
+
+        this.romInfo = {
+          name: rom,
+          prg: this.dataView.getUint8(4),
+          chr: this.dataView.getUint8(5),
+          mapper: this.dataView.getUint8(6),
+          mapper2: this.dataView.getUint8(7),
+          ram: this.dataView.getUint8(8),
+          tv: this.dataView.getUint8(9),
+          ramExists: this.dataView.getUint8(10)
+        };
+
         const chrRomBlocks = this.dataView.getUint8(5);
 
         if (chrRomBlocks > 0) {
@@ -52,6 +66,7 @@ export default class NesIO {
             len: this.dataView.byteLength - 100
           };
         }
+
 
       /*  const blob = new Blob(new Uint8Array(this.dataView.buffer), {
           type: "octet/stream"

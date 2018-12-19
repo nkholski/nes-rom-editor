@@ -44,3 +44,10 @@ export const setRomInfoIndex = (romInfoIndex) => dispatch => {
         payload: romInfoIndex
     });
 }
+
+export const setRomInfo = (romInfo) => dispatch => {
+    dispatch({
+        type: "SET_ROM_INFO",
+        payload: romInfo
+    });
+}
