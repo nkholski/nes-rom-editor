@@ -51,3 +51,11 @@ export const setRomInfo = (romInfo) => dispatch => {
         payload: romInfo
     });
 }
+
+export const setRomNames = (romNames) => dispatch => {
+    dispatch({
+        type: "SET_ROM_NAMES",
+        payload: romNames
+    });
+
+}

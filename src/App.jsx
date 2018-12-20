@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import Init from "./services/init";
 
 // import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -10,7 +11,8 @@ import {
   setRomInfoIndex,
   setRomInfo,
   storeRom,
-  setRomSettings
+  setRomSettings,
+  setRomNames
 } from "./redux/actions/nesRomActions";
 
 import classnames from "classnames";
@@ -75,17 +77,12 @@ class App extends React.Component {
       },
       disabled: []
     };
-    fetch("/files/nespalette.json")
-      .then(response => response.json())
-      .then(palette => {
-        this.props.setPalette(palette);
-        this.setState({ ready: true });
-      });
-    fetch("/rom-info/index.json")
-      .then(response => response.json())
-      .then(romInfo => {
-        this.props.setRomInfoIndex(romInfo);
-      });
+
+    const init = new Init(this.props);
+    init.init().then(() => {
+      this.setState({ ready: true });
+});
+
 
     /// return new Promise(resolve => { let i = new Image(); i.onload = () => { resolve(i) }; i.src = url; });
 
@@ -381,6 +378,9 @@ const mapDispatchToProps = dispatch => {
     },
     setRomInfo: romInfo => {
       dispatch(setRomInfo(romInfo));
+    },
+    setRomNames: romNames => {
+      dispatch(setRomNames(romNames));
     }
     /*,
     setGameList: gameList => {

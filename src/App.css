@@ -203,3 +203,11 @@ canvas {
 .github-link>i {
   transform: translateY(20px);
 }
+
+.file-input {
+  display: none;
+}
+body {
+  min-width: 1900px;
+
+}
