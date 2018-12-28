@@ -40,9 +40,7 @@ class DrawControls extends Component {
   constructor(props) {
     super(props);
     console.log(props.presetCompositions);
-    const compositions = props.presetCompositions
-      ? [...props.presetCompositions]
-      : [];
+    const compositions = props.compositions ? [...props.compositions] : [];
 
     try {
       const storedCompositions = JSON.parse(
@@ -319,11 +317,11 @@ class DrawControls extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.presetCompositions !== this.props.presetCompositions) {
+    if (prevProps.compositions !== this.props.compositions) {
       this.setState({
         compositions: [
           // ...JSON.parse(localStorage.getItem("compositions")),
-          ...this.props.presetCompositions
+          ...this.props.compositions
         ]
       });
     }
@@ -338,7 +336,7 @@ const mapStateToProps = state => {
   return {
     ...state.canvasReducer,
     ...state.drawReducer,
-    presetCompositions: state.canvasReducer.presetCompositions
+    compositions: state.romSettingsReducer.compositions
   };
 };
 

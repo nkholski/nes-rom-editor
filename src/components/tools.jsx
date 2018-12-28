@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ImportImage from "./importImage";
+import TextFinder from "./tools/TextFinder";
+import IPSPatcher from "./tools/IPSpatcher";
 import { Button, Container, Row, Col } from "reactstrap";
 
 class Tools extends Component {
@@ -17,12 +19,11 @@ class Tools extends Component {
     }
 
     render() {
-        if(this.state.page === 2) {
+        // return <IPSPatcher />;
+
+        if(this.state.page === null) {
             return <div id="tools-page">
-
-                <ImportImage />
-
-
+            <TextFinder/>
             <div class="grid">
                     <Container className="nes-container with-title is-centered">
                         <p class="title">Import image</p>
@@ -58,6 +59,15 @@ class Tools extends Component {
                         </Row>
                         <Row className="actions">
                             <Col><Button className="nes-btn is-primary">Go Game Genie</Button></Col>
+                        </Row>
+                    </Container>
+                    <Container className="nes-container with-title is-centered">
+                        <p class="title">IPS Patcher</p>
+                        <Row>
+                            <Col>Apply an whole or partial IPS patch.</Col>
+                        </Row>
+                        <Row className="actions">
+                            <Col><Button className="nes-btn is-primary">Patch!</Button></Col>
                         </Row>
                     </Container>
             
@@ -107,6 +117,8 @@ class Tools extends Component {
         }
 
     }
+
+     
 
 
 }

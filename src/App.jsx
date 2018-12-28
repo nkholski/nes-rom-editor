@@ -37,6 +37,7 @@ import ImportImage from "./components/importImage";
 import Emulator from "./components/emulator";
 import Tools from "./components/tools";
 import File from "./components/file";
+import Texts from "./components/Texts";
 
 // import { Button } from "reactstrap";
 
@@ -134,7 +135,7 @@ class App extends React.Component {
 
   render() {
     console.log(this.state.activeTab);
-    const pageIds = ["File", "Graphics", "Palettes", "Hacks", "Emulator", "Tools", "Rom info", "Help"];
+    const pageIds = ["File", "Graphics", "Palettes", "Texts", "Hacks", "Emulator", "Tools", "Help"];
     const disabled = this.state.disabled;
     
     pageIds.forEach(page => { 
@@ -180,6 +181,9 @@ class App extends React.Component {
         case "Graphics":
           pageTag = <GraphicsPage />;
           break;
+        case "Texts":
+          pageTag = <Texts />;
+          break;
         case "Hacks":
           pageTag = <RomHacks/>;
           break;
@@ -188,35 +192,6 @@ class App extends React.Component {
           break;
         case "Tools":
           pageTag = <Tools/>;
-          break;
-          case "Rom info":
-          pageTag = <p>
-            filename:
-            prg-rom: bytes
-            chr-rom: x banks x bytes || No CHR-Rom see note
-
-            Hacks: 15
-            Palette references: 10
-            Compostions: 5 (20% of CHR-Rom mapped)
-            Text tables: 1
-            Text references: 10
-
-
-            Note: This rom has no CHR-Rom which means it uses CHR-Ram. You will need to dig through PRG-Rom to manipulate GFX.
-            
-          </p>
-          
-          
-          
-          
-    
-
-
-
-
-
-
-
           break;
         default:
           pageTag = <h1>{page}</h1>;

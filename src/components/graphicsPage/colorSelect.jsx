@@ -13,7 +13,7 @@ export default function ColorSelect(props) {
   };
 
   let NEScolorIndex;
-  Object.keys(props.palette).some((hexcolor, i) => { console.log(hexcolor, i); if(props.palette[hexcolor] === props.color){NEScolorIndex = i; return true} })
+  Object.keys(props.palette).some((hexcolor, i) => {  if(props.palette[hexcolor] === props.color){NEScolorIndex = i; return true} })
 
 
   let hexString = NEScolorIndex.toString(16).toUpperCase();

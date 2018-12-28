@@ -380,8 +380,8 @@ class RomHacks extends Component {
 
 const mapStateToProps = state => {
   return { 
-    hacks: state.nesRomReducer.romSettings.hacks,
-    textTables: state.nesRomReducer.romSettings.textTables,
+    hacks: state.romSettingsReducer.hacks,
+    textTables: state.romSettingsReducer.textTables,
     romData: state.nesRomReducer.romData,
     nesPalette: state.drawReducer.nesPalette,
     chrSpan: state.nesRomReducer.chrSpan

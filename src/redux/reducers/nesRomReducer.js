@@ -1,5 +1,6 @@
 const defaultState = {
     romData: [], // DataView
+    untouchedRom: [], // for IPS download
     chrData: {
         start: 0,
         len: 0
@@ -10,6 +11,7 @@ const defaultState = {
     romSettings: {}, // External romsettings (Palettes and hacks for current rom)
     romInfoIndex: {}, // Index over avaliable hacks
     romInfo: {} // Info about the rom, mapper and stuff
+
 }
 
 export default (state = defaultState, action) => {
@@ -34,15 +36,18 @@ export default (state = defaultState, action) => {
                 ...state,
                 romNames: payload
             }
-        case 'SET_ROM_SETTINGS':
+        /*case 'SET_ROM_SETTINGS':
             console.log("SET ROM SETTINGS", payload);
             return {
                 ...state,
                 romSettings: payload
-            };
+            };*/
         case 'STORE_ROM':
-            console.log("STORE ROM", payload.romData.buffer);
-
+            console.log("STORE ROM", payload.romData === payload.untouchedRom);
+                    	if(state.untouchedRom.byteLength > 0) {
+                            // TEMP
+                            payload.untouchedRom = state.untouchedRom;
+                        }
             return {
                 ...state,
                 ...payload,

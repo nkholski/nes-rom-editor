@@ -1,8 +1,10 @@
 export const storeRom = (romData, chrSpan) => dispatch => {
     console.log("Store", romData, chrSpan);
+    const untouchedRom = new DataView(romData.buffer.slice(0));
+   
     dispatch({
         type: 'STORE_ROM',
-        payload: {romData, chrSpan}
+        payload: {romData, chrSpan, untouchedRom}
     })
 }
 

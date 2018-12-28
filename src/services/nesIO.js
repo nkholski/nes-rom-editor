@@ -67,7 +67,82 @@ export default class NesIO {
           };
         }
 
+/*
+        fetch("/files/test1.ips").then(response => response.arrayBuffer()).then((arrayBuffer) => {
+          const ipsView = new DataView(arrayBuffer);
+          let recordStart = 5;
+          //while(true) {
+          console.log(ipsView.byteLength - 3);
+                    console.log("O=", ipsView.getUint8(ipsView.byteLength - 3));
 
+          console.log("O=", ipsView.getUint8(ipsView.byteLength - 2));
+          // LOOP
+
+          console.log("F=", ipsView.getUint8(ipsView.byteLength - 1));
+   
+          for(;;){
+          if (recordStart + 6 > ipsView.byteLength) {
+            alert("Corrupt IPS file");
+            break;
+          }
+          if (ipsView.getUint8(recordStart) === 69 && ipsView.getUint8(recordStart + 1) === 79 && ipsView.getUint8(recordStart + 2) === 70) {
+            console.log("END OF FILE");
+            break;
+          }
+
+          
+            // CHECK FOR EOF, bail
+
+          console.log("start",  ipsView.getUint8(recordStart));
+
+          // First 3 bytes is address
+          const address = ipsView.getUint8(recordStart) * 256 * 256 + ipsView.getUint8(recordStart + 1) * 256 + ipsView.getUint8(recordStart + 2);
+
+
+                  /*
+Addr, 3 bytes 32784
+file.jsx: 247 Size, 2 bytes 1
+file.jsx: 238 Addr, 3 bytes 32792
+file.jsx: 247 Size, 2 bytes 1
+
+Addr, 3 bytes 32784
+file.jsx: 243 doing byte 2
+file.jsx: 243 doing byte 1
+file.jsx: 243 doing byte 0
+file.jsx: 248 Size, 2 bytes 1
+file.jsx: 238 Addr, 3 bytes 32792
+file.jsx: 243 doing byte 2
+file.jsx: 243 doing byte 1
+file.jsx: 243 doing byte 0
+file.jsx: 248 Size, 2 bytes 1
+                  */
+/*
+          // Byte 4,5 is size
+          const size = ipsView.getUint16(recordStart + 3);
+
+                              console.log("address", address, size);
+
+                              debugger;
+
+
+          for (let i = 0; i < size; i++) {
+            this.dataView.setUint8(address + i, ipsView.getUint8(recordStart + 5 + i))
+          }
+          recordStart += 3 + 2 + size;
+
+          }
+          console.log("IPS DONW");
+
+
+          //}*/
+
+/*
+          console.log("A", ipsView.getUint8(1));
+
+          console.log("IPS", ipsView);
+
+        })
+*/
       /*  const blob = new Blob(new Uint8Array(this.dataView.buffer), {
           type: "octet/stream"
         });*/
@@ -101,6 +176,9 @@ export default class NesIO {
         // this.findPaletteInRom(this.dataView, [this.dataView.getUint8(1512), this.dataView.getUint8(1513), this.dataView.getUint8(1514)], this.chrSpan.first)
         return this.dataView;
       });
+
+      
+
     return promise;
   }
 

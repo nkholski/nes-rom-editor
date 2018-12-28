@@ -10,15 +10,12 @@ import {
 
 class File extends Component {
     render() {
-        const prgBytes = 16 * this.props.romInfo.prg;
-        const chrBytes = 8 * this.props.romInfo.chr;
-        const chrText = chrBytes > 0 ? <span>{this.props.romInfo.chr} bank(s)({chrBytes} kb)</span> : "No CHR-Rom see note below";
+        const prgBytes = 16 * this.props.romInfo.prg.length;
+        const chrBytes = 8 * this.props.romInfo.chr.length;
+        const chrText = chrBytes > 0 ? <span>{this.props.romInfo.chr.length} bank(s)({chrBytes} kb)</span> : "No CHR-Rom see note below";
         const ramNote = chrBytes === 0 ? <span>Note: This rom has no CHR-Rom which means it uses CHR-Ram. You will need to dig through PRG-Rom to manipulate GFX.</span> : "";
        
         
-
-
-
 
         console.log("romifnoidnex", this.props.romInfoIndex);
        
@@ -50,7 +47,7 @@ class File extends Component {
                 filename: { this.props.romInfo.filename}<br /> 
                 md5: {this.props.romInfo.md5}<br />
                 no-intro md5: {this.props.romInfo.noIntroMD5}<br />
-                prg-rom: {this.props.romInfo.prg} bank(s) ({prgBytes} kb)<br/>
+                prg-rom: {this.props.romInfo.prg.length} bank(s) ({prgBytes} kb)<br/>
                 chr-rom: {chrText}<br/>
                 Hacks: 15<br/>
                 Palette references: 10<br/>
@@ -67,12 +64,12 @@ class File extends Component {
                 <p class="title">Rom actions</p>
                 <Row>
                 
-                    <input type="file" id="rom-input" onChange={e => this.loadRom(e.target.files)} className="file-input"/>;
+                    <input type="file" id="rom-input" onChange={e => this.loadRom(e.target.files)} className="file-input" accept=".nes"/>;
 
                  <Col><Button className="nes-btn is-primary" onClick={() => { document.getElementById("rom-input").click()}}>Load rom</Button></Col>
                  <Col><Button className="nes-btn is-primary">Save rom to localStorage</Button></Col>
                  <Col><Button className="nes-btn is-primary">Download rom</Button></Col>
-                 <Col><Button className="nes-btn is-primary">Download IPS</Button></Col>
+                 <Col><Button className="nes-btn is-primary" onClick={()=> { this.downloadIPS();}}>Download IPS</Button></Col>
                 </Row>
             </Container>
 
@@ -117,14 +114,22 @@ class File extends Component {
                 const noIntroMD5 = md5(dataView.buffer.slice(16)).toUpperCase();
                 const name = (this.props.romNames.hasOwnProperty(noIntroMD5)) ? this.props.romNames[noIntroMD5] : "Unknown";
 
+                const prg = [];
+                for (let i = 0; i<dataView.getUint8(4); i++) {
+                    prg.push(16 + i * 16384);
+                }
+                const chr = [];
+                for (let i = 0; i < dataView.getUint8(5); i++) {
+                    chr.push(16 + 16384 * prg.length + 8192 * i);
+                }
 
                 const romInfo = {
                     name,
                     filename: data[0].name,
-                    prg: dataView.getUint8(4),
+                    prg,
                     noIntroMD5,
                     md5: md5(dataView.buffer).toUpperCase(),
-                    chr: dataView.getUint8(5),
+                    chr,   // dataView.getUint8(5),
                     mapper: dataView.getUint8(6),
                     mapper2: dataView.getUint8(7),
                     ram: dataView.getUint8(8),
@@ -176,6 +181,171 @@ class File extends Component {
 
 
     }
+
+    downloadIPS(){
+        const len = this.props.romData.byteLength;
+        let ipsString = "PATCH";
+        let diffStart = -1;
+        let diffBlock = [];
+        let noDiffCount = 0;
+        let dataviewLength = 5+3;
+        const records = [];
+        let currentRecord = { addr: -1, values: []};
+        for(let i = 0; i<len; i++){
+            const diff = this.props.untouchedRom.getUint8(i) !== this.props.romData.getUint8(i);
+
+            // Remember new value if different or we're already started from a diff
+            if (diff || (currentRecord.addr !== -1)) {
+                currentRecord.values.push(this.props.romData.getUint8(i));
+            }
+
+            // If there is a diff, reset the noDiffCount and check if we new about it since before.
+            if(diff) {
+                noDiffCount = 0;
+                if (currentRecord.addr === -1) {
+                  currentRecord.addr = i;
+                } 
+            }
+            else {
+                noDiffCount++;
+            }
+
+            if(noDiffCount===5 && currentRecord.addr !== -1) {
+                currentRecord.values = currentRecord.values.slice(0, currentRecord.values.length - 5);
+                currentRecord.size = currentRecord.values.length;
+                records.push(currentRecord);
+                dataviewLength += 5 + currentRecord.values.length;
+                currentRecord = { addr: -1, values: []};
+            }
+
+        }
+
+        if (records.length === 0) {
+            alert("No changes detected");
+            return;
+        }
+
+        
+        let IPSview = new DataView(new ArrayBuffer(dataviewLength));
+
+        ("PATCH").split("").forEach((letter, i) => {
+            IPSview.setUint8(i, letter.charCodeAt(0));
+        });
+        ("EOF").split("").forEach((letter, i) => {
+            IPSview.setUint8(dataviewLength-3+i, letter.charCodeAt(0));
+        });
+
+        console.log(IPSview.getUint8(1));
+
+        console.log("DV",dataviewLength, IPSview);
+        let currentPos = 5;       
+        records.forEach(record => {
+            // Turn start address to 24 bit number, expressed in three bytes
+            const startAddrString = ("000000000000000000000000" + record.addr.toString(2)).slice(-24);
+            for (let byte = 0; byte < 3; byte++) {
+                const num = parseInt(startAddrString.substring(8 * byte, 8 * byte + 8), 2);
+                IPSview.setUint8(currentPos++, num)
+            }
+            // Turn size (record.values.length) into a 16 bit number as above
+            const sizeString = ("0000000000000000" + record.values.length.toString(2)).slice(-16);
+            for (let byte = 0; byte < 2; byte++) {
+                const num = parseInt(sizeString.substring(8 * byte, 8 * byte + 8), 2);
+                IPSview.setUint8(currentPos++, num);
+            }
+            // Push all number as bytes into the string
+            record.values.forEach((num) => {
+                IPSview.setUint8(currentPos++, num);
+            });
+        });
+        /*
+        let IPSdata = "PATCH"; 
+        records.forEach(record => {
+            // Turn start address to 24 bit number, expressed in three bytes
+            const startAddrString = ("000000000000000000000000" + record.addr.toString(2)).slice(-24);
+            for (let byte = 0; byte < 3; byte++) {
+                const ascii = parseInt(startAddrString.substring(8 * byte, 8 * byte + 8), 2);
+                IPSdata += String.fromCharCode(ascii);
+            }
+            // Turn size (record.values.length) into a 16 bit number as above
+            const sizeString = ("0000000000000000" + record.values.length.toString(2)).slice(-16);
+            for (let byte = 0; byte < 2; byte++) {
+                const ascii = parseInt(sizeString.substring(8 * byte, 8 * byte + 8), 2);
+                IPSdata += String.fromCharCode(ascii);
+            }
+            // Push all number as bytes into the string
+            record.values.forEach((n) => {
+                IPSdata += String.fromCharCode(n);
+            });
+        });
+        IPSdata+="EOF";
+        */
+
+
+
+       // console.log(records);
+
+         /*   if(diffCnt === 10 && diffStart !== -1) {
+                let recordString = "";
+                console.log("Addr, 3 bytes", diffCnt, diffStart);
+
+                // Turn start address to 24 bit number, expressed in three bytes
+                const startAddrString = ("000000000000000000000000" + diffStart.toString(2)).slice(-24);
+                let charCodes = [];
+                for(let byte=0; byte<3; byte++){
+                    const ascii = parseInt(startAddrString.substring(8 * byte, 8 * byte + 8),2);
+                    recordString += String.fromCharCode(ascii);
+                    charCodes.push(String.fromCharCode(ascii).charCodeAt(0));
+                }
+
+                //console.log("THE SAME?", diffStart, charCodes[0] * 256 * 256 + charCodes[1] * 256 + charCodes[2]);
+                //const decodedAddress = ipsView.getUint8(recordStart) * 256 * 256 + ipsView.getUint8(recordStart + 1) * 256 + ipsView.getUint8(recordStart + 2);
+
+
+                //console.log("Size, 2 bytes", diffBlock.length);
+                // Turn size (diffBlock.length) into a 16 bit number as above
+                const sizeString = ("0000000000000000" + diffBlock.length.toString(2)).slice(-16);
+                for (let byte = 0; byte < 2; byte++) {
+                    const ascii = parseInt(sizeString.substring(8 * byte, 8 * byte + 8), 2);
+                    recordString += String.fromCharCode(ascii);
+                }
+
+                // Push all number as bytes into the string
+                diffBlock.forEach((n) => {
+                    recordString += String.fromCharCode(n);
+                });
+                
+                // Add it all to the IPS-output string
+                ipsString += recordString;
+
+                // Reset
+                diffStart = -1;
+                diffBlock = [];
+                diffCnt = 0;
+            }
+            
+            
+        
+
+
+        }*/
+
+        //console.log(ipsString);
+        console.log(records);
+
+        const filename = this.props.romData.filename + ".ips";
+        const blob = new Blob([new Uint8Array(IPSview.buffer)], {
+            type: "octet/stream"
+        });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+        window.URL.revokeObjectURL(url);
+
+
+        //console.log("IPS", ipsString);
+    }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -193,7 +363,9 @@ const mapStateToProps = state => {
     return {
         romInfo: state.nesRomReducer.romInfo,
         romInfoIndex: state.nesRomReducer.romInfoIndex,
-        romNames: state.nesRomReducer.romNames
+        romNames: state.nesRomReducer.romNames,
+        romData: state.nesRomReducer.romData,
+        untouchedRom: state.nesRomReducer.untouchedRom
     };
 };
 

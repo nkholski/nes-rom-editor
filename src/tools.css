@@ -15,3 +15,27 @@ div.actions .col {
 
 
 }
+
+
+.excluded-letters {
+    color: #AAA;
+
+}
+
+span.selected-letters {
+        background-color: #DFD;
+    
+}
+
+input.one-digit {
+    width: 3.5em;
+    text-align: center;
+     padding: 0 !important;
+}
+
+table.string-finder tr {
+    border-top: 3px solid #555;
+}
+table.string-finder tr.selected {
+    background-color: lightgreen;
+}

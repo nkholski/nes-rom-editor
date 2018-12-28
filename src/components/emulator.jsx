@@ -42,10 +42,16 @@ class Emulator extends Component {
           null,
           this.props.romData.buffer
       );*/
-    const binary = String.fromCharCode.apply(
+    /*const binary = String.fromCharCode.apply(
       null,
       new Uint8Array(this.props.romData.buffer)
-    );
+    );*/
+
+    const binary = new Uint8Array(this.props.romData.buffer).reduce(function (data, byte) {
+      return data + String.fromCharCode(byte);
+    }, '')
+    
+    // new TextDecoder("utf-8").decode(new Uint8Array(this.props.romData.buffer));
 
     const canvas = document.getElementById("screen");
 
@@ -86,6 +92,8 @@ class Emulator extends Component {
 
   onAnimationFrame = () => {
     window.requestAnimationFrame(this.onAnimationFrame);
+    console.log(this.framebuffer_u8);
+    debugger;
     this.image.data.set(this.framebuffer_u8);
     this.ctx.putImageData(this.image, 0, 0);
     this.nes.frame();
