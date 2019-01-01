@@ -1,19 +1,22 @@
 import React from "react";
 
 export default function ColorSelect(props) {
-  const selectPalette = <div className="palette" onClick={()=>props.showPaletteModal(props.colorIndex)}>Edit</div>;
+  const selectPalette = props.edit ? <div className="palette" onClick={()=>props.edit(props.colorIndex)}>Edit</div> : null;
   let className = "color";
   className += props.selected ? " selected" : "";
 
-
-
+  let NEScolorIndex;
+  if(isNaN(props.color)){
+    console.log("color nan",props.color);
+    Object.keys(props.palette).some((hexcolor, i) => {  if(props.palette[hexcolor] === props.color){NEScolorIndex = i; return true} })
+  }
+  else {
+    NEScolorIndex = props.color;
+  }
 
   const style = {
-    backgroundColor: props.color
+    backgroundColor: props.palette[NEScolorIndex]
   };
-
-  let NEScolorIndex;
-  Object.keys(props.palette).some((hexcolor, i) => {  if(props.palette[hexcolor] === props.color){NEScolorIndex = i; return true} })
 
 
   let hexString = NEScolorIndex.toString(16).toUpperCase();
@@ -22,7 +25,7 @@ export default function ColorSelect(props) {
   return (
     
     <div className="color-control">
-      <div className={className} style={style} onClick={()=>props.setActiveColor(props.colorIndex)}>{hexString}</div>
+      <div className={className} style={style} onClick={()=>props.callback(props.colorIndex)}>{hexString}</div>
       {selectPalette}
     </div>
   );

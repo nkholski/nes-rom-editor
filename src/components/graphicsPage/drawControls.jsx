@@ -73,11 +73,11 @@ class DrawControls extends Component {
       console.log(this.props.activeColorIndex);
       return (
         <ColorSelect
-          setActiveColor={this.props.setActiveColor}
+          callback={this.props.setActiveColor}
           colorIndex={colorIndex}
           color={this.props.colors[colorIndex]}
           selected={this.props.activeColorIndex === colorIndex && this.props.mode === "draw"}
-          showPaletteModal={this.showPaletteModal.bind(this)}
+          edit={this.showPaletteModal.bind(this)}
           palette={this.props.nesPalette}
           key={colorIndex}
         />

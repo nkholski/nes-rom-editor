@@ -1,3 +1,11 @@
+export const isReady = () => dispatch => {
+    dispatch({
+        type: "IS_READY"
+    })
+}
+
+
+
 export const storeRom = (romData, chrSpan) => dispatch => {
     console.log("Store", romData, chrSpan);
     const untouchedRom = new DataView(romData.buffer.slice(0));

@@ -123,10 +123,10 @@ class TextFinder extends Component {
     const okSkip = 0;
     let foundCount = 0;
     let treshold = okSkip;
-    const lastCheck = this.props.romData.byteLength - minLength;
+    const lastCheck = this.state.searchSettings.prgOnly ? this.props.romInfo.prg.length * 16384 - minLength : this.props.romData.byteLength - minLength;
     let step = 0;
     let string = "";
-    for (let i = 0; i < lastCheck; i++) {
+    for (let i = 16; i < lastCheck; i++) {
       const value = this.props.romData.getUint8(i);
       if (
         table.hasOwnProperty(value) &&
@@ -220,8 +220,8 @@ const mapStateToProps = state => {
     textTables: state.romSettingsReducer.textTables,
     textStrings: state.romSettingsReducer.textStrings,
     romSettings: state.nesRomReducer.romSettings,
-    romData: state.nesRomReducer.romData
-    
+    romData: state.nesRomReducer.romData,
+    romInfo: state.nesRomReducer.romInfo
   };
 };
 

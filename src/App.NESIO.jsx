@@ -1,11 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-// import Init from "./services/init";
+import Init from "./services/init";
+
 // import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-// Actions
-import { init } from "./services/init";
-import { loadURL } from "./services/romIO";
 import { setPalette } from "./redux/actions/drawActions";
 import { setPresetCompositions } from "./redux/actions/canvasActions";
 import {
@@ -45,6 +43,8 @@ import Palettes from "./components/Palettes";
 
 import DownloadNes from "./services/downloadNes";
 
+import NesIO from "./services/nesIO";
+
 import "./App.css";
 import "nes.css/css/nes.css";
 import "./tabs.css";
@@ -79,9 +79,58 @@ class App extends React.Component {
       disabled: []
     };
 
-    props.init();
+    const init = new Init(this.props);
+    init.init().then(() => {
+      this.setState({ ready: true });
+});
 
-   
+
+    /// return new Promise(resolve => { let i = new Image(); i.onload = () => { resolve(i) }; i.src = url; });
+
+    fetch("/screenshot-source.png")
+      .then(res => new Image(res))
+      .then(img => {
+        // console.log("img",img);
+        /*
+      const tmpCanvas = document.createElement("canvas");
+      const tmpCtx = tmpCanvas.getContext("2d");
+
+      let imageStr = '';
+      const bytes = [].slice.call(new Uint8Array(buffer));
+
+      bytes.forEach(b => (imageStr += String.fromCharCode(b)));
+
+      imageStr = window.btoa(imageStr);
+
+      const base64Flag = 'data:image/jpeg;base64,';
+      //const imageStr = arrayBufferToBase64(buffer);
+      const img = base64Flag + imageStr;*/
+        //  tmpCtx.drawImage(img, 0, 0, img.width, img.height);
+      });
+
+    const nesIO = new NesIO();
+    nesIO.loadFile("/files/smb.nes").then(romData => {
+      this.props.storeRom(romData, nesIO.chrSpan);
+      /*this.chrSpan = nesIO.chrSpan;
+      // const width = 9 * 8; // Eight block wide, line between*/
+      /*this.setState({
+        height: 9 * (nesIO.chrSpan.len / 128)
+      });*/
+
+      // OH. It's Mario
+      fetch("/rom-info/games/Super Mario Bros.json")
+        .then(data => data.json())
+        .then(data => {
+          // Convert all string-hex numbers to decimal ints
+          this.props.setRomSettings(data);
+          this.props.setRomInfo(nesIO.romInfo);
+        });
+    });
+
+    // TEST
+    // row = [1,0,3,1,2,0,1,2];
+
+    //console.log("Varianter:", colorToIndex.length);
   }
 
   render() {
@@ -99,22 +148,11 @@ class App extends React.Component {
 
       }
     });
-    // this.setState({disabled});
+    this.setState({disabled});
 
-
-    console.log("ändrar", this.props, this.props.romInfo, this.props.romNames, this.props.romInfoIndex);
-
-
-
-    if (!this.state.ready) {
-     // return <div>Loading...</div>;
+    if (!this.state.ready || this.props.romVersion < 1) {
+      return <div>Loading...</div>;
     }
-    else if(this.romVersion<1 && this.props.romNames && this.props.romInfoIndex){
-      console.log("LOAD")
-     // this.props.loadURL("smb", this.props.romNames, this.props.romInfoIndex);
-    }
-
-
     const tabs = pageIds.map(page => (
       <NavItem key={page}>
         <NavLink
@@ -193,14 +231,10 @@ class App extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (!this.props.romStatus && !nextProps.romStatus && nextProps.romNames && nextProps.romInfoIndex) {
-      this.props.loadURL("smb", nextProps.romNames, nextProps.romInfoIndex);
-    }
-    if(!nextProps.isReady) {
-      return false;
-    }
-    return (nextState.activeTab !== this.state.activeTab ||
-      nextState.ready !== this.state.ready);
+    console.log(nextState.activeTab, nextState.ready, nextProps.romVersion);
+    return nextState.activeTab !== this.state.activeTab ||
+      nextState.ready !== this.state.ready ||
+      this.props.romVersion !== nextProps.romVersion;
   }
 
   /*page(pg) {
@@ -239,7 +273,6 @@ class App extends React.Component {
   }
 
   getRomSpecificStuff() {
-    return;
     if (this.props.romInfoIndex.md5.hasOwnProperty(this.props.md5)) {
       const romFile = this.props.romInfoIndex.md5[this.props.md5];
       fetch("/rom-info/games/" + romFile + ".json")
@@ -297,21 +330,15 @@ const mapStateToProps = state => {
   return {
     nesRomReducer: state.nesRomReducer,
     canvasReducer: state.canvasReducer,
-    romData: state.nesRomReducer.romData, // Bort!
+    romData: state.nesRomReducer.romData,
     romVersion: state.nesRomReducer.version,
     md5: state.nesRomReducer.md5,
-    romInfoIndex: state.nesRomReducer.romInfoIndex,
-    romNames: state.nesRomReducer.romNames,
-    isReady: state.nesRomReducer.isReady,
-    romStatus: state.nesRomReducer.romStatus
+    romInfoIndex: state.nesRomReducer.romInfoIndex
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    init: () => {
-      dispatch(init());
-    },
     setPalette: palette => {
       dispatch(setPalette(palette));
     },
@@ -332,9 +359,6 @@ const mapDispatchToProps = dispatch => {
     },
     setRomNames: romNames => {
       dispatch(setRomNames(romNames));
-    },
-    loadURL: (fileName, romNames, romInfoIndex) => {
-      dispatch(loadURL(fileName, romNames, romInfoIndex))
     }
     /*,
     setGameList: gameList => {

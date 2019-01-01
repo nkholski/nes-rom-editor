@@ -14,8 +14,7 @@
     "react-redux": "^5.1.0",
     "react-scripts": "2.1.0",
     "reactstrap": "^6.5.0",
-    "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -35,6 +34,7 @@
   "devDependencies": {
     "babel-loader": "^8.0.4",
     "react-router-dom": "^4.3.1",
+    "redux-thunk": "^2.3.0",
     "xmldom": "^0.1.27"
   }
 }

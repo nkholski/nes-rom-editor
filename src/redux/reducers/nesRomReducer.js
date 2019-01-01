@@ -1,4 +1,6 @@
 const defaultState = {
+    isReady: false, // Shouldnt be here. true when init finishes
+    romStatus: null,
     romData: [], // DataView
     untouchedRom: [], // for IPS download
     chrData: {
@@ -8,7 +10,7 @@ const defaultState = {
     chrSpan: {}, // ERSÄTTER OVAN?
     version: 0, // version of data, used to detect changes
     lastAltered: 0, // Index of (first)byte altered, used to render parts of canvas
-    romSettings: {}, // External romsettings (Palettes and hacks for current rom)
+    romSettings: {}, // TO BE REMOVED External romsettings (Palettes and hacks for current rom)
     romInfoIndex: {}, // Index over avaliable hacks
     romInfo: {} // Info about the rom, mapper and stuff
 
@@ -21,6 +23,16 @@ export default (state = defaultState, action) => {
     } = action;
 
     switch (type) {
+        case 'ROM_STATUS':
+            return {
+                ...state,
+                romStatus: payload
+            }
+        case 'IS_READY':
+            return {
+                ...state,
+                isReady: true
+            }
         case 'SET_ROM_INFO_INDEX':
             return {
                 ...state,
@@ -31,26 +43,27 @@ export default (state = defaultState, action) => {
                 ...state,
                 romInfo: payload
             };
-        case 'SET_ROM_NAMES': 
+        case 'SET_ROM_NAMES':
             return {
                 ...state,
                 romNames: payload
             }
-        /*case 'SET_ROM_SETTINGS':
-            console.log("SET ROM SETTINGS", payload);
-            return {
-                ...state,
-                romSettings: payload
-            };*/
+            /*case 'SET_ROM_SETTINGS':
+                console.log("SET ROM SETTINGS", payload);
+                return {
+                    ...state,
+                    romSettings: payload
+                };*/
         case 'STORE_ROM':
-            console.log("STORE ROM", payload.romData === payload.untouchedRom);
-                    	if(state.untouchedRom.byteLength > 0) {
-                            // TEMP
-                            payload.untouchedRom = state.untouchedRom;
-                        }
+            // Should be fixed, payload shoud always be === romData
+            let pl = payload.hasOwnProperty("romData") ? payload : {
+                romData: payload
+            };
+
+
             return {
                 ...state,
-                ...payload,
+                ...pl,
                 version: 1
             };
         case 'PUT_PIXEL':

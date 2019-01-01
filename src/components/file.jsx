@@ -1,19 +1,46 @@
 import React, { Component } from "react";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Container, Row, Col, Button } from "reactstrap";
-import md5 from "js-md5";
+import { loadFile } from "../services/romIO";
 
 import {
-    setRomInfo,
-    storeRom
+  setRomInfo,
+  storeRom,
+  setRomSettings
 } from "../redux/actions/nesRomActions";
 
 class File extends Component {
     render() {
-        const prgBytes = 16 * this.props.romInfo.prg.length;
-        const chrBytes = 8 * this.props.romInfo.chr.length;
-        const chrText = chrBytes > 0 ? <span>{this.props.romInfo.chr.length} bank(s)({chrBytes} kb)</span> : "No CHR-Rom see note below";
-        const ramNote = chrBytes === 0 ? <span>Note: This rom has no CHR-Rom which means it uses CHR-Ram. You will need to dig through PRG-Rom to manipulate GFX.</span> : "";
+        let page = null;
+        if(this.props.romVersion > 0 && Object.keys(this.props.romInfo).length>0) {
+            const prgBytes = this.props.romInfo ? 16 * this.props.romInfo.prg.length : -1;
+            const chrBytes = 8 * this.props.romInfo.chr.length;
+            const chrText = chrBytes > 0 ? <span>{this.props.romInfo.chr.length} bank(s)({chrBytes} kb)</span> : "No CHR-Rom see note below";
+            const ramNote = chrBytes === 0 ? <span>Note: This rom has no CHR-Rom which means it uses CHR-Ram. You will need to dig through PRG-Rom to manipulate GFX.</span> : "";
+            page = <Container className="nes-container with-title is-centered">
+                <p class="title">Current rom info</p>
+                <Row>
+                    <Col>
+                        name: {this.props.romInfo.name}<br />
+                        filename: {this.props.romInfo.filename}<br />
+                        md5: {this.props.romInfo.md5}<br />
+                        no-intro md5: {this.props.romInfo.noIntroMD5}<br />
+                        prg-rom: {this.props.romInfo.prg.length} bank(s) ({prgBytes} kb)<br />
+                        chr-rom: {chrText}<br />
+                        Hacks: 15<br />
+                        Palette references: 10<br />
+                        Compostions: 5 (20% of CHR-Rom mapped)<br />
+                        Text tables: 1<br />
+                        Text references: 10<br />
+
+                        {ramNote}
+                    </Col>
+                </Row>
+            </Container>;
+
+        }
+
        
         
 
@@ -39,38 +66,16 @@ class File extends Component {
                 </Row>
             </Container>
 
-            <Container className="nes-container with-title is-centered">
-                <p class="title">Current rom info</p>
-            <Row>
-                <Col>
-                name: { this.props.romInfo.name }<br/>
-                filename: { this.props.romInfo.filename}<br /> 
-                md5: {this.props.romInfo.md5}<br />
-                no-intro md5: {this.props.romInfo.noIntroMD5}<br />
-                prg-rom: {this.props.romInfo.prg.length} bank(s) ({prgBytes} kb)<br/>
-                chr-rom: {chrText}<br/>
-                Hacks: 15<br/>
-                Palette references: 10<br/>
-                Compostions: 5 (20% of CHR-Rom mapped)<br/>
-                Text tables: 1<br/>
-                Text references: 10<br/>
-    
-                { ramNote }
-                </Col>
-            </Row>
-            </Container>
+           {page}
 
+           <input type="file" id="rom-input" onChange={e => this.loadRom(e.target.files)} className="file-input" accept=".nes" />
             <Container className="nes-container with-title is-centered">
                 <p class="title">Rom actions</p>
-                <Row>
+                <Button className="nes-btn is-primary" onClick={() => { document.getElementById("rom-input").click()}}>Load rom</Button>
+                <Button className="nes-btn is-primary">Save rom to localStorage</Button>
+                <Button className="nes-btn is-primary">Download rom</Button>
+                <Button className="nes-btn is-primary" onClick={()=> { this.downloadIPS();}}>Download IPS</Button>
                 
-                    <input type="file" id="rom-input" onChange={e => this.loadRom(e.target.files)} className="file-input" accept=".nes"/>;
-
-                 <Col><Button className="nes-btn is-primary" onClick={() => { document.getElementById("rom-input").click()}}>Load rom</Button></Col>
-                 <Col><Button className="nes-btn is-primary">Save rom to localStorage</Button></Col>
-                 <Col><Button className="nes-btn is-primary">Download rom</Button></Col>
-                 <Col><Button className="nes-btn is-primary" onClick={()=> { this.downloadIPS();}}>Download IPS</Button></Col>
-                </Row>
             </Container>
 
             <Container className="nes-container with-title is-centered">
@@ -101,85 +106,7 @@ class File extends Component {
     }
 
     loadRom(data) {
-        const reader = new FileReader();
-        if (data[0]) {
-            console.log("FINNSD ATA");
-            reader.onload = (e) => {
-                const dataView = new DataView(e.target.result);
-                const isNes = (dataView.getUint8(0) + dataView.getUint8(1) + dataView.getUint8(2)) === 230; // I'm lazy
-                if(!isNes) {
-                    alert("Not a valid nes rom!");
-                    return;
-                }
-                const noIntroMD5 = md5(dataView.buffer.slice(16)).toUpperCase();
-                const name = (this.props.romNames.hasOwnProperty(noIntroMD5)) ? this.props.romNames[noIntroMD5] : "Unknown";
-
-                const prg = [];
-                for (let i = 0; i<dataView.getUint8(4); i++) {
-                    prg.push(16 + i * 16384);
-                }
-                const chr = [];
-                for (let i = 0; i < dataView.getUint8(5); i++) {
-                    chr.push(16 + 16384 * prg.length + 8192 * i);
-                }
-
-                const romInfo = {
-                    name,
-                    filename: data[0].name,
-                    prg,
-                    noIntroMD5,
-                    md5: md5(dataView.buffer).toUpperCase(),
-                    chr,   // dataView.getUint8(5),
-                    mapper: dataView.getUint8(6),
-                    mapper2: dataView.getUint8(7),
-                    ram: dataView.getUint8(8),
-                    tv: dataView.getUint8(9),
-                    ramExists: dataView.getUint8(10)
-                };
-
-                console.log(romInfo);
-                
-
-                let chrSpan;
-                if (romInfo.chr > 0) {
-                    chrSpan = {
-                        first: 16 + 16384 * romInfo.prg,
-                        len: 8192 * romInfo.chr
-                    };
-                } else {
-                    chrSpan = {
-                        first: 16,
-                        len: dataView.byteLength - 100
-                    };
-                }
-                // 
-
-                if (this.props.romInfoIndex.md5.hasOwnProperty(noIntroMD5)) {
-                    fetch("rom-info/games/" + this.props.romInfoIndex.md5[noIntroMD5] + ".json").then(response => response.json()).then( response => {
-                 
-                        console.log("GOT DATA", response)
-                        // Kolla texttables om A-Z, a-z, 0-9
-
-                    });
-                    
-                    
-                    alert("DATA EXISTS");
-                }
-
-
-                this.props.storeRom(dataView, chrSpan);
-
-                this.props.setRomInfo(romInfo);
-
-            }
-            reader.readAsArrayBuffer(data[0]);
-
-        }
-        else {
-            alert("FAIL");
-        }
-
-
+        this.props.loadFile(data[0], this.props.romNames, this.props.romInfoIndex);
     }
 
     downloadIPS(){
@@ -348,16 +275,20 @@ class File extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => {
+/*const mapDispatchToProps = dispatch => {
     return {
         setRomInfo: romInfo => {
             dispatch(setRomInfo(romInfo));
         },
         storeRom: (romData, chrSpan) => {
             dispatch(storeRom(romData, chrSpan))
-        }
+        },
     }
-}
+}*/
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ setRomInfo , storeRom, setRomSettings, loadFile }, dispatch);
+
 
 const mapStateToProps = state => {
     return {
@@ -365,7 +296,8 @@ const mapStateToProps = state => {
         romInfoIndex: state.nesRomReducer.romInfoIndex,
         romNames: state.nesRomReducer.romNames,
         romData: state.nesRomReducer.romData,
-        untouchedRom: state.nesRomReducer.untouchedRom
+        untouchedRom: state.nesRomReducer.untouchedRom,
+        romVersion: state.nesRomReducer.version
     };
 };
 

@@ -1,50 +1,61 @@
-export default class Init {
-    constructor({setPalette, setRomNames, setRomInfoIndex}) {
-        this.setPalette = setPalette;
-        this.setRomNames = setRomNames;
-        this.setRomInfoIndex = setRomInfoIndex;
-/*        this.getPalette(setPalette);
-        this.getRomNames(setRomNames);
-        this.jobLeft = 2;*/
-    }
+const init = () => {
+    return dispatch => {
+        // Create temp canvas used by tile renderer
+        const canvas = document.createElement("canvas");
+        canvas.mozOpaque = true;
+        canvas.opaque = true;
+        canvas.style.imageRendering = "webkit-crisp-edges";
+        canvas.setAttribute('width', 8);
+        canvas.setAttribute('height', 8);
+        const ctx = canvas.getContext("2d");
+        ctx.imageSmoothingEnabled = false;
 
-    init() {
-        const getPalette = fetch("../files/nespalette.json")
-            .then(response => response.json()).then((data) => {
-                this.setPalette(data);
-            });
+        dispatch({
+            type: "SET_TMP_CANVAS",
+            payload: { canvas, ctx }
+        })
 
-        const getRomNames = fetch("../rom-info/md5-to-game-name.json")
-            .then(response => response.json()).then((data) => {
-                this.setRomNames(data);
-            });
 
-        const getRomInfoIndex =  fetch("/rom-info/index.json")
-                .then(response => response.json())
-                .then(romInfo => {
-                    this.setRomInfoIndex(romInfo);
+
+        // Load a bunch of stuff
+        const palette = fetch("../files/nespalette.json")
+            .then(response => response.json())
+            .then((data) => {
+                console.log("PALETTE", data);
+                dispatch({
+                    type: "SET_PALETTE",
+                    payload: data
                 });
+            });
+        const gameName = fetch("../rom-info/md5-to-game-name.json")
+            .then(response => response.json())
+            .then((data) => {
+                dispatch({
+                    type: "SET_ROM_NAMES",
+                    payload: data
+                });
+            });
+        const romInfo = fetch("/rom-info/index.json")
+            .then(response => response.json())
+            .then(data => {
+                console.log("index", data);
 
-        return Promise.all([getPalette, getRomNames, getRomInfoIndex]);
+                dispatch({
+                    type: "SET_ROM_INFO_INDEX",
+                    payload: data
+                })
+            });
+
+        Promise.all([palette, gameName, romInfo]).then(
+            () => {
+                dispatch({
+                    type: "IS_READY",
+                })
+            }
+        )
     }
-
-
-    getPalette(setPalette){
-    return fetch("../files/nespalette.json")
-    .then(response => response.json()).then((data) => {
-        setPalette(data);
-        this.jobLeft--;
-    });
-    }
-
-    getRomNames(setRomNames) {
-
-
-
-    
-    }
-
- 
-
-
 }
+
+export {
+    init
+};
