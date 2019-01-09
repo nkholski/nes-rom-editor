@@ -6,7 +6,7 @@ const defaultState = {
     blocks: [
         [null]
     ],
-    scale: 32,
+    scale: 16,
     clipByte: 0,
     compositionName: "",
     presetCompositions: []
@@ -18,6 +18,15 @@ export default (state = defaultState, action) => {
         payload
     } = action;
     switch (type) {
+        case 'CLEAR_COMPOSITION':
+            return {...state,
+            blocks: [
+                [null]
+            ],
+            width: 1,
+            height: 1,
+            scale: 16
+        }
         case 'EXPAND':
             return expand(state, payload);
             /* case 'SETCOLORS':
@@ -49,8 +58,21 @@ export default (state = defaultState, action) => {
             return {...state,
             blocks: flipBlock(payload, state.blocks)
             } ;  
+        case 'MOUSE_WHEEL_ZOOM':
+            console.log("Payload", payload)
+            const zoomLevels = [4,6,8,10,12,16];
+            let newZoomIndex = zoomLevels.indexOf(state.scale) + payload;
+            if(newZoomIndex<0) {
+                newZoomIndex = 0;
+            } else if(newZoomIndex>zoomLevels.length-1){
+                newZoomIndex = zoomLevels.length-1;
+            }
+            const scale = zoomLevels[newZoomIndex];
+            console.log("SCALE", scale, newZoomIndex);
 
-
+            return {...state,
+                scale
+            };
         default:
             return state;
     }
@@ -100,6 +122,14 @@ const expand = (state, payload) => {
         default: // Happy Lint
             break;
     }
+
+    scale = setScaleByComposition(blocks);
+
+   
+
+
+
+
     return {
         width,
         height,
@@ -154,7 +184,6 @@ const renderBlocks = (state, {
     romData,
     colors
 }) => {
-    console.log("RB", colors);
     const ctx = document.getElementById("draw-canvas").getContext("2d");
     for (let x = 0; x < state.blocks.length; x++) {
         // Vertical line at x
@@ -164,14 +193,13 @@ const renderBlocks = (state, {
         ctx.strokeStyle = 'rgba(0,0,0,0.5)';
         ctx.stroke();
         for (let y = 0; y < state.blocks[x].length; y++) {
-            console.log("BLCKS",state.blocks[x][y]);
             if (!state.blocks[x][y]){
-                continue;
+                state.blocks[x][y] = {byteIndex: null, flipX: false, flipY: false}
             }
+    
             const {byteIndex, flipX, flipY} = state.blocks[x][y];
-            console.log("by",byteIndex);
-            if (byteIndex > 0 && (!excludeByteIndex || excludeByteIndex === byteIndex)) {
-                console.log("RENDERING");
+            
+            if (!excludeByteIndex || excludeByteIndex !== byteIndex) {
                 renderBlock(byteIndex, romData, x * 8, y * 8, ctx, state.scale, colors, flipX, flipY);
             }
             // Horizontal line at y, do it once per y (not for every x in this loop) and just for last x or lines will be covered by tile graphics
@@ -194,12 +222,14 @@ const setComposition = (state, compositionData) => {
     const blocks = compositionData.blocks;
     const width = blocks.length;
     const height = blocks[0].length;
+    let scale = setScaleByComposition(blocks);
     console.log("COMPOSITION! >>> ", blocks, compositionData.name);
 
     return { ...state,
         blocks,
         width,
         height,
+        scale,
         compositionName: compositionData.name
     };
 }   
@@ -210,4 +240,17 @@ const flipBlock = (action, blocks) => {
     block[action.dir] = !block[action.dir];
     blocks[action.x][action.y] = block;
     return blocks;
+}
+
+const setScaleByComposition = (blocks) => {
+    const scaleX = 870/(8*blocks.length);
+    const scaleY=  560/(8*blocks[0].length);
+    let scale = scaleX < scaleY ? scaleX : scaleY;
+    let normalizedScale = 4;
+    [4,6,8,10,12,16].forEach(step => {
+        if(scale>step) {
+            normalizedScale = step;
+        }
+    })
+   return normalizedScale;
 }

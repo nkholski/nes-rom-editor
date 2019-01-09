@@ -16,11 +16,13 @@ import {
 import DrawCanvas from "./drawCanvas";
 
 import {
+  clearComposition,
   expand,
   setZoom,
   setComposition
 } from "../../redux/actions/canvasActions";
 import {
+  setColors,
   setActiveColor,
   mapPaletteToColors,
   pushHEXToColors,
@@ -39,6 +41,7 @@ import classnames from "classnames";
 class DrawControls extends Component {
   constructor(props) {
     super(props);
+
     console.log(props.presetCompositions);
     const compositions = props.compositions ? [...props.compositions] : [];
 
@@ -57,8 +60,13 @@ class DrawControls extends Component {
       selectCompositionModal: false,
       saveCompositionModal: false,
       compositions,
-      zoom: 1
+      zoom: 1,
+      currentPalette: null,
+      availablePalettes: null
     };
+
+    
+
 
     //    this.loadComposition();
 
@@ -70,7 +78,6 @@ class DrawControls extends Component {
     //   const storedCompositions = JSON.parse(localStorage.getItem("compositions"));
 
     const colors = [0, 1, 2, 3].map(colorIndex => {
-      console.log(this.props.activeColorIndex);
       return (
         <ColorSelect
           callback={this.props.setActiveColor}
@@ -96,8 +103,19 @@ class DrawControls extends Component {
 
     const paletteDropDown = this.getPaletteDropDown();
 
+    let savePaletteToRom = "";
+    if(this.state.currentPalette && this.state.currentPalette.hasOwnProperty("address") && this.state.currentPalette.address.length>0) {
+      savePaletteToRom = <Button className="nes-btn is-primary" onClick={() => this.savePaletteToRom()}>
+        Save palette to rom
+      </Button>;
+    }
+
+
+
     return (
       <div id="draw-controls">
+
+
         <PaletteModal
           colorIndex={this.state.paletteModal.colorIndex}
           isOpen={this.state.paletteModal.isOpen}
@@ -125,17 +143,16 @@ class DrawControls extends Component {
             <div class="palette">&nbsp;</div>
           </div>  
           {paletteDropDown}
-          <Button onClick={() => this.savePaletteToRom()}>
-            Save palette to rom
-          </Button>
+          {savePaletteToRom}
+   
         </div>
         <div className="md-6">{dropDown}</div>
         <div className="md-6">
-          <Button onClick={() => this.expand(1)}>Clear composition</Button>{" "}
-          <Button onClick={() => this.setComposition(-1)}>
+          <Button className="nes-btn is-primary" onClick={() => this.props.clearComposition()}>Clear composition</Button>{" "}
+          <Button className="nes-btn is-primary" onClick={() => this.setComposition(-1)}>
             Load composition
           </Button>{" "}
-          <Button onClick={() => this.saveComposition(true)}>
+          <Button className="nes-btn is-primary" onClick={() => this.saveComposition(true)}>
             Save composition
           </Button>
         </div>
@@ -152,13 +169,19 @@ class DrawControls extends Component {
     });
   }
 
+  clearComposition(){
+
+  }
+
   saveComposition = (isOpen = false) => {
     this.setState({
       saveCompositionModal: isOpen
     });
   };
 
-  shiftPaletteRef(colorIndex, HEXColor) {
+  shiftPaletteRef(colorIndex, nesColorIndex) {
+
+    console.log("colorIndex",colorIndex, nesColorIndex);
     this.setState({
       paletteModal: {
         isOpen: false
@@ -167,9 +190,10 @@ class DrawControls extends Component {
     if (colorIndex === -1) {
       return;
     } else {
-      const colors = [...this.props.colors];
-      colors[colorIndex] = HEXColor;
-      this.props.pushHEXToColors(colors);
+      const nesColorIndicies = [...this.props.nesColorIndicies];
+      nesColorIndicies[colorIndex] = nesColorIndex;
+      console.log("nesColorIndicies", nesColorIndicies);
+      this.props.setColors(nesColorIndicies);
     }
   }
 
@@ -239,68 +263,86 @@ class DrawControls extends Component {
   }
 
   savePaletteToRom() {
-    const currentComposition = this.state.compositions[0];
-    const selectedTarget = 2;
-
     //const jobToDo = currentComposition.palettes[selectedTarget].address;
-    const jobToDo = [-1, 1520, 1521, 1522];
 
-    jobToDo.forEach((address, colorIndex) => {
-      const value = this.props.nesPalette.indexOf(
-        this.props.colors[colorIndex]
-      );
+    this.state.currentPalette.address.forEach((address, colorIndex) => {
+      const value = this.props.nesColorIndicies[colorIndex];
       if (address === -1 || value === -1) {
         return;
       }
       // colors to index
-      console.log("PUSH", value, "to", address);
       this.props.alterByte(address, value);
     });
     console.log(this.state.compositions);
   }
 
   getPaletteDropDown() {
-    const palettes = [
-      {
-        name: "Mario",
-        colors: ["#3CBCFC", "#F83800", "#FCA044", "#AC7C00"]
-      },
-      {
-        name: "RGB (non-NES)",
-        colors: ["#000000", "#FF0000", "#00FF00", "#0000FF"]
-      }
-    ];
+    
 
-    const choices = palettes.map((palette, i) => {
+
+    let buttonText = this.state.currentPalette ? ">> "+this.state.currentPalette.name : "Palette presets";
+    let choices = null;
+
+
+    if(!this.state.availablePalettes) {
+      choices = null;
+      return null;
+    }
+    else {
+    const custom = {
+      name: "Custom",
+      colors: [0,1,2,3]
+    }
+
+    choices = [custom, ...this.state.availablePalettes].map((palette, i) => {
       return (
         <DropdownItem
           key={i}
           onClick={() => {
-            this.props.pushHEXToColors(palette.colors);
+            this.setPalette(palette)
           }}
         >
           {palette.name}
         </DropdownItem>
       );
     });
+  }
+
     return (
       <ButtonDropdown
         isOpen={this.state.dropdownOpen.palette}
         toggle={() => this.toggleDropDown("palette")}
       >
-        <DropdownToggle caret>Palette presets</DropdownToggle>
+        <DropdownToggle caret>{buttonText}</DropdownToggle>
         <DropdownMenu>{choices}</DropdownMenu>
       </ButtonDropdown>
     );
   }
 
-  loadComposition() {
-    fetch("/rom-info/games/Super Mario Bros.json")
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ compositions: data.compositions });
-        this.props.setComposition(data.compositions[0]);
+  setPalette(palette) {
+    let nesColorIndicies = null;
+    if(palette.address) {
+      nesColorIndicies = [];
+      console.log("Setting colors",palette.address);
+      [0,1,2,3].forEach((i) => {
+        if(palette.address[i]>0){
+          nesColorIndicies.push(this.props.romData.getUint8(palette.address[i]));
+        }
+        else {
+          nesColorIndicies.push(this.props.nesColorIndicies[i])
+        }    
       });
+      this.props.setColors(nesColorIndicies);
+    }
+    else {
+      // Kolla om det finns färger?
+
+    }
+
+    
+    this.setState({currentPalette: palette});
+    
+
   }
 
   setComposition(cI = -2) {
@@ -312,15 +354,20 @@ class DrawControls extends Component {
     if (cI === -2) {
       return;
     }
-    console.log("COMPOSITION", cI, this.state.compositions);
-    this.props.setComposition(this.state.compositions[cI]);
+    const composition = this.state.compositions[cI];
+    console.log(this.state.compositions, cI);
+  //  debugger;
+
+    if(composition.hasOwnProperty("palettes") && composition.palettes.length > 0) {
+      this.setState({availablePalettes: composition.palettes});
+    }
+    this.props.setComposition(composition);
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.compositions !== this.props.compositions) {
       this.setState({
         compositions: [
-          // ...JSON.parse(localStorage.getItem("compositions")),
           ...this.props.compositions
         ]
       });
@@ -336,12 +383,18 @@ const mapStateToProps = state => {
   return {
     ...state.canvasReducer,
     ...state.drawReducer,
+    nesColorIndicies: state.drawReducer.nesColorIndicies,
+    romData: state.nesRomReducer.romData,
+    palettes: state.romSettingsReducer.palettes,
     compositions: state.romSettingsReducer.compositions
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    clearComposition: () => {
+      dispatch(clearComposition());
+    },
     expand: direction => {
       dispatch(expand(direction));
     },
@@ -365,6 +418,9 @@ const mapDispatchToProps = dispatch => {
     },
     setMode: (mode) => {
       dispatch(setMode(mode))
+    },
+    setColors: (nesColorIndicies) => {
+      dispatch(setColors(nesColorIndicies))
     }
   };
 };

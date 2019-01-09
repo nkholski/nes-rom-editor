@@ -31,6 +31,7 @@ class Palettes extends Component {
 
     const colors = [0, 1, 2].map(colorIndex => {
       console.log(this.props.activeColorIndex);
+
       return (
         <ColorSelect
           setActiveColor={this.props.setActiveColor}
@@ -146,7 +147,15 @@ class Palettes extends Component {
             composition.palettes.forEach((pal, pI) => {
             if(!pal.address){return;}
             addrExists = true;
-            colors[i + ":" + pI] = [2,3,4];
+            colors[i + ":" + pI] = [];
+            ([0,1,2]).forEach((colorIndex) => {
+              console.log(pal.address[colorIndex]);
+              const color = pal.address[colorIndex] > -1 ? pal.address[colorIndex] : 0;
+
+              colors[i + ":" + pI].push(this.props.romData.getUint8(pal.address[colorIndex+1]));  
+            });
+            
+            // colors[i + ":" + pI] = [2,3,4];
             
           });
           if (addrExists) {

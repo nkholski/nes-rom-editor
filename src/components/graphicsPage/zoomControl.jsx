@@ -7,10 +7,6 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 
 class ZoomControl extends Component {
-    constructor(props) {
-        super(props);
-        console.log("z", props);    
-    }
     render(){
 
         const marks = {
@@ -25,14 +21,14 @@ class ZoomControl extends Component {
         };
         return  <div id="zoom-container">
             <span className="zoom-span">zoom</span><br />
-            <Slider vertical included={false} marks={marks} defaultValue={this.props.zoom} step={1} min={4} max={16} onChange={this.props.setZoom} />
+            <Slider vertical included={false} marks={marks} value={this.props.zoom} step={1} min={4} max={16} onChange={this.props.setZoom} />
         </div>;
 
     }
 }
 
 const mapStateToProps = state => {
-    return { zoom: state.canvasReducer.zoom };
+    return { zoom: state.canvasReducer.scale };
 };
 
 const mapDispatchToProps = dispatch => {

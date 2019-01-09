@@ -36,7 +36,7 @@ h1.main {
 }
 
 .nav-link:not(.active):hover {
-    cursor: pointer;
+    cursor: url(https://unpkg.com/nes.css/assets/cursor-click.png);
     color: black !important;
 }
 

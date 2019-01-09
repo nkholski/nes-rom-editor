@@ -1,3 +1,10 @@
+export const clearComposition = () => dispatch => {
+    dispatch({
+        type: "CLEAR_COMPOSITION",
+        payload: null
+    });
+}
+
 export const expand = (direction) => dispatch => {
     dispatch({
         type: 'EXPAND',
@@ -66,6 +73,19 @@ export const setZoom = (zoom) => dispatch => {
         payload: zoom
     })
 }
+
+
+export const mouseWheelZoom = (event) => dispatch => {
+    console.log(event);
+    //debugger;
+    dispatch({
+        type: 'MOUSE_WHEEL_ZOOM',
+        payload: (event.wheelDeltaY > 0) ? 1 : -1
+    });
+
+
+}
+
 
 export const flipBlock = (x, y, dir) => dispatch => {
     dispatch({

@@ -40,12 +40,12 @@ class ChrNav extends Component {
         clip.style.left = event.clientX + "px";
       });
   }
-  drawCHR() {
+  drawCHR(colors = this.props.colors) {
     const correctX = this.chrSpan.first % 128;
 
-    console.log("<<<", this, this.chrSpan);
+    // Havn't figuered out why context is forgotten...
+    this.context = this.context.hasOwnProperty("fillStyle") ? this.context : this.canvas.getContext("2d");
 
-    console.log(this.context);
 
     for (
       let i = this.chrSpan.first;
@@ -62,7 +62,7 @@ class ChrNav extends Component {
         y * 9,
         this.context,
         1,
-        this.props.colors
+        colors
       );
     }
   }
@@ -78,7 +78,16 @@ class ChrNav extends Component {
     );
   }
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
+    let colorChange = this.props.colors.reduce((changed, value, index)=>{ return changed || value!==nextProps[index];}, false);
+    if(colorChange && this.canvas){
+      /*console.log(this);
+      this.canvas = document.getElementById("chr-canvas");
+      this.clip = document.getElementById("clip");
+      this.clipContext = document.getElementById("clip").getContext("2d");*/
+      this.drawCHR(nextProps.colors);
+    }
+
     return this.props.version !== this.renderedVersion;
   }
 

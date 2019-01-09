@@ -313,1590 +313,928 @@
                     }
                 ]
             ]
+        
         },
-        {
 
-            "name": "Items",
-            "blocks": [
-                [
-                  34672,
-                  34704,
-                  39520,
-                  39552,
-                  null,
-                  null
-                ],
-                [
-                  34688,
-                  34720,
-                  39536,
-                  39568,
-                  null,
-                  null
-                ],
-                [
-                  null,
-                  null,
-                  null,
-                  null,
-                  38848,
-                  38880
-                ],
-                [
-                  null,
-                  null,
-                  null,
-                  null,
-                  38864,
-                  38896
-                ],
-                [
-                  36208,
-                  36256,
-                  null,
-                  null,
-                  38208,
-                  38240
-                ],
-                [
-                  null,
-                  null,
-                  null,
-                  null,
-                  38224,
-                  38256
-                ],
-                [
-                  35040,
-                  36432,
-                  null,
-                  null,
-                  37696,
-                  null
-                ],
-                [
-                  null,
-                  null,
-                  null,
-                  null,
-                  34816,
-                  37696
-                ]
-              ]
+        
 
-        },
-        
-        {
-            "name": "Mixed",
-            "blocks": [
-                [
-                  32912,
-                  32944,
-                  33520,
-                  33568,
-                  33296,
-                  33328,
-                  33360,
-                  33392,
-                  null,
-                  32912,
-                  34192,
-                  34224,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  35920,
-                  35952,
-                  36048,
-                  null,
-                  35920,
-                  35952,
-                  36048
-                ],
-                [
-                  32928,
-                  32960,
-                  33536,
-                  33504,
-                  33312,
-                  33344,
-                  33376,
-                  33408,
-                  null,
-                  32928,
-                  34208,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  35904,
-                  35936,
-                  36032,
-                  null,
-                  35904,
-                  35936,
-                  36032
-                ],
-                [
-                  32912,
-                  33424,
-                  33456,
-                  33488,
-                  32912,
-                  32944,
-                  32976,
-                  33008,
-                  32912,
-                  33424,
-                  33456,
-                  34256,
-                  null,
-                  34784,
-                  36128,
-                  36160,
-                  35840,
-                  35872,
-                  35888,
-                  null,
-                  35840,
-                  36016,
-                  35888,
-                  null
-                ],
-                [
-                  32928,
-                  33440,
-                  33472,
-                  33504,
-                  32928,
-                  32960,
-                  32992,
-                  33024,
-                  32928,
-                  33440,
-                  33472,
-                  34272,
-                  null,
-                  34768,
-                  35024,
-                  36144,
-                  35824,
-                  35856,
-                  null,
-                  null,
-                  35824,
-                  36000,
-                  null,
-                  null
-                ],
-                [
-                  32912,
-                  32944,
-                  32976,
-                  33568,
-                  33040,
-                  33072,
-                  33104,
-                  33136,
-                  32912,
-                  32944,
-                  33104,
-                  34288,
-                  null,
-                  null,
-                  36416,
-                  null,
-                  null,
-                  35920,
-                  35952,
-                  35984,
-                  null,
-                  35920,
-                  35952,
-                  35984
-                ],
-                [
-                  32928,
-                  32960,
-                  33552,
-                  33504,
-                  33056,
-                  33088,
-                  33120,
-                  33152,
-                  32928,
-                  32960,
-                  32992,
-                  34304,
-                  null,
-                  36176,
-                  null,
-                  34992,
-                  null,
-                  35904,
-                  35936,
-                  35968,
-                  null,
-                  35904,
-                  35936,
-                  35968
-                ],
-                [
-                  32912,
-                  32944,
-                  32976,
-                  33488,
-                  32784,
-                  32816,
-                  32848,
-                  32880,
-                  32784,
-                  34000,
-                  33968,
-                  33984,
-                  null,
-                  34784,
-                  34976,
-                  null,
-                  35840,
-                  35872,
-                  35888,
-                  null,
-                  35840,
-                  36016,
-                  35888,
-                  null
-                ],
-                [
-                  32928,
-                  32960,
-                  33552,
-                  33504,
-                  32800,
-                  32832,
-                  32864,
-                  32896,
-                  32800,
-                  34016,
-                  null,
-                  null,
-                  null,
-                  34768,
-                  34960,
-                  34992,
-                  35824,
-                  35856,
-                  null,
-                  null,
-                  35824,
-                  36000,
-                  null,
-                  null
-                ],
-                [
-                  32912,
-                  32944,
-                  33520,
-                  33488,
-                  33168,
-                  33200,
-                  33232,
-                  33264,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  36560,
-                  36576,
-                  36544,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                [
-                  32928,
-                  32960,
-                  33536,
-                  33504,
-                  33184,
-                  33216,
-                  33248,
-                  33280,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  35568,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                [
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  34576,
-                  34608,
-                  null,
-                  null,
-                  36464,
-                  36544,
-                  null,
-                  null,
-                  null,
-                  35584,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                [
-                  33584,
-                  33936,
-                  35312,
-                  35328,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  34592,
-                  34624,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  35504,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                [
-                  33600,
-                  33952,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  35520,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                [
-                  33584,
-                  33904,
-                  33584,
-                  33616,
-                  33712,
-                  34048,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                [
-                  33600,
-                  33888,
-                  33600,
-                  33632,
-                  33664,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                [
-                  33584,
-                  33872,
-                  33712,
-                  33728,
-                  33584,
-                  33840,
-                  null,
-                  null,
-                  35440,
-                  35472,
-                  34464,
-                  34480,
-                  35472,
-                  null,
-                  null,
-                  null,
-                  36304,
-                  36320,
-                  36336,
-                  null,
-                  null,
-                  null,
-                  36496,
-                  36528
-                ],
-                [
-                  33600,
-                  33888,
-                  33664,
-                  33744,
-                  33824,
-                  33856,
-                  null,
-                  35424,
-                  35456,
-                  35488,
-                  35424,
-                  35456,
-                  35488,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  36480,
-                  36512
-                ],
-                [
-                  33584,
-                  33904,
-                  33712,
-                  33680,
-                  33584,
-                  35088,
-                  null,
-                  null,
-                  35360,
-                  35392,
-                  34496,
-                  34512,
-                  35392,
-                  null,
-                  35632,
-                  35664,
-                  36304,
-                  36352,
-                  null,
-                  null,
-                  40048,
-                  40080,
-                  40112,
-                  40144
-                ],
-                [
-                  33600,
-                  33920,
-                  33664,
-                  33696,
-                  33600,
-                  35104,
-                  null,
-                  35344,
-                  35376,
-                  35408,
-                  35344,
-                  35376,
-                  35408,
-                  null,
-                  35648,
-                  35680,
-                  null,
-                  null,
-                  null,
-                  null,
-                  40064,
-                  40096,
-                  40128,
-                  40160
-                ],
-                [
-                  33584,
-                  33872,
-                  33760,
-                  33792,
-                  33712,
-                  35120,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                [
-                  33600,
-                  33920,
-                  33776,
-                  33808,
-                  33664,
-                  35136,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                [
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                [
-                  null,
-                  35744,
-                  35776,
-                  35792,
-                  null,
-                  36064,
-                  36080,
-                  36096,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                [
-                  null,
-                  35728,
-                  35760,
-                  39744,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                [
-                  35808,
-                  35792,
-                  35248,
-                  35280,
-                  null,
-                  34736,
-                  36272,
-                  36240,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                [
-                  null,
-                  39744,
-                  35264,
-                  35296,
-                  null,
-                  34752,
-                  36288,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                [
-                  35152,
-                  35168,
-                  35184,
-                  35216,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                [
-                  null,
-                  null,
-                  35200,
-                  35232,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  null
-                ]
-              ],
-            "palettes": [
-                {
-                "name": "Mario",
-                "colors": null,
-                "address": [-1, 1512, 1513, 1514]
-            },
-            {
-                "name": "Luigi",
-                "colors": null,
-                "address": [-1, 1516, 1517, 1518]
-            },
-            {
-                "name": "Fire Mario / Luigi",
-                "colors": null,
-                "address": [-1, 1520, 1521, 1522]
-            },
-            {
-                "name": "Wierd",
-                "colors": [0, 1, 2, 3],
-                "address": null
-            }
-        ]
-        },
-        
-        
-        {
-        "name": "Mario",
-        "blocks": [
+
+
+        { 
+            "name": "Mario ",
+
+         "blocks": [
             [
-                32912,
-                32944,
-                33520,
-                33568,
-                33296,
-                33328,
-                null,
-                null,
-                null,
-                32912,
-                34192,
-                34224,
-                null,
-                null,
-                null,
-                null,
-                null,
-                35920,
-                35952,
-                36048,
-                null,
-                35920,
-                35952,
-                36048
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32912
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32944
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33520
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33568
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33296
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33328
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33360
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33392
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33584
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33936
+              }
             ],
             [
-                32928,
-                32960,
-                33536,
-                33504,
-                33312,
-                33344,
-                33376,
-                33408,
-                null,
-                32928,
-                34208,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                35904,
-                35936,
-                36032,
-                null,
-                35904,
-                35936,
-                36032
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32928
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32960
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33536
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33504
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33312
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33344
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33376
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33408
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33600
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33952
+              }
             ],
             [
-                32912,
-                33424,
-                33456,
-                33488,
-                32912,
-                32944,
-                32976,
-                33008,
-                33296,
-                null,
-                null,
-                null,
-                null,
-                34784,
-                36128,
-                36160,
-                35840,
-                35872,
-                35888,
-                null,
-                35840,
-                36016,
-                35888,
-                null
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32912
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33424
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33456
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33488
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32912
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32944
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32976
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33008
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33584
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33904
+              }
             ],
             [
-                32928,
-                33440,
-                33472,
-                33504,
-                32928,
-                32960,
-                32992,
-                33024,
-                null,
-                null,
-                null,
-                null,
-                null,
-                34768,
-                35024,
-                36144,
-                35824,
-                35856,
-                null,
-                null,
-                35824,
-                36000,
-                null,
-                null
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32928
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33440
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33472
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33504
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32928
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32960
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32992
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33024
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33600
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33888
+              }
             ],
             [
-                32912,
-                32944,
-                32976,
-                33568,
-                33040,
-                33072,
-                33104,
-                33136,
-                33296,
-                null,
-                null,
-                null,
-                null,
-                null,
-                36416,
-                null,
-                null,
-                35920,
-                35952,
-                35984,
-                null,
-                35920,
-                35952,
-                35984
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32912
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32944
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32976
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33568
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33040
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33072
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33104
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33136
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33584
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33872
+              }
             ],
             [
-                32928,
-                32960,
-                33552,
-                33504,
-                33056,
-                33088,
-                33120,
-                33152,
-                null,
-                null,
-                null,
-                null,
-                null,
-                36176,
-                null,
-                34992,
-                null,
-                35904,
-                35936,
-                35968,
-                null,
-                35904,
-                35936,
-                35968
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32928
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32960
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33552
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33504
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33056
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33088
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33120
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33152
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33600
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33888
+              }
             ],
             [
-                32912,
-                32944,
-                32976,
-                33488,
-                32784,
-                32816,
-                32848,
-                32880,
-                32784,
-                34000,
-                33968,
-                33984,
-                null,
-                34784,
-                34976,
-                null,
-                35840,
-                35872,
-                35888,
-                null,
-                35840,
-                36016,
-                35888,
-                null
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32912
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32944
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32976
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33488
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32784
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32816
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32848
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32880
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33584
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33904
+              }
             ],
             [
-                32928,
-                32960,
-                33552,
-                33504,
-                32800,
-                32832,
-                32864,
-                32896,
-                32800,
-                34016,
-                null,
-                null,
-                null,
-                34768,
-                34960,
-                34992,
-                35824,
-                35856,
-                null,
-                null,
-                35824,
-                36000,
-                null,
-                null
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32928
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32960
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33552
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33504
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32800
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32832
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32864
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32896
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33600
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33920
+              }
             ],
             [
-                32912,
-                32944,
-                33520,
-                33488,
-                33168,
-                33200,
-                33232,
-                33264,
-                null,
-                null,
-                null,
-                null,
-                null,
-                36560,
-                36576,
-                36544,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32912
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32944
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33520
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33488
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33168
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33200
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33232
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33264
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33584
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33872
+              }
             ],
             [
-                32928,
-                32960,
-                33536,
-                33504,
-                33184,
-                33216,
-                33248,
-                33280,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                35568,
-                null,
-                null,
-                null,
-                null
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32928
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32960
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33536
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33504
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33184
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33216
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33248
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33280
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33600
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33920
+              }
             ],
             [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                34576,
-                34608,
-                null,
-                36448,
-                36464,
-                36544,
-                null,
-                null,
-                null,
-                35584,
-                null,
-                null,
-                null,
-                null
+              null,
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32912
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 34192
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 34224
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33584
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33616
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33712
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 34048
+              },
+              null,
+              null
             ],
             [
-                33584,
-                33936,
-                35312,
-                35328,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                34592,
-                34624,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                35504,
-                null,
-                null,
-                null,
-                null
+              null,
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32928
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 34208
+              },
+              {
+                "flipX": true,
+                "flipY": false,
+                "byteIndex": 34224
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33600
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33632
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33664
+              },
+              {
+                "flipX": true,
+                "flipY": false,
+                "byteIndex": 34048
+              },
+              null,
+              null
             ],
             [
-                33600,
-                33952,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                35520,
-                null,
-                null,
-                null,
-                null
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32912
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33424
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33456
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 34256
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33712
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33728
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33584
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33840
+              },
+              null,
+              null
             ],
             [
-                33584,
-                33904,
-                33584,
-                33616,
-                33712,
-                34048,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32928
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33440
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33472
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 34272
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33664
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33744
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33824
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33856
+              },
+              null,
+              null
             ],
             [
-                33600,
-                33888,
-                null,
-                33632,
-                33664,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32912
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32944
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33104
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 34288
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33712
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33680
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33584
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 35088
+              },
+              null,
+              null
             ],
             [
-                33584,
-                33872,
-                33712,
-                33728,
-                33584,
-                33840,
-                null,
-                null,
-                35440,
-                35472,
-                34464,
-                34480,
-                35472,
-                null,
-                null,
-                null,
-                36304,
-                36320,
-                36336,
-                null,
-                null,
-                null,
-                36496,
-                36528
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32928
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32960
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32992
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 34304
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33664
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33696
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33600
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 35104
+              },
+              null,
+              null
             ],
             [
-                33600,
-                33888,
-                33664,
-                33744,
-                33824,
-                33856,
-                null,
-                35424,
-                35456,
-                35488,
-                35424,
-                35456,
-                35488,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                36480,
-                36512
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32784
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 34000
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33968
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33984
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33760
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33792
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33712
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 35120
+              },
+              null,
+              null
             ],
             [
-                33584,
-                33904,
-                null,
-                null,
-                33584,
-                35088,
-                null,
-                null,
-                35360,
-                35392,
-                34496,
-                34512,
-                35392,
-                null,
-                35632,
-                35664,
-                36304,
-                36352,
-                null,
-                null,
-                40048,
-                40080,
-                40112,
-                40144
-            ],
-            [
-                33600,
-                33920,
-                null,
-                null,
-                null,
-                35104,
-                null,
-                35344,
-                35376,
-                35408,
-                35344,
-                35376,
-                35408,
-                null,
-                35648,
-                35680,
-                null,
-                null,
-                null,
-                null,
-                40064,
-                40096,
-                40128,
-                40160
-            ],
-            [
-                33584,
-                33872,
-                33760,
-                33792,
-                33712,
-                35120,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            [
-                33600,
-                null,
-                33776,
-                33808,
-                33664,
-                35136,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            [
-                null,
-                35744,
-                35776,
-                39712,
-                null,
-                36064,
-                36080,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            [
-                null,
-                35728,
-                35760,
-                39744,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            [
-                35808,
-                39712,
-                35248,
-                35280,
-                null,
-                34736,
-                36272,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            [
-                null,
-                39744,
-                35264,
-                35296,
-                null,
-                34752,
-                36288,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            [
-                35152,
-                35168,
-                35184,
-                35216,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            [
-                null,
-                null,
-                35200,
-                35232,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 32800
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 34016
+              },
+              {
+                "flipX": true,
+                "flipY": false,
+                "byteIndex": 33968
+              },
+              {
+                "flipX": true,
+                "flipY": false,
+                "byteIndex": 33984
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33776
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33808
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 33664
+              },
+              {
+                "flipX": false,
+                "flipY": false,
+                "byteIndex": 35136
+              },
+              null,
+              null
             ]
-        ],
-        "palettes": [{
-                "name": "Mario",
-                "colors": null,
-                "address": [-1, 1512, 1513, 1514]
-            },
+          ],
+
+          "palettes": [
             {
-                "name": "Luigi",
-                "colors": null,
-                "address": [-1, 1516, 1517, 1518]
-            },
-            {
-                "name": "Fire Mario / Luigi",
-                "colors": null,
-                "address": [-1, 1516, 1517, 1518]
-            },
-            {
-                "name": "Wierd",
-                "colors": [0, 1, 2, 3],
-                "address": null
-            }
-        ]
-    }],
+            "name": "Mario",
+            "colors": null,
+            "address": [-1, 1512, 1513, 1514]
+        },
+        {
+            "name": "Luigi",
+            "colors": null,
+            "address": [-1, 1516, 1517, 1518]
+        },
+        {
+            "name": "Fire Mario / Luigi",
+            "colors": null,
+            "address": [-1, 1520, 1521, 1522]
+        }]
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+     
+        
+        
+  ],
     "palettes": [{
         "name": "Characters",
         "children": [{

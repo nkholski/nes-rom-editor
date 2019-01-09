@@ -25,6 +25,15 @@ class ImportImage extends Component {
       checkedPalettes: []
     };
     this.task = 0;
+
+
+    if(this.props.romInfo.chr && this.props.romInfo.chr.length>0) {
+      this.chrSpan = {
+        first: this.props.romInfo.chr[0],
+        len: 8192 * this.props.romInfo.chr.length
+      };
+    }
+
   }
 
   render() {
@@ -126,7 +135,7 @@ class ImportImage extends Component {
         img.src = "data:image/png;base64," + btoa(this.props.imageBinaryData);
         this.tileCollector(img);
       } else {
-        this.loadFromFile("/screenshot-source2.png").then(img =>
+        this.loadFromFile("/mario-sprites.png").then(img =>
           this.tileCollector(img)
         );
       }
@@ -240,6 +249,9 @@ class ImportImage extends Component {
 
     console.log("DONE", composition, palettes);
 
+    window["comp"] = composition;
+
+
     const checkedPalettes = [];
     for(let i=0; i<palettes.length; i++) {
       checkedPalettes[i] = palettes[i][3] === 0;
@@ -263,7 +275,8 @@ class ImportImage extends Component {
   }
 
   imageScan({ composition, img, tmpCtx, mappingVariants }) {
-    const { chrSpan, romData } = this.props;
+    const romData = this.props.romData;
+    const chrSpan = this.chrSpan;
     const foundPalettes = [];
     let identified = 0; // ?
 
@@ -659,6 +672,7 @@ const mapStateToProps = state => {
   return {
     chrSpan: state.nesRomReducer.chrSpan,
     romData: state.nesRomReducer.romData,
+    romInfo: state.nesRomReducer.romInfo,
     nesPalette: state.drawReducer.nesPalette
   };
 };

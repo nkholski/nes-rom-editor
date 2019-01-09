@@ -27,6 +27,14 @@ export const pushHEXToColors = (palette) => dispatch => {
     })
 }
 
+export const setColors = (nesColorIndicies) => dispatch => {
+    console.log("AAAA",nesColorIndicies)
+    dispatch({
+        type: 'SET_COLORS',
+        payload: nesColorIndicies
+    })
+}
+
 export const setMode = (mode) => dispatch => {
     dispatch({
         type: 'SET_MODE',

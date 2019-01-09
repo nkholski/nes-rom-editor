@@ -19,7 +19,7 @@ class File extends Component {
             const chrText = chrBytes > 0 ? <span>{this.props.romInfo.chr.length} bank(s)({chrBytes} kb)</span> : "No CHR-Rom see note below";
             const ramNote = chrBytes === 0 ? <span>Note: This rom has no CHR-Rom which means it uses CHR-Ram. You will need to dig through PRG-Rom to manipulate GFX.</span> : "";
             page = <Container className="nes-container with-title is-centered">
-                <p class="title">Current rom info</p>
+                <p className="title">Current rom info</p>
                 <Row>
                     <Col>
                         name: {this.props.romInfo.name}<br />
@@ -48,7 +48,7 @@ class File extends Component {
        
        return <div id="rom-page" className="row">
             <Container className="nes-container with-title is-centered">
-                <p class="title">Welcome to NES Tamp</p>
+                <p className="title">Welcome to NES Tamp</p>
                 <Row>
                     <Col>
                     NES Tamp the result of a birthday suprise rom hack project going overboard and morphed into a tool. It's a general tool for hacking nes roms
@@ -70,7 +70,7 @@ class File extends Component {
 
            <input type="file" id="rom-input" onChange={e => this.loadRom(e.target.files)} className="file-input" accept=".nes" />
             <Container className="nes-container with-title is-centered">
-                <p class="title">Rom actions</p>
+                <p className="title">Rom actions</p>
                 <Button className="nes-btn is-primary" onClick={() => { document.getElementById("rom-input").click()}}>Load rom</Button>
                 <Button className="nes-btn is-primary">Save rom to localStorage</Button>
                 <Button className="nes-btn is-primary">Download rom</Button>
@@ -79,7 +79,7 @@ class File extends Component {
             </Container>
 
             <Container className="nes-container with-title is-centered">
-                <p class="title">Revision history</p>
+                <p className="title">Revision history</p>
                 <Row>
                     <Col>Type of action</Col>
                     <Col>Details</Col>

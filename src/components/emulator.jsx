@@ -7,6 +7,78 @@ const SCREEN_HEIGHT = 240;
 const FRAMEBUFFER_SIZE = SCREEN_WIDTH * SCREEN_HEIGHT;
 
 class Emulator extends Component {
+  constructor(props) {
+    super(props);
+    this.keys = {
+      a: 0,
+      b: 1,
+      select: 3,
+      start: 4,
+      up:4,
+     down: 5,
+     left: 6,
+     right: 7
+    };
+    this.keys = {
+      a: 75,
+      b: 76,
+      select: 16,
+      start: 13,
+      up: 87,
+     down: 83,
+     left: 65,
+     right: 68
+    };
+
+    this.keys = {
+      75: 0,
+      76: 1,
+      16: 2,
+      13: 3,
+      87: 4,
+      83: 5,
+      65: 6,
+      68: 7
+    };
+    this.pressed = {};
+
+    Object.keys(this.keys).forEach(keyName => {
+      this.pressed[keyName] = false;
+    })
+
+
+
+    window.onkeyup = (e) => {
+      console.log(this.keys);
+       var key = e.keyCode ? e.keyCode : e.which;
+      console.log("KEY",key);
+         if(!this.keys.hasOwnProperty(key)) {
+           return;
+         }
+         console.log("PRESS", key, this.keys[key])
+         this.nes.buttonUp(1, this.keys[key]);
+     
+       }
+
+       window.onkeydown = (e) => {
+        console.log(this.keys);
+         var key = e.keyCode ? e.keyCode : e.which;
+        console.log("KEY",key);
+           if(!this.keys.hasOwnProperty(key)) {
+             return;
+           }
+           console.log("PRESS", key, this.keys[key])
+           this.nes.buttonDown(1, this.keys[key]);
+       
+         }
+    
+    
+
+  }
+
+
+
+
 
   render() {
     return <div id="emulator-page" className="row">
@@ -23,14 +95,15 @@ class Emulator extends Component {
           </p>
         </div>
       </div>;
+
   }
 
   componentDidMount() {
+    this.setState({start: true})
     this.componentDidUpdate();
   }
 
   componentDidUpdate() {
-    console.log("component update");
     if (this.props.romVersion < 1) {
       return false;
     }
@@ -91,13 +164,28 @@ class Emulator extends Component {
   }
 
   onAnimationFrame = () => {
+    
+
+
+
     window.requestAnimationFrame(this.onAnimationFrame);
-    console.log(this.framebuffer_u8);
-    debugger;
     this.image.data.set(this.framebuffer_u8);
     this.ctx.putImageData(this.image, 0, 0);
     this.nes.frame();
-  };
+
+  }
+
+  controller(){
+    /*Controller.BUTTON_A = 0;
+Controller.BUTTON_B = 1;
+Controller.BUTTON_SELECT = 2;
+Controller.BUTTON_START = 3;
+Controller.BUTTON_UP = 4;
+Controller.BUTTON_DOWN = 5;
+Controller.BUTTON_LEFT = 6;
+Controller.BUTTON_RIGHT = 7;*/
+  }
+
 
   drawBuffer(frameBuffer) {
     const color = [

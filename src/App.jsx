@@ -6,8 +6,8 @@ import { connect } from "react-redux";
 // Actions
 import { init } from "./services/init";
 import { loadURL } from "./services/romIO";
-import { setPalette } from "./redux/actions/drawActions";
-import { setPresetCompositions } from "./redux/actions/canvasActions";
+// import { setPalette } from "./redux/actions/drawActions";
+import { setPresetCompositions, mouseWheelZoom } from "./redux/actions/canvasActions";
 import {
   setRomInfoIndex,
   setRomInfo,
@@ -80,7 +80,7 @@ class App extends React.Component {
     };
 
     props.init();
-
+    document.addEventListener("mousewheel", (e)=>{console.dir(e); this.props.mouseWheelZoom(e)}, false);
    
   }
 
@@ -312,9 +312,9 @@ const mapDispatchToProps = dispatch => {
     init: () => {
       dispatch(init());
     },
-    setPalette: palette => {
+   /* setPalette: palette => {
       dispatch(setPalette(palette));
-    },
+    },*/
     setRomInfoIndex: romInfoIndex => {
       dispatch(setRomInfoIndex(romInfoIndex));
     },
@@ -335,6 +335,9 @@ const mapDispatchToProps = dispatch => {
     },
     loadURL: (fileName, romNames, romInfoIndex) => {
       dispatch(loadURL(fileName, romNames, romInfoIndex))
+    },
+    mouseWheelZoom: (e) => {
+      dispatch(mouseWheelZoom(e))
     }
     /*,
     setGameList: gameList => {

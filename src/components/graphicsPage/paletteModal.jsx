@@ -10,7 +10,7 @@ import {
 
 export default function PaletteModal(props) {
   const colors = props.palette.map((color, i)=>{
-    let colorRef = props.hexColor ? color : i;
+    let colorRef =  i; //props.hexColor ? color :
     return <div style={{backgroundColor: color}} key={i} className="palette-color-box" onClick={()=>{props.callback(props.colorIndex, colorRef)}}></div> 
   });
   let isOpen = props.isOpen;

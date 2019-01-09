@@ -34,5 +34,5 @@
 
 
 .color {
-    cursor: pointer;
+    cursor: url(https://unpkg.com/nes.css/assets/cursor-click.png);
 }

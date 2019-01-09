@@ -7,7 +7,6 @@ import { putPixel } from "../../redux/actions/nesRomActions";
 class DrawCanvas extends Component {
    
   render() {
-    console.log("Render canvas");
     
     const { width, height, scale, compositionName } = this.props;
     return (
@@ -23,12 +22,32 @@ class DrawCanvas extends Component {
     );
   }
 
+
+
+  componentDidMount(){
+    this.componentDidUpdate();
+  }
+
   componentDidUpdate() {
     if(!this.props.romData || this.props.romData.length === 0){
       return;
     }
-    console.log("UPDATE CANVAS  ")
     this.props.renderBlocks(this.props.romData, this.props.colors);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    console.log("COLORS???",this.props.colors, nextProps.colors)
+    let shouldUpdate = false;
+    ["width", "height", "scale", "compositionName"].forEach(property => {
+      if(this.props[property] !== nextProps[property]){
+        shouldUpdate = true;
+      }
+    });
+    if(shouldUpdate) {
+      return true;
+    }
+    this.props.renderBlocks(this.props.romData, nextProps.colors);
+    return false;
   }
 
   manipulate = event => {

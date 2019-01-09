@@ -14,92 +14,116 @@ class Tools extends Component {
             imageBinaryData: null
         }*/
         this.state = {
-            page: null
+            tool: null
         }
     }
 
     render() {
         // return <IPSPatcher />;
 
-        if(this.state.page === null) {
+        if(this.state.tool === null) {
             return <div id="tools-page">
-            <TextFinder/>
-            <div class="grid">
+            <h1>Tools</h1>
+            <div className="nes-container">
+                The tools on this page is used to identify custom settings for the current rom.
+            </div>
+            <div className="grid">
                     <Container className="nes-container with-title is-centered">
-                        <p class="title">Import image</p>
+                        <p className="title">Import image</p>
                         <Row>
                             <Col>Identitify tile compositions and palettes from an imported image. Please read the instructions for best result.</Col>
                         </Row>
                         <Row className="actions">
-                            <Col><Button className="nes-btn is-primary">Go to import!</Button></Col>
+                            <Col><Button className="nes-btn is-primary" onClick={()=>{this.setTool('imageImport')}}>Go to import!</Button></Col>
                         </Row>
                     </Container>
                     <Container className="nes-container with-title is-centered">
-                        <p class="title">Find palette address</p>
+                        <p className="title">Find palette address</p>
                         <Row>
                             <Col>Search PRG ROM for possible palette defining addresses. Export to hack section.</Col>
                         </Row>
                         <Row className="actions">
-                            <Col><Button className="nes-btn is-primary">Find palette</Button></Col>
+                            <Col><Button className="nes-btn is-primary" onClick={()=>{this.setTool('imageImport')}}>Find palette</Button></Col>
                         </Row>
                     </Container>
                     <Container className="nes-container with-title is-centered">
-                        <p class="title">Text tools</p>
+                        <p className="title">Text tools</p>
                         <Row>
-                            <Col>Identify text tables and addresses to exåprt to the hack section.</Col>
+                            <Col>Identify text tables and addresses to exoprt to the hack section.</Col>
                         </Row>
                         <Row className="actions">
-                            <Col><Button className="nes-btn is-primary">Do text stuff</Button></Col>
+                            <Col><Button className="nes-btn is-primary" onClick={()=>{this.setTool('text')}}>Do text stuff</Button></Col>
                         </Row>
                     </Container>
                     <Container className="nes-container with-title is-centered">
-                        <p class="title">Game Genie</p>
+                        <p className="title">Game Genie</p>
                         <Row>
                             <Col>Decode Game Genie codes, manipulate them and export to the hack sextion..</Col>
                         </Row>
                         <Row className="actions">
-                            <Col><Button className="nes-btn is-primary">Go Game Genie</Button></Col>
+                            <Col><Button className="nes-btn is-primary" onClick={()=>{this.setTool('imageImport')}}>Go Game Genie</Button></Col>
                         </Row>
                     </Container>
                     <Container className="nes-container with-title is-centered">
-                        <p class="title">IPS Patcher</p>
+                        <p className="title">IPS Patcher</p>
                         <Row>
                             <Col>Apply an whole or partial IPS patch.</Col>
                         </Row>
                         <Row className="actions">
-                            <Col><Button className="nes-btn is-primary">Patch!</Button></Col>
+                            <Col><Button className="nes-btn is-primary" onClick={()=>{this.setTool('imageImport')}}>Patch!</Button></Col>
+                        </Row>
+                    </Container>
+                    <Container className="nes-container with-title is-centered">
+                        <p className="title">Rom Settings</p>
+                        <Row>
+                            <Col>Edit the settings JSON directly (if you dare), import json settings or download it to share it.</Col>
+                        </Row>
+                        <Row className="actions">
+                            <Col><Button className="nes-btn is-primary" onClick={()=>{this.setTool('imageImport')}}>Do json settings stuff</Button></Col>
                         </Row>
                     </Container>
             
             </div>
-            
-
-           
-            
-            
-            
             </div>;
 
 
         }
 
+        let currentPage = "";
+        switch(this.state.tool) {
+            case "imageImport":
+                currentPage =  <div><ImportImage />
+                <img id="source-image" />
+                <input type="file" id="input" onChange={e => this.parseImage(e.target.files)} /></div>;
+                break;
+            case "text":
+                currentPage = <TextFinder/>;
+                break;
 
 
-        const importImage = 
+        }
+
+
+        /*const importImage = 
                 this.state.imageBinaryData ? 
                 <ImportImage imageBinaryData={this.state.imageBinaryData}/> 
                 : 
-                <input type="file" id="input" onChange={e => this.parseImage(e.target.files)} />;
+                <input type="file" id="input" onChange={e => this.parseImage(e.target.files)} />;*/
             
 
         //             <ImportImage/>
 
         return <div>
             <h1>Tools</h1>
-             <ImportImage />
-            <img id="source-image" />
-            {importImage}
+            <div className="nes-container" onClick = {()=>this.setTool(null)}>
+                Click here to return to tools selection.
+            </div>
+            {currentPage}
           </div>;
+    }
+
+    setTool(tool) {
+        this.setState({tool});
     }
 
     parseImage(data){

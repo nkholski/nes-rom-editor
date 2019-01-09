@@ -15,15 +15,12 @@ export default function renderBlock(firstByteIndex, dataView, X, Y, ctx, scale =
      }*/
 
     // console.log(firstByteIndex, dataView, X, Y, ctx, scale);
-    color = color ? color : [
-        "#3CBCFC",
-        "#F83800",
-        "#FCA044",
-        "#AC7C00"
-    ];
     // const rgb = [];
     for (let y = 0; y < 8; y++) {
-        const c = bytesToColorIndexArray(firstByteIndex, y, dataView);
+        let c = [0,0,0,0,0,0,0,0];
+        if(firstByteIndex > 0){
+            c = bytesToColorIndexArray(firstByteIndex, y, dataView);
+        }
         
         for (let x = 0; x < 8; x++) {
             const rx = flipX ? 7 - x : x;
@@ -44,7 +41,7 @@ export default function renderBlock(firstByteIndex, dataView, X, Y, ctx, scale =
     image.data.set(blockBuffer_8, 0, 0);
 
     if(scale>1){
-        // Should move for reuse
+        // Should move for reuse, expensive DOM-object creation
         const tmpCanvas = document.createElement("canvas");
         tmpCanvas.mozOpaque = true;
         tmpCanvas.opaque = true;
@@ -63,7 +60,6 @@ export default function renderBlock(firstByteIndex, dataView, X, Y, ctx, scale =
     else {
         ctx.putImageData(image, X, Y);
     }
-    console.log("x");
 
     ctx.restore();
 
