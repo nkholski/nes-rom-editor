@@ -1,0 +1,10 @@
+#chr-canvas {
+  transform-origin: top;
+  border: 1px solid black;
+  transform: scale(4);
+}
+
+#chrNavContiner {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

@@ -26,6 +26,7 @@ class ChrNav extends Component {
   }
 
     this.state = {
+     
       height: 9 * (this.chrSpan.len / 128),
       romCheckupDone: false
     };
@@ -46,6 +47,7 @@ class ChrNav extends Component {
     // Havn't figuered out why context is forgotten...
     this.context = this.context.hasOwnProperty("fillStyle") ? this.context : this.canvas.getContext("2d");
 
+    
 
     for (
       let i = this.chrSpan.first;

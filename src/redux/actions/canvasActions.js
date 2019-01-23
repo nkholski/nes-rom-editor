@@ -12,6 +12,13 @@ export const expand = (direction) => dispatch => {
     })
 }
 
+export const crop = (side) => dispatch => {
+    dispatch({
+        type: 'CROP',
+        payload: side
+    })
+}
+
 export const dropBlock = (globalCoords, romData, byteIndex, colors) => dispatch => {
     dispatch({
         type: 'DROP_BLOCK',

@@ -28,7 +28,12 @@ export default (state = defaultState, action) => {
             scale: 16
         }
         case 'EXPAND':
-            return expand(state, payload);
+            return { state,
+                ...expand(state, payload)
+            };
+        case 'CROP':
+            return {state,
+            ...crop(state, payload)}
             /* case 'SETCOLORS':
                 return setColors(state, payload); */
         case 'DROP_BLOCK':
@@ -87,13 +92,8 @@ export default (state = defaultState, action) => {
 }*/
 
 const expand = (state, payload) => {
-    let {
-        blocks,
-        width,
-        height,
-        scale,
-        ...stuff
-    } = state;
+    let { width, height, blocks} = state;
+    
     switch (payload) {
         case 0: // TOP
             height++;
@@ -123,19 +123,61 @@ const expand = (state, payload) => {
             break;
     }
 
-    scale = setScaleByComposition(blocks);
+    return {
+        width,
+        height,
+        blocks,
+        scale: setScaleByComposition(blocks)
+    }
+}
 
-   
+
+const crop = (state, payload) => {
+    let { width, height, blocks} = state;
+    if(width === 1 && (payload === 1 || payload === 3)) {
+        return {};
+    }
+    if(height === 1 && (payload === 0 || payload === 2)) {
+        return {};
+    }
 
 
+    switch (payload) {
+        case 0: // TOP
+            height--;
+            //if (blocks[0].length < height) {
+                for (let x = 0; x < blocks.length; x++) {
+                    blocks[x].splice(0,1);
 
+                }
+            //}
+            break;
+        case 1: // RIGHT
+            width--;
+            blocks.splice(width,1);
+            break;
+        case 2: // BOTTOM
+            height--;
+            //if (blocks[0].length < height) {
+                for (let x = 0; x < blocks.length; x++) {
+                    blocks[x].splice(height,1);
+
+                }
+            //}
+            break;
+        case 3: // LEFT
+            width--;
+            blocks.splice(0,1);
+            break;
+        default: // Happy Lint
+            break;
+    }
 
     return {
         width,
         height,
         blocks,
-        scale,
-        ...stuff
+        scale: setScaleByComposition(blocks)
     }
 }
 
@@ -237,6 +279,9 @@ const setComposition = (state, compositionData) => {
 
 const flipBlock = (action, blocks) => {
     const block = blocks[action.x][action.y];
+    if(!block) {
+        return blocks;
+    }
     block[action.dir] = !block[action.dir];
     blocks[action.x][action.y] = block;
     return blocks;

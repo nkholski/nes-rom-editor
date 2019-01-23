@@ -1,0 +1,27 @@
+// Third party library: https://github.com/nostalgic-css/NES.css
+@import '~nes.css/css/nes.css';
+
+@import 'main.scss';
+@import 'colors.scss';
+@import "tabs.scss";
+// import "./chr-nav.css";
+@import "slider.scss";
+@import "colors.scss";
+@import "draw-canvas.scss";
+@import "emulator.scss";
+@import "importImage.scss";
+@import "tools.scss";
+
+#chr-nav  {
+    @import './chr-nav.scss';
+        width: 340px;
+        padding-top: 10px;
+        background-color: #EEE;
+        border: 4px solid black;
+        text-align: center;
+        max-height: 1000px;
+        overflow-y: scroll;
+    
+}
+
+

@@ -18,6 +18,7 @@ import DrawCanvas from "./drawCanvas";
 import {
   clearComposition,
   expand,
+  crop,
   setZoom,
   setComposition
 } from "../../redux/actions/canvasActions";
@@ -192,14 +193,10 @@ class DrawControls extends Component {
     } else {
       const nesColorIndicies = [...this.props.nesColorIndicies];
       nesColorIndicies[colorIndex] = nesColorIndex;
-      console.log("nesColorIndicies", nesColorIndicies);
+      console.log("nesColorIndicies", nesColorIndicies);  
       this.props.setColors(nesColorIndicies);
     }
   }
-
-  expand = direction => {
-    this.props.expand(direction);
-  };
 
   toggleDropDown(id) {
     const dropDownOpen = this.state.dropdownOpen;
@@ -210,9 +207,10 @@ class DrawControls extends Component {
   dropDownClick(action, direction) {
     switch (action) {
       case "expand":
-        this.expand(direction);
+        this.props.expand(direction);
         break;
       default:
+        this.props.crop(direction);
         break;
     }
   }
@@ -397,6 +395,9 @@ const mapDispatchToProps = dispatch => {
     },
     expand: direction => {
       dispatch(expand(direction));
+    },
+    crop: side => {
+      dispatch(crop(side));
     },
     setZoom: zoom => {
       dispatch(setZoom(zoom));
