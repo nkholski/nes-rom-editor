@@ -66,9 +66,6 @@ class DrawControls extends Component {
       availablePalettes: null
     };
 
-    
-
-
     //    this.loadComposition();
 
     // const storedCompositions = JSON.parse(localStorage.getItem("compositions"));
@@ -84,7 +81,10 @@ class DrawControls extends Component {
           callback={this.props.setActiveColor}
           colorIndex={colorIndex}
           color={this.props.colors[colorIndex]}
-          selected={this.props.activeColorIndex === colorIndex && this.props.mode === "draw"}
+          selected={
+            this.props.activeColorIndex === colorIndex &&
+            this.props.mode === "draw"
+          }
           edit={this.showPaletteModal.bind(this)}
           palette={this.props.nesPalette}
           key={colorIndex}
@@ -105,18 +105,23 @@ class DrawControls extends Component {
     const paletteDropDown = this.getPaletteDropDown();
 
     let savePaletteToRom = "";
-    if(this.state.currentPalette && this.state.currentPalette.hasOwnProperty("address") && this.state.currentPalette.address.length>0) {
-      savePaletteToRom = <Button className="nes-btn is-primary" onClick={() => this.savePaletteToRom()}>
-        Save palette to rom
-      </Button>;
+    if (
+      this.state.currentPalette &&
+      this.state.currentPalette.hasOwnProperty("address") &&
+      this.state.currentPalette.address.length > 0
+    ) {
+      savePaletteToRom = (
+        <Button
+          className="nes-btn is-primary"
+          onClick={() => this.savePaletteToRom()}
+        >
+          Save palette to rom
+        </Button>
+      );
     }
-
-
 
     return (
       <div id="draw-controls">
-
-
         <PaletteModal
           colorIndex={this.state.paletteModal.colorIndex}
           isOpen={this.state.paletteModal.isOpen}
@@ -134,26 +139,52 @@ class DrawControls extends Component {
         />
 
         <div className="md-12" id="colors">
-           {colors}
+          {colors}
           <div class="color-control">
-            <div onClick={()=>this.props.setMode('flipX')} className = { classnames({ color: true, flip: true, selected: this.props.mode === "flipX"})} >&harr;</div>
+            <div
+              onClick={() => this.props.setMode("flipX")}
+              className={classnames({
+                color: true,
+                flip: true,
+                X: true,
+                selected: this.props.mode === "flipX"
+              })}
+            />
             <div class="palette">&nbsp;</div>
           </div>
           <div class="color-control">
-            <div class="color flip" onClick={() => this.props.setMode('flipY')} className={classnames({ color: true, flip: true, selected: this.props.mode === "flipY" })}>&uarr; &darr;</div>
+            <div
+              onClick={() => this.props.setMode("flipY")}
+              className={classnames({
+                color: true,
+                flip: true,
+                Y: true,
+                selected: this.props.mode === "flipY"
+              })}
+            />
             <div class="palette">&nbsp;</div>
-          </div>  
+          </div>
           {paletteDropDown}
           {savePaletteToRom}
-   
         </div>
         <div className="md-6">{dropDown}</div>
         <div className="md-6">
-          <Button className="nes-btn is-primary" onClick={() => this.props.clearComposition()}>Clear composition</Button>{" "}
-          <Button className="nes-btn is-primary" onClick={() => this.setComposition(-1)}>
+          <Button
+            className="nes-btn is-primary"
+            onClick={() => this.props.clearComposition()}
+          >
+            Clear composition
+          </Button>{" "}
+          <Button
+            className="nes-btn is-primary"
+            onClick={() => this.setComposition(-1)}
+          >
             Load composition
           </Button>{" "}
-          <Button className="nes-btn is-primary" onClick={() => this.saveComposition(true)}>
+          <Button
+            className="nes-btn is-primary"
+            onClick={() => this.saveComposition(true)}
+          >
             Save composition
           </Button>
         </div>
@@ -170,9 +201,7 @@ class DrawControls extends Component {
     });
   }
 
-  clearComposition(){
-
-  }
+  clearComposition() {}
 
   saveComposition = (isOpen = false) => {
     this.setState({
@@ -181,8 +210,7 @@ class DrawControls extends Component {
   };
 
   shiftPaletteRef(colorIndex, nesColorIndex) {
-
-    console.log("colorIndex",colorIndex, nesColorIndex);
+    console.log("colorIndex", colorIndex, nesColorIndex);
     this.setState({
       paletteModal: {
         isOpen: false
@@ -193,7 +221,7 @@ class DrawControls extends Component {
     } else {
       const nesColorIndicies = [...this.props.nesColorIndicies];
       nesColorIndicies[colorIndex] = nesColorIndex;
-      console.log("nesColorIndicies", nesColorIndicies);  
+      console.log("nesColorIndicies", nesColorIndicies);
       this.props.setColors(nesColorIndicies);
     }
   }
@@ -275,36 +303,33 @@ class DrawControls extends Component {
   }
 
   getPaletteDropDown() {
-    
-
-
-    let buttonText = this.state.currentPalette ? ">> "+this.state.currentPalette.name : "Palette presets";
+    let buttonText = this.state.currentPalette
+      ? ">> " + this.state.currentPalette.name
+      : "Palette presets";
     let choices = null;
 
-
-    if(!this.state.availablePalettes) {
+    if (!this.state.availablePalettes) {
       choices = null;
       return null;
-    }
-    else {
-    const custom = {
-      name: "Custom",
-      colors: [0,1,2,3]
-    }
+    } else {
+      const custom = {
+        name: "Custom",
+        colors: [0, 1, 2, 3]
+      };
 
-    choices = [custom, ...this.state.availablePalettes].map((palette, i) => {
-      return (
-        <DropdownItem
-          key={i}
-          onClick={() => {
-            this.setPalette(palette)
-          }}
-        >
-          {palette.name}
-        </DropdownItem>
-      );
-    });
-  }
+      choices = [custom, ...this.state.availablePalettes].map((palette, i) => {
+        return (
+          <DropdownItem
+            key={i}
+            onClick={() => {
+              this.setPalette(palette);
+            }}
+          >
+            {palette.name}
+          </DropdownItem>
+        );
+      });
+    }
 
     return (
       <ButtonDropdown
@@ -319,28 +344,24 @@ class DrawControls extends Component {
 
   setPalette(palette) {
     let nesColorIndicies = null;
-    if(palette.address) {
+    if (palette.address) {
       nesColorIndicies = [];
-      console.log("Setting colors",palette.address);
-      [0,1,2,3].forEach((i) => {
-        if(palette.address[i]>0){
-          nesColorIndicies.push(this.props.romData.getUint8(palette.address[i]));
+      console.log("Setting colors", palette.address);
+      [0, 1, 2, 3].forEach(i => {
+        if (palette.address[i] > 0) {
+          nesColorIndicies.push(
+            this.props.romData.getUint8(palette.address[i])
+          );
+        } else {
+          nesColorIndicies.push(this.props.nesColorIndicies[i]);
         }
-        else {
-          nesColorIndicies.push(this.props.nesColorIndicies[i])
-        }    
       });
       this.props.setColors(nesColorIndicies);
-    }
-    else {
+    } else {
       // Kolla om det finns färger?
-
     }
 
-    
-    this.setState({currentPalette: palette});
-    
-
+    this.setState({ currentPalette: palette });
   }
 
   setComposition(cI = -2) {
@@ -354,10 +375,13 @@ class DrawControls extends Component {
     }
     const composition = this.state.compositions[cI];
     console.log(this.state.compositions, cI);
-  //  debugger;
+    //  debugger;
 
-    if(composition.hasOwnProperty("palettes") && composition.palettes.length > 0) {
-      this.setState({availablePalettes: composition.palettes});
+    if (
+      composition.hasOwnProperty("palettes") &&
+      composition.palettes.length > 0
+    ) {
+      this.setState({ availablePalettes: composition.palettes });
     }
     this.props.setComposition(composition);
   }
@@ -365,9 +389,7 @@ class DrawControls extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.compositions !== this.props.compositions) {
       this.setState({
-        compositions: [
-          ...this.props.compositions
-        ]
+        compositions: [...this.props.compositions]
       });
     }
   }
@@ -417,11 +439,11 @@ const mapDispatchToProps = dispatch => {
     alterByte: (address, value) => {
       dispatch(alterByte(address, value));
     },
-    setMode: (mode) => {
-      dispatch(setMode(mode))
+    setMode: mode => {
+      dispatch(setMode(mode));
     },
-    setColors: (nesColorIndicies) => {
-      dispatch(setColors(nesColorIndicies))
+    setColors: nesColorIndicies => {
+      dispatch(setColors(nesColorIndicies));
     }
   };
 };

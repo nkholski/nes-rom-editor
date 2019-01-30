@@ -176,7 +176,11 @@ class App extends React.Component {
       nextProps.romNames &&
       nextProps.romInfoIndex
     ) {
-      this.props.loadURL("smb", nextProps.romNames, nextProps.romInfoIndex);
+      if (localStorage.getItem("romData")) {
+        // alert("Rom xxx");
+      }
+
+      // this.props.loadURL("smb", nextProps.romNames, nextProps.romInfoIndex);
     }
     if (!nextProps.isReady) {
       return false;
@@ -248,9 +252,9 @@ const mapDispatchToProps = dispatch => {
     setRomNames: romNames => {
       dispatch(setRomNames(romNames));
     },
-    loadURL: (fileName, romNames, romInfoIndex) => {
+    /*    loadURL: (fileName, romNames, romInfoIndex) => {
       dispatch(loadURL(fileName, romNames, romInfoIndex));
-    },
+    },*/
     mouseWheelZoom: e => {
       dispatch(mouseWheelZoom(e));
     }

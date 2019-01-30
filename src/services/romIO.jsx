@@ -2,21 +2,54 @@ import md5 from "js-md5";
 
 const loadFile = (data, romNames, romInfoIndex) => {
   console.log("DASDSA", romNames, romInfoIndex);
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: "ROM_STATUS",
       payload: "loading"
     });
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = e => {
       processData(e.target.result, romNames, romInfoIndex, dispatch);
-      
-    }
+    };
     reader.readAsArrayBuffer(data);
-  }
+  };
 };
 
-const loadURL = (fileName, romNames, romInfoIndex) => {
+const loadLocalStorage = (gameName, romInfo, dispatch) => {
+  // 1. Get modified romData
+  const romData = localStorage.getItem("romData");
+
+  /*dispatch({
+    type: "SET_ROM_DATA",
+    payload: base64toArrayBuffer(romData)
+  });*/
+
+  // 2. Get original romData and everything that can be found from it
+  const origialRomData = localStorage.getItem("untouchedRom");
+
+  // return bytes.buffer;
+
+  processData(
+    base64toArrayBuffer(origialRomData),
+    gameName,
+    romInfo,
+    dispatch,
+    base64toArrayBuffer(romData)
+  );
+  /*
+  //function str2ab(str) {
+  var buf = new ArrayBuffer(romData.length * 2); // 2 bytes for each char
+  var bufView = new Uint8Array(buf);
+  for (var i = 0, strLen = romData.length; i < strLen; i++) {
+    bufView[i] = romData.charCodeAt(i);
+  }
+
+  //}
+  console.log("dat", buf, gameName, romInfo, dispatch);
+  processData(buf, gameName, romInfo, dispatch);*/
+};
+
+/*const loadURL = (fileName, romNames, romInfoIndex) => {
   console.log("DASDSA",romNames, romInfoIndex);
   return (dispatch) => {
       console.log("FETC", romNames, romInfoIndex);
@@ -34,9 +67,9 @@ const loadURL = (fileName, romNames, romInfoIndex) => {
           console.log("error", e)
       });
   }
-};
+};*/
 
-export { loadFile, loadURL };
+export { loadFile, loadLocalStorage }; //loadURL
 
 /*
    const itemsIsLoading = (palette) => dispatch => {
@@ -53,13 +86,27 @@ export { loadFile, loadURL };
 
 */
 
-function processData(arrayBuffer, romNames, romInfoIndex, dispatch) {
-  const dataView = new DataView(arrayBuffer);
-  const isNes =
-    dataView.getUint8(0) + dataView.getUint8(1) + dataView.getUint8(2) === 230; // I'm lazy
-
-  if (!isNes) {
-    alert("Not a valid nes rom!");
+function processData(
+  untouchedRom,
+  romNames,
+  romInfoIndex,
+  dispatch,
+  romData = null
+) {
+  const dataView = new DataView(untouchedRom);
+  const romDataDataView = romData ? new DataView(romData) : dataView;
+  try {
+    const isNes =
+      dataView.getUint8(0) + dataView.getUint8(1) + dataView.getUint8(2) ===
+      230; // I'm lazy
+    if (!isNes) {
+      alert("Not a valid nes rom!");
+      return;
+    }
+  } catch {
+    alert("Rom in localStorage is corrupted :-(");
+    localStorage.removeItem("romData");
+    localStorage.removeItem("untouchedRom");
     return;
   }
 
@@ -115,10 +162,14 @@ function processData(arrayBuffer, romNames, romInfoIndex, dispatch) {
       payload: "loaded"
     });
   }
-  
+
   dispatch({
     type: "STORE_ROM",
-    payload: dataView
+    payload: {
+      romData: romDataDataView,
+      fromLocalStorage: !!romData,
+      untouchedRom: dataView
+    }
   });
   dispatch({
     type: "SET_ROM_INFO",
@@ -127,8 +178,18 @@ function processData(arrayBuffer, romNames, romInfoIndex, dispatch) {
 }
 
 function checkStatus(response) {
-    if (!response.ok) {
-        throw new Error(`HTTP ${response.status} - ${response.statusText}`);
-    }
-    return response;
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status} - ${response.statusText}`);
+  }
+  return response;
+}
+
+function base64toArrayBuffer(data) {
+  var binary_string = window.atob(data);
+  var len = binary_string.length;
+  var bytes = new Uint8Array(len);
+  for (var i = 0; i < len; i++) {
+    bytes[i] = binary_string.charCodeAt(i);
+  }
+  return bytes.buffer;
 }

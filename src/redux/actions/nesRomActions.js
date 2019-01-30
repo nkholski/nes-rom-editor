@@ -1,71 +1,75 @@
 export const isReady = () => dispatch => {
-    dispatch({
-        type: "IS_READY"
-    })
-}
-
-
+  dispatch({
+    type: "IS_READY"
+  });
+};
 
 export const storeRom = (romData, chrSpan) => dispatch => {
-    console.log("Store", romData, chrSpan);
-    const untouchedRom = new DataView(romData.buffer.slice(0));
-   
-    dispatch({
-        type: 'STORE_ROM',
-        payload: {romData, chrSpan, untouchedRom}
-    })
-}
+  console.log("Store", romData, chrSpan);
+  const untouchedRom = new DataView(romData.buffer.slice(0));
+
+  dispatch({
+    type: "STORE_ROM",
+    payload: { romData, chrSpan, untouchedRom }
+  });
+};
 
 export const alterByte = (address, value) => dispatch => {
-    // data : { byteIndex: number, value: number}[] || { byteIndex: number, value: number}
-    dispatch({
-        type: 'ALTER_BYTE',
-        payload: {address, value}
-    })
-}
+  // data : { byteIndex: number, value: number}[] || { byteIndex: number, value: number}
+  dispatch({
+    type: "ALTER_BYTE",
+    payload: { address, value }
+  });
+};
 
 export const putPixel = (firstByteIndex, x, y, colorIndex) => dispatch => {
-    // firstByteIndex = index of first byte of 8x8 block
-    // x,y = coordinates within the block
-    // colorIndex = 0 to 3
-    dispatch({
-        type: 'PUT_PIXEL',
-        payload: {firstByteIndex, x, y, colorIndex}
-    })
-}
+  // firstByteIndex = index of first byte of 8x8 block
+  // x,y = coordinates within the block
+  // colorIndex = 0 to 3
+  dispatch({
+    type: "PUT_PIXEL",
+    payload: { firstByteIndex, x, y, colorIndex }
+  });
+};
 
-export const download = (filename) => dispatch => {
-    dispatch({
-        type: "DOWNLOAD",
-        payload: filename
-    });
-}
+export const download = filename => dispatch => {
+  dispatch({
+    type: "DOWNLOAD",
+    payload: filename
+  });
+};
 
-export const setRomSettings = (romSettings) => dispatch => {
-    dispatch({
-        type: "SET_ROM_SETTINGS",
-        payload: romSettings
-    });
-}
+export const setRomSettings = romSettings => dispatch => {
+  dispatch({
+    type: "SET_ROM_SETTINGS",
+    payload: romSettings
+  });
+};
 
-export const setRomInfoIndex = (romInfoIndex) => dispatch => {
-    dispatch({
-        type: "SET_ROM_INFO_INDEX",
-        payload: romInfoIndex
-    });
-}
+export const setRomInfoIndex = romInfoIndex => dispatch => {
+  dispatch({
+    type: "SET_ROM_INFO_INDEX",
+    payload: romInfoIndex
+  });
+};
 
-export const setRomInfo = (romInfo) => dispatch => {
-    dispatch({
-        type: "SET_ROM_INFO",
-        payload: romInfo
-    });
-}
+export const setRomInfo = romInfo => dispatch => {
+  dispatch({
+    type: "SET_ROM_INFO",
+    payload: romInfo
+  });
+};
 
-export const setRomNames = (romNames) => dispatch => {
-    dispatch({
-        type: "SET_ROM_NAMES",
-        payload: romNames
-    });
+export const setRomNames = romNames => dispatch => {
+  dispatch({
+    type: "SET_ROM_NAMES",
+    payload: romNames
+  });
+};
 
-}
+export const setRomData = romData => dispatch => {
+  dispatch({
+    type: "SET_ROM_DATA",
+    payload: romData
+  });
+};

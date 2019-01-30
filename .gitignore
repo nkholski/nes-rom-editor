@@ -30,3 +30,5 @@ yarn-error.log*
 todo.txt
 *.ips
 *.1.js*
+
+## Removed from eslint/extends-array: "plugin:react/recommended"

@@ -1,38 +1,38 @@
 .color-control {
-    text-align: center;
-
+  text-align: center;
 }
 
 .color-control div:first-child {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
-
 #colors {
-    align-items: center;
-    display: flex;
+  align-items: center;
+  display: flex;
 }
 
 .palette {
-    font-size: 0.7em;
+  font-size: 0.7em;
 }
-
 
 #colors .selected {
-    border-width: 3px;
-    /* Border-color: color ^ 0x00ffffff */
+  border-width: 3px;
+  /* Border-color: color ^ 0x00ffffff */
 }
-
 
 .flip {
-    font-size: 40px;
-    text-align: center;
-    padding: 0 !important;
-    line-height: 0.7em;
-    background: #DDD;
+  background: #ddd;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &.X {
+    background-image: url("/images/flipX_arrows.png");
+  }
+  &.Y {
+    background-image: url("/images/flipY_arrows.png");
+  }
 }
 
-
 .color {
-    cursor: url(https://unpkg.com/nes.css/assets/cursor-click.png);
+  cursor: url(https://unpkg.com/nes.css/assets/cursor-click.png);
 }

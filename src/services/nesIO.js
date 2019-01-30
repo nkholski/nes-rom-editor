@@ -23,24 +23,23 @@ export default class NesIO {
   loadFile(fileName) {
     //fileName = "/rom/smb.nes";
     //const rom = "Mega\ Man\ 2\ \(U\)";
-      const rom = "smb";
+    const rom = "smb";
     fileName = "/rom/" + rom + ".nes";
     this.fileName = fileName;
+    alert("LOADING");
     const promise = fetch(fileName)
       .then(response => this.checkStatus(response) && response.arrayBuffer())
       .then(arrayBuffer => {
         console.log("ROM OK", arrayBuffer);
 
-       /* const binary = String.fromCharCode.apply(
+        /* const binary = String.fromCharCode.apply(
           null,
           new Uint8Array(arrayBuffer)
         );*/
 
-       /* console.log("BIN", typeof (binary));*/
+        /* console.log("BIN", typeof (binary));*/
 
-        
         this.dataView = new DataView(arrayBuffer);
-
 
         this.romInfo = {
           name: rom,
@@ -67,7 +66,7 @@ export default class NesIO {
           };
         }
 
-/*
+        /*
         fetch("/files/test1.ips").then(response => response.arrayBuffer()).then((arrayBuffer) => {
           const ipsView = new DataView(arrayBuffer);
           let recordStart = 5;
@@ -116,7 +115,7 @@ file.jsx: 243 doing byte 1
 file.jsx: 243 doing byte 0
 file.jsx: 248 Size, 2 bytes 1
                   */
-/*
+        /*
           // Byte 4,5 is size
           const size = ipsView.getUint16(recordStart + 3);
 
@@ -136,30 +135,27 @@ file.jsx: 248 Size, 2 bytes 1
 
           //}*/
 
-/*
+        /*
           console.log("A", ipsView.getUint8(1));
 
           console.log("IPS", ipsView);
 
         })
 */
-      /*  const blob = new Blob(new Uint8Array(this.dataView.buffer), {
+        /*  const blob = new Blob(new Uint8Array(this.dataView.buffer), {
           type: "octet/stream"
         });*/
 
-
         // const binary2 = new Uint8Array(this.dataView.buffer);
         // const binary2 = new TextDecoder("utf-8").decode(new Uint8Array(this.dataView));
-       /* const binary2 = String.fromCharCode.apply(
+        /* const binary2 = String.fromCharCode.apply(
           null,
           new Uint8Array(this.dataView.buffer)
         );*/
 
+        //   console.log("BIN2", typeof (binary2));
 
-
-     //   console.log("BIN2", typeof (binary2));
-
-    //    console.log("IS BINARY SAME", (binary == binary2));
+        //    console.log("IS BINARY SAME", (binary == binary2));
 
         // debugger;
         /** INTEGRATE JSNES FIRST TEST 
@@ -177,12 +173,11 @@ file.jsx: 248 Size, 2 bytes 1
         return this.dataView;
       });
 
-      
-
     return promise;
   }
 
-  findPaletteInRom(romData, paletteArray, prgLen) { // Just a test for future feature, will move somwhere else
+  findPaletteInRom(romData, paletteArray, prgLen) {
+    // Just a test for future feature, will move somwhere else
     let step = 0;
     console.log("Will try", prgLen, paletteArray);
     for (let i = 0; i < prgLen; i++) {
@@ -194,9 +189,8 @@ file.jsx: 248 Size, 2 bytes 1
         step = 0;
       }
       if (step === 3) {
-        console.log(`Possible byteIndex  ${i-2} to ${i}.`);
+        console.log(`Possible byteIndex  ${i - 2} to ${i}.`);
       }
-
     }
   }
 
