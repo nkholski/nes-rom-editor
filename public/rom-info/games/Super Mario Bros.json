@@ -1,1398 +1,1372 @@
 {
-    "name": "Super Mario Bros",
-    "textTables": [
-        {
-            "title": "Standard",
-            "tbl": {
-                "0": "0",
-                "1": "1",
-                "2": "2",
-                "3": "3",
-                "4": "4",
-                "5": "5",
-                "6": "6",
-                "7": "7",
-                "8": "8",
-                "9": "9",
-                "10": "A",
-                "11": "B",
-                "12": "C",
-                "13": "D",
-                "14": "E",
-                "15": "F",
-                "16": "G",
-                "17": "H",
-                "18": "I",
-                "19": "J",
-                "20": "K",
-                "21": "L",
-                "22": "M",
-                "23": "N",
-                "24": "O",
-                "25": "P",
-                "26": "Q",
-                "27": "R",
-                "28": "S",
-                "29": "T",
-                "30": "U",
-                "31": "V",
-                "32": "W",
-                "33": "X",
-                "34": "Y",
-                "35": "Z",
-                "36": " ",
-                "40": "-",
-                "41": "×",
-                "42": " ",
-                "43": "!",
-                "207": "©"
-            }
-        }
-    ],
-            "textStrings": [{
-                "description": null,
-                "address": 1893,
-                "length": 5,
-                "table": 0
-            }],
-
-    "compositions": [
-        {
-            "name": "fliptest",
-            "blocks": [
-                [
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34672
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34704
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 39520
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 39552
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 37696
-                    },
-                    null
-                ],
-                [
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34688
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34720
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 39536
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 39568
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34816
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 37696
-                    }
-                ],
-                [
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 36208
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 36256
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34336
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34336
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34128
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34160
-                    }
-                ],
-                [
-                    {
-                        "flipX": true,
-                        "flipY": false,
-                        "byteIndex": 36208
-                    },
-                    {
-                        "flipX": true,
-                        "flipY": false,
-                        "byteIndex": 36256
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34320
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34320
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34144
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34176
-                    }
-                ],
-                [
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 35040
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 36432
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34352
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34352
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 38848
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 38880
-                    }
-                ],
-                [
-                    {
-                        "flipX": true,
-                        "flipY": false,
-                        "byteIndex": 35040
-                    },
-                    {
-                        "flipX": true,
-                        "flipY": false,
-                        "byteIndex": 36432
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 36720
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 36752
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 38864
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 38896
-                    }
-                ],
-                [
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 38208
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 38240
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 36800
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 36768
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 36784
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 36832
-                    }
-                ],
-                [
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 38224
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 38256
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 36736
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34064
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 34064
-                    },
-                    {
-                        "flipX": false,
-                        "flipY": false,
-                        "byteIndex": 36848
-                    }
-                ]
-            ]
-        
-        },
-
-        
-
-
-
-        { 
-            "name": "Mario ",
-
-         "blocks": [
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32912
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32944
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33520
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33568
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33296
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33328
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33360
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33392
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33584
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33936
-              }
-            ],
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32928
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32960
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33536
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33504
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33312
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33344
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33376
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33408
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33600
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33952
-              }
-            ],
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32912
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33424
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33456
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33488
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32912
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32944
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32976
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33008
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33584
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33904
-              }
-            ],
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32928
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33440
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33472
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33504
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32928
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32960
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32992
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33024
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33600
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33888
-              }
-            ],
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32912
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32944
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32976
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33568
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33040
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33072
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33104
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33136
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33584
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33872
-              }
-            ],
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32928
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32960
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33552
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33504
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33056
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33088
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33120
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33152
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33600
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33888
-              }
-            ],
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32912
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32944
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32976
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33488
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32784
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32816
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32848
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32880
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33584
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33904
-              }
-            ],
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32928
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32960
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33552
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33504
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32800
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32832
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32864
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32896
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33600
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33920
-              }
-            ],
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32912
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32944
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33520
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33488
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33168
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33200
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33232
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33264
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33584
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33872
-              }
-            ],
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32928
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32960
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33536
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33504
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33184
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33216
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33248
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33280
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33600
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33920
-              }
-            ],
-            [
-              null,
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32912
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 34192
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 34224
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33584
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33616
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33712
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 34048
-              },
-              null,
-              null
-            ],
-            [
-              null,
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32928
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 34208
-              },
-              {
-                "flipX": true,
-                "flipY": false,
-                "byteIndex": 34224
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33600
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33632
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33664
-              },
-              {
-                "flipX": true,
-                "flipY": false,
-                "byteIndex": 34048
-              },
-              null,
-              null
-            ],
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32912
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33424
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33456
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 34256
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33712
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33728
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33584
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33840
-              },
-              null,
-              null
-            ],
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32928
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33440
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33472
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 34272
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33664
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33744
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33824
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33856
-              },
-              null,
-              null
-            ],
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32912
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32944
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33104
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 34288
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33712
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33680
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33584
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 35088
-              },
-              null,
-              null
-            ],
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32928
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32960
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32992
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 34304
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33664
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33696
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33600
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 35104
-              },
-              null,
-              null
-            ],
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32784
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 34000
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33968
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33984
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33760
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33792
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33712
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 35120
-              },
-              null,
-              null
-            ],
-            [
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 32800
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 34016
-              },
-              {
-                "flipX": true,
-                "flipY": false,
-                "byteIndex": 33968
-              },
-              {
-                "flipX": true,
-                "flipY": false,
-                "byteIndex": 33984
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33776
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33808
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 33664
-              },
-              {
-                "flipX": false,
-                "flipY": false,
-                "byteIndex": 35136
-              },
-              null,
-              null
-            ]
-          ],
-
-          "palettes": [
-            {
-            "name": "Mario",
-            "colors": null,
-            "address": [-1, 1512, 1513, 1514]
-        },
-        {
-            "name": "Luigi",
-            "colors": null,
-            "address": [-1, 1516, 1517, 1518]
-        },
-        {
-            "name": "Fire Mario / Luigi",
-            "colors": null,
-            "address": [-1, 1520, 1521, 1522]
-        }]
-
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-     
-        
-        
+  "name": "Super Mario Bros",
+  "textTables": [
+    {
+      "title": "Standard",
+      "tbl": {
+        "0": "0",
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5",
+        "6": "6",
+        "7": "7",
+        "8": "8",
+        "9": "9",
+        "10": "A",
+        "11": "B",
+        "12": "C",
+        "13": "D",
+        "14": "E",
+        "15": "F",
+        "16": "G",
+        "17": "H",
+        "18": "I",
+        "19": "J",
+        "20": "K",
+        "21": "L",
+        "22": "M",
+        "23": "N",
+        "24": "O",
+        "25": "P",
+        "26": "Q",
+        "27": "R",
+        "28": "S",
+        "29": "T",
+        "30": "U",
+        "31": "V",
+        "32": "W",
+        "33": "X",
+        "34": "Y",
+        "35": "Z",
+        "36": " ",
+        "40": "-",
+        "41": "×",
+        "42": " ",
+        "43": "!",
+        "207": "©"
+      }
+    }
   ],
-    "palettes": [{
-        "name": "Characters",
-        "children": [{
-            "name": "Normal Mario",
-            "palette": {
-                "hat + outer clothing": "0x005E8",
-                "skin": "0x005E9",
-                "hair + inner clothing": "0x005EA"
-            }
-        }]
-    }],
-    "hacks": [{
-            "name": "Game settings",
-            "children": [{
-                    "name": "Start lives (start with n+1 lives)",
-                    "address": 4218,
-                    "number": {
-                        "min": 0,
-                        "max": 255
-                    }
-                },
-                {
-                    "name": "Infinite lives (bool -1 ==> loadedwith",
-                    "address": 4585,
-                    "true": 173,
-                    "false": -1
-                }
-            ]
+  "textStrings": [
+    {
+      "description": null,
+      "address": 1893,
+      "length": 5,
+      "table": 0
+    }
+  ],
+
+  "compositions": [
+    {
+      "name": "fliptest",
+      "blocks": [
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34672
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34704
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 39520
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 39552
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 37696
+          },
+          null
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34688
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34720
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 39536
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 39568
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34816
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 37696
+          }
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 36208
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 36256
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34336
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34336
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34128
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34160
+          }
+        ],
+        [
+          {
+            "flipX": true,
+            "flipY": false,
+            "byteIndex": 36208
+          },
+          {
+            "flipX": true,
+            "flipY": false,
+            "byteIndex": 36256
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34320
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34320
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34144
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34176
+          }
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 35040
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 36432
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34352
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34352
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 38848
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 38880
+          }
+        ],
+        [
+          {
+            "flipX": true,
+            "flipY": false,
+            "byteIndex": 35040
+          },
+          {
+            "flipX": true,
+            "flipY": false,
+            "byteIndex": 36432
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 36720
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 36752
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 38864
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 38896
+          }
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 38208
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 38240
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 36800
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 36768
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 36784
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 36832
+          }
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 38224
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 38256
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 36736
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34064
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34064
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 36848
+          }
+        ]
+      ]
+    },
+
+    {
+      "name": "Mario ",
+
+      "blocks": [
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32912
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32944
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33520
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33568
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33296
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33328
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33360
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33392
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33584
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33936
+          }
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32928
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32960
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33536
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33504
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33312
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33344
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33376
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33408
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33600
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33952
+          }
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32912
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33424
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33456
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33488
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32912
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32944
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32976
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33008
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33584
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33904
+          }
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32928
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33440
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33472
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33504
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32928
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32960
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32992
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33024
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33600
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33888
+          }
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32912
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32944
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32976
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33568
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33040
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33072
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33104
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33136
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33584
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33872
+          }
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32928
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32960
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33552
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33504
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33056
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33088
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33120
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33152
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33600
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33888
+          }
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32912
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32944
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32976
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33488
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32784
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32816
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32848
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32880
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33584
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33904
+          }
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32928
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32960
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33552
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33504
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32800
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32832
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32864
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32896
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33600
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33920
+          }
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32912
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32944
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33520
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33488
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33168
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33200
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33232
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33264
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33584
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33872
+          }
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32928
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32960
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33536
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33504
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33184
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33216
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33248
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33280
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33600
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33920
+          }
+        ],
+        [
+          null,
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32912
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34192
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34224
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33584
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33616
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33712
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34048
+          },
+          null,
+          null
+        ],
+        [
+          null,
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32928
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34208
+          },
+          {
+            "flipX": true,
+            "flipY": false,
+            "byteIndex": 34224
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33600
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33632
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33664
+          },
+          {
+            "flipX": true,
+            "flipY": false,
+            "byteIndex": 34048
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32912
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33424
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33456
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34256
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33712
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33728
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33584
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33840
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32928
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33440
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33472
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34272
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33664
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33744
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33824
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33856
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32912
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32944
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33104
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34288
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33712
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33680
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33584
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 35088
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32928
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32960
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32992
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34304
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33664
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33696
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33600
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 35104
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32784
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34000
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33968
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33984
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33760
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33792
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33712
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 35120
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 32800
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 34016
+          },
+          {
+            "flipX": true,
+            "flipY": false,
+            "byteIndex": 33968
+          },
+          {
+            "flipX": true,
+            "flipY": false,
+            "byteIndex": 33984
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33776
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33808
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 33664
+          },
+          {
+            "flipX": false,
+            "flipY": false,
+            "byteIndex": 35136
+          },
+          null,
+          null
+        ]
+      ],
+
+      "palettes": [
+        {
+          "name": "Mario",
+          "colors": null,
+          "address": [-1, 1512, 1513, 1514]
         },
         {
-            "name": "Player mechanics",
-            "children": [{
-                    "name": "Max running velocity left",
-                    "address": 13392,
-                    "number": {
-                        "min": 5,
-                        "max": 55
-                    }
-                },
-                {
-                    "name": "Max walking velocity left",
-                    "address": 13393,
-                    "number": {
-                        "min": 5,
-                        "max": 55
-                    }
-
-
-                },
-                {
-                    "name": "Max swimming velocity left (guess)",
-                    "address": 13394,
-                    "number": {
-                        "min": 5,
-                        "max": 55
-                    }
-                },
-                {
-                    "name": "Max running velocity right",
-                    "address": 13395,
-                    "number": {
-                        "min": 5,
-                        "max": 55
-                    }
-
-
-                },
-                {
-                    "name": "Max walking velocity right",
-                    "address": 13396,
-                    "number": {
-                        "min": 5,
-                        "max": 55
-                    }
-
-
-                },
-                {
-                    "name": "Max swimming velocity right",
-                    "address": 13397,
-                    "number": {
-                        "min": 5,
-                        "max": 55
-                    }
-
-
-                },
-                {
-                    "name": "Fire ball movement",
-                    "address": 25058,
-                    "dropdown": [{
-                            "name": "Explode on contact, but no damage",
-                            "value": "10"
-                        },
-                        {
-                            "value": "13",
-                            "name": "Straight forward but bounces off blocks "
-                        },
-                        {
-                            "value": "15",
-                            "name": "Straight forward"
-                        },
-                        {
-                            "value": "19",
-                            "name": "Appear in air then bounce along top of sky "
-                        },
-                        {
-                            "value": "1B",
-                            "name": "Explode on contact"
-                        },
-                        {
-                            "value": "1C",
-                            "name": "Normal"
-                        },
-                        {
-                            "value": "9F",
-                            "name": "Wierd jump - shoot"
-                        },
-                        {
-                            "value": "CF",
-                            "name": "Kill first enemy even if you miss it"
-                        },
-                        {
-                            "value": "FF",
-                            "name": "Explode on Mario, but no damage"
-                        }
-                    ]
-                },
-                {
-                    "name": "Fire ball position",
-                    "address": 25083,
-                    "dropdown": [{
-                            "name": "3 blocks above Mario",
-                            "value": "CA"
-                        },
-                        {
-                            "value": "D0",
-                            "name": "2 blocks above Mario "
-                        },
-                        {
-                            "value": "F7",
-                            "name": "Straight ahead, misses Goombas but sometimes hits Koopa Troopas"
-                        },
-                        {
-                            "value": "F8",
-                            "name": "Normal"
-                        },
-                        {
-                            "value": "FC",
-                            "name": "Shoot much farther"
-                        },
-                        {
-                            "value": "FE",
-                            "name": "Shoot slightly farther"
-                        }
-                    ]
-                }
-            ]
+          "name": "Luigi",
+          "colors": null,
+          "address": [-1, 1516, 1517, 1518]
+        },
+        {
+          "name": "Fire Mario / Luigi",
+          "colors": null,
+          "address": [-1, 1520, 1521, 1522]
         }
-    ]
+      ]
+    }
+  ],
+  "palettes": [
+    {
+      "name": "Characters",
+      "children": [
+        {
+          "name": "Normal Mario",
+          "palette": {
+            "hat + outer clothing": "0x005E8",
+            "skin": "0x005E9",
+            "hair + inner clothing": "0x005EA"
+          }
+        }
+      ]
+    }
+  ],
+  "hacks": [
+    {
+      "name": "Game settings",
+      "children": [
+        {
+          "name": "Start lives",
+          "address": 4218,
+          "compValue": 2,
+          "adjust": 1,
+          "number": {
+            "min": 0,
+            "max": 255
+          }
+        },
+        {
+          "name": "Infinite lives",
+          "address": 4585,
+          "true": 173,
+          "false": 206
+        }
+      ]
+    },
+    {
+      "name": "Player mechanics",
+      "children": [
+        {
+          "name": "Max running velocity left",
+          "address": 13392,
+          "number": {
+            "min": 5,
+            "max": 55
+          }
+        },
+        {
+          "name": "Max walking velocity left",
+          "address": 13393,
+          "number": {
+            "min": 5,
+            "max": 55
+          }
+        },
+        {
+          "name": "Max swimming velocity left (guess)",
+          "address": 13394,
+          "number": {
+            "min": 5,
+            "max": 55
+          }
+        },
+        {
+          "name": "Max running velocity right",
+          "address": 13395,
+          "number": {
+            "min": 5,
+            "max": 55
+          }
+        },
+        {
+          "name": "Max walking velocity right",
+          "address": 13396,
+          "number": {
+            "min": 5,
+            "max": 55
+          }
+        },
+        {
+          "name": "Max swimming velocity right",
+          "address": 13397,
+          "number": {
+            "min": 5,
+            "max": 55
+          }
+        },
+        {
+          "name": "Fire ball movement",
+          "address": 25058,
+          "dropdown": [
+            {
+              "name": "Explode on contact, but no damage",
+              "value": "10"
+            },
+            {
+              "value": "13",
+              "name": "Straight forward but bounces off blocks "
+            },
+            {
+              "value": "15",
+              "name": "Straight forward"
+            },
+            {
+              "value": "19",
+              "name": "Appear in air then bounce along top of sky "
+            },
+            {
+              "value": "1B",
+              "name": "Explode on contact"
+            },
+            {
+              "value": "1C",
+              "name": "Normal"
+            },
+            {
+              "value": "9F",
+              "name": "Wierd jump - shoot"
+            },
+            {
+              "value": "CF",
+              "name": "Kill first enemy even if you miss it"
+            },
+            {
+              "value": "FF",
+              "name": "Explode on Mario, but no damage"
+            }
+          ]
+        },
+        {
+          "name": "Fire ball position",
+          "address": 25083,
+          "dropdown": [
+            {
+              "name": "3 blocks above Mario",
+              "value": "CA"
+            },
+            {
+              "value": "D0",
+              "name": "2 blocks above Mario "
+            },
+            {
+              "value": "F7",
+              "name": "Straight ahead, misses Goombas but sometimes hits Koopa Troopas"
+            },
+            {
+              "value": "F8",
+              "name": "Normal"
+            },
+            {
+              "value": "FC",
+              "name": "Shoot much farther"
+            },
+            {
+              "value": "FE",
+              "name": "Shoot slightly farther"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

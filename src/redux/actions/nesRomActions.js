@@ -5,7 +5,6 @@ export const isReady = () => dispatch => {
 };
 
 export const storeRom = (romData, chrSpan) => dispatch => {
-  console.log("Store", romData, chrSpan);
   const untouchedRom = new DataView(romData.buffer.slice(0));
 
   dispatch({

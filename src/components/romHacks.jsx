@@ -1,8 +1,6 @@
-// import renderBlock from "../services/renderBlock";
-// import NesIO from "../services/nesIO";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 
 import GameGenie from "../services/gameGenie";
 
@@ -10,376 +8,187 @@ class RomHacks extends Component {
   constructor(props) {
     super(props);
     this.defaults = {};
-    this.hexValues = [null,null,null];
+    this.hexValues = [null, null, null];
   }
 
   render() {
-    const colorOptions = this.props.nesPalette.map((color, index) => {
-      let hexString = index.toString(16).toUpperCase();
-      hexString = hexString.length % 2 ? "0" + hexString : hexString;
-
-      return <option value={index} key={index + "." + color} style={{ backgroundColor: color }}>{hexString}</option>;
-
-    }
+    console.log("HACK RENDER", this.props.hacks);
+    const hacks = this.props.hacks
+      ? this.getHacks(this.props.hacks)
+      : "No hacks for this rom";
+    return (
+      <>
+        <Container className="nes-container with-title is-centered">
+          <p className="title">Rom hacks</p>
+          <p>
+            Use the different tools from the tools section to add hacks to this
+            page.
+          </p>
+        </Container>
+        {hacks}
+      </>
     );
-    const paletteDropdown = [0,1,2].map(index => {
-      return <select key={index} onChange={(e) => this.paletteChange(index, e.target.value)}>
-        {colorOptions}
-      </select>;
-    }
-    );
 
-
-    
-
-    console.log("HACK RENDER", this.props.hacks)
-    const hacks = this.props.hacks ? this.getHacks(this.props.hacks) : "No hacks for this rom";
-    return <div>
-      {paletteDropdown}
-     
-      {hacks}
-    
-      Game Genie: <input type="text" id="gameGenieCode" className="input"/>
-      <Button onClick={() => this.gameGenie()}>
-        Test it
-      </Button>
-
-      Search value: <input type="text" id="searchValue" className="input"/>
-      <Button onClick={() => this.findValue()}>
-        Find it!
-      </Button>
-      
-      Possible strings <input type="text" id="searchValue" className="input"/>
-      <Button onClick={() => this.findStrings()}>
-        Find it!
-      </Button>
-
-
-      <textarea id="tblDump">
-
-
-      </textarea>
-      <Button onClick={() => this.importTbl()}>
-        Import tbl
-      </Button>
-
-      
-
-
-    </div>;
     /*[ADD NEW] [RESET TO ROM DEFAULTS]  [SAVE TO ROM]*/
   }
 
-  findTextValue(searchString) {
-    const searchArrayLetters = searchString.toUpperCase().split("");
-    const lastCheck = this.props.romData.byteLength - searchString.length;
-    const searchArray = searchArrayLetters.map(letter => {
-      let found = -1;
-      Object.keys(this.props.textTables[0].tbl).some(addr => {
-        if (this.props.textTables[0].tbl[addr] === letter) {
-          found = addr;
-          return true;
-        }
-        return false;
+  inputChanged = ({ ...params }) => {
+    console.log("ch", params);
+  };
+
+  pushHack = id => {
+    let needle = null;
+    this.props.hacks.some(hacksGroup => {
+      needle = hacksGroup.children.find(hack => {
+        return hack.id === id;
       });
-      return parseInt(found, 10);
-    });
-    
-    let step = 0;
-    for (let i = 0; i < lastCheck; i++) {
-      const value = this.props.romData.getUint8(i);
-      if(value === searchArray[step]){
-        step++;
+      if (needle) {
+        return true;
       }
-      else {
-        step = 0;
-      }
-      if (step === searchString.length){
-        const addr = i - searchString.length + 1;
-        console.log("FOUND", i - searchString.length + 1);
-        this.extractString(addr)
-        step = 0; 
-      }
-
-    }
-
-
-  }
-
-  paletteChange(order, paletteIndex) {
-    console.log(order,paletteIndex);
-    this.hexValues[order] = parseInt(paletteIndex, 10);
-    console.log(this.hexValues);
-    if(this.hexValues.indexOf(null) === -1) {
-      console.log("GO hACK");
-      this.findValueArray(this.hexValues);
-    }
-
-
-  }
-  extractString(addr){
-    const tbl = this.props.textTables[0].tbl;
-    const romData = this.props.romData;
-
-    // 1. Go backwards
-    while (tbl.hasOwnProperty(romData.getUint8(addr))){
-      addr--;
-    }
-    addr++;
-    // 2. Advance
-    let foundString = "";
-    while (tbl.hasOwnProperty(romData.getUint8(addr))) {
-      foundString += tbl[romData.getUint8(addr)];
-      addr++;
-    }
-    console.log(foundString);
-
-  }
-
-
-  findTextValueNoAlpha(searchString) {
-    searchString = searchString.toUpperCase();
-    const lastCheck = this.props.romData.byteLength - searchString.length;
-    const firstLetter = searchString.charCodeAt(0);
-    const sequence = searchString.split("").map((letter,i) => {
-      if(i === 0) {
-        return;
-      }
-      if(!letter.match(/[a-zA-Z]/)) {
-        console.log("NULL")
-        return null;
-      } 
-      return letter.charCodeAt(0) - firstLetter;
     });
 
-    let step = 0;
-    let baseValue; 
-    let found = false;
-    for (let i = 0; i < lastCheck; i++) {
-      const value = this.props.romData.getUint8(i);
-      if(!sequence[step] && step>0){
-        step++;
-        return;
-      }
-      if(step === 0) {
-        baseValue = value;
-        step++;
-      }
-      else {
-        if(value-baseValue === sequence[step]){
-          step++;
-          if(found){
-            console.log("INDING");
-            found = false;
-          }
-        }
-        else {
-          step=0;
-        }
-      }
-      if(step === sequence.length ) {
-        const startAddress = i - sequence.length + 1;
-        // this.props.romData.setUint8(startAddress, value);
-        const letterDiff = searchString.charCodeAt(0) - baseValue;
-        console.log("LETTERDIF", baseValue, letterDiff, searchString.charCodeAt(0));
-
-        const alphabet = {};
-        for(let chr=0; chr<25; chr++) {
-          alphabet[chr + 10] = String.fromCharCode(65+chr);
-
-        }
-
-        this.findStrings(alphabet);
-        step = 0;
-        found = true;
-      }
-
-    }
-
-
-
-  }
-
-  findStrings(alphabet = this.props.textTables[0].tbl) {
-    console.log( this.props.textTables)
-    console.log(alphabet);
-    const minLength = 3;
-    let treshold = 2;
-    const lastCheck = this.props.romData.byteLength - minLength;
-    console.log("CHECKING", alphabet);
-    let step = 0;
-    let string = "";
-    for (let i = 0; i < lastCheck; i++) {
-      const value = this.props.romData.getUint8(i);
-      if(alphabet.hasOwnProperty(value)) {
-        string+=alphabet[value];
-        step++;
-        treshold = 2;
-      }
-      else {
-        treshold--;
-        if(step>=minLength){
-          if(treshold > 0) {
-            string+="?";
-            continue;
-          }
-          else {
-            console.log(string);
-          }
-        }
-        string = "";
-        step = 0;
-      }
-
-    }
-
-  }
-
-
-  findValue(){
-    const inputValue = document.getElementById("searchValue").value;
-    console.log(inputValue);
-    if (inputValue.match(/[^0-9]/)) {
-      this.findTextValue(inputValue);
+    if (!needle) {
+      alert("Something went wrong!");
       return;
     }
-    const value = parseInt(document.getElementById("searchValue").value);
 
-
-
-    console.log("SEARCH BEGAN");
-    let len = 1;
-    const values = [];
-    
-    const pieces = Math.ceil(value/255);
-      const binaryString = ("000000000000000000000" + (value).toString(2)).slice(-8*pieces);
-      console.log(binaryString);
-      for(let i=0;i<pieces;i++){
-        const binStr = binaryString.substr(i * 8, 8);
-        values.push(parseInt(binStr, 2));
-      }
-    
-
-
-    this.findValueArray(values)
-  }
-
-  findValueArray(values){
-    console.log(this.props);
-    const chrRom = false;
-    const pieces = values.length;
-    const endValue = chrRom ? this.props.romData.byteLength - pieces + 1 : this.props.chrSpan.first;
-    let occurances = 0;
-    for (let i = 0; i < endValue; i++) {
-      let found = true;
-      for (let l = 0; l < pieces; l++) {
-        if (this.props.romData.getUint8(i + l) !== values[l]) {
-          found = false;
-          break;
-        }
-      }
-      if (found) {
-        occurances++;
-        console.log("Found", i);
-        this.props.romData.setUint8(i, 1)
-      }
+    let value;
+    if (needle.false) {
+      value = document.getElementById("input-" + needle.id).checked
+        ? needle.true
+        : needle.false;
+    } else {
+      let value =
+        parseInt(document.getElementById("input-" + needle.id).value, 10) -
+        (Number.isInteger(needle.adjust) ? needle.adjust : 0);
     }
-    console.log("SEARCH FINISHED, FOUND: " + occurances);
-  }
-    
-    
-    gameGenie() {
-    const result = GameGenie(document.getElementById("gameGenieCode").value)
 
-    console.log("code", result, result.address + 16 - 16384 * 2, this.props.romData.byteLength);
-    if(result){
-      console.log(this.props.romData.getUint8(result.address));
-      console.log(this.props.romData.getUint8(result.address+16));
-      console.log(this.props.romData.getUint8(result.address+16-16384));
-      console.log(this.props.romData.getUint8(result.address + 16 - 16384*2));
-      if(result.data === 8) {
-        result.data = 44;
+    value = value > 255 ? 255 : value;
+    value = value < 0 ? 0 : value;
+    let addressJump = 0;
+    const compValue = this.props.romData.getUint8(needle.address);
+
+    while (needle.address + addressJump < this.props.romData.byteLength) {
+      const currentValue = this.props.romData.getUint8(
+        needle.address + addressJump
+      );
+      if (currentValue === compValue) {
+        this.props.romData.setUint8(needle.address + addressJump, value);
+      } else {
+        console.log("NO");
       }
-      if(result.data === 206){
-        result.data = 0;
-      }
-      this.props.romData.setUint8(result.address + 16 - 16384 * 2, result.data);
+      console.log("AT", addressJump, compValue, currentValue);
+
+      addressJump += 0x4000; // compensate for bank swapping
     }
-  }
 
-  getHacks = (data, key=null) => {
-    console.log("SKAFFA HACK", data);
+    console.log(needle, value);
 
+    console.log("hack", id, typeof id);
+  };
 
-    if(!data.map){
+  getHacks = (data, key = null) => {
+    if (!data.map) {
+      if (!data.hasOwnProperty("id")) {
+        data.id = Math.floor(10000000 * Math.random());
+      }
+
       let setting;
-      if(!this.defaults.hasOwnProperty(data.address)){
+      if (!this.defaults.hasOwnProperty(data.address)) {
         this.defaults[data.address] = this.props.romData.getUint8(data.address);
       }
-      if(false || data.dropdown){
-        const options = data.dropdown.map((option, i)=>{
+      if (data.dropdown) {
+        const options = data.dropdown.map((option, i) => {
           console.log(option);
-          return <option key={i+":"+option.value} defaultValue={option.value}>{option.name}</option>
+          return (
+            <option key={i + ":" + option.value} defaultValue={option.value}>
+              {option.name}
+            </option>
+          );
         });
-        console.log("key"+key);
+        console.log("key" + key);
         setting = <select>{options}</select>;
-      }
-      else {
-        setting = <input type="text" value={this.defaults[data.address]}/>;
+      } else if (data.hasOwnProperty("true")) {
+        const currentValue = this.props.romData.getUint8(data.address);
+        data.true = data.true === -1 ? currentValue : data.true;
+        data.false = data.false === -1 ? currentValue : data.false;
+        const checked = data.true === currentValue;
+        setting = (
+          <label>
+            <input
+              id={"input-" + data.id}
+              type="checkbox"
+              className="nes-checkbox"
+              defaultChecked={checked}
+            />
+            <span />
+          </label>
+        );
+        return (
+          <Row key={key}>
+            <Col>{setting}</Col>
+            <Col>{data.name}</Col>
+            <Col>0x{data.address.toString(16)}</Col>
+            <Col>
+              <Button onClick={() => this.pushHack(data.id)}>
+                Push to rom
+              </Button>
+            </Col>
+          </Row>
+        );
+      } else {
+        setting = (
+          <input
+            id={"input-" + data.id}
+            type="text"
+            onChange={this.inputChanged}
+            defaultValue={
+              this.defaults[data.address] +
+              (Number.isInteger(data.adjust) ? data.adjust : 0)
+            }
+          />
+        );
       }
       console.log("key->", key);
-      return <div key={key}><h5>{data.name} (0x{data.address.toString(16)})</h5>{ setting }</div>;
+      return (
+        <Row key={key}>
+          <Col>{data.name}</Col>
+          <Col>{setting}</Col>
+          <Col>0x{data.address.toString(16)}</Col>
+          <Col>
+            <Button onClick={() => this.pushHack(data.id)}>Push to rom</Button>
+          </Col>
+        </Row>
+      );
     }
 
     const hacks = data.map((entity, i) => {
       let content = "";
       if (entity.children) {
         const content = entity.children.map((entity, i2) => {
-          return this.getHacks(entity, i+":"+i2);
+          return this.getHacks(entity, i + ":" + i2);
         });
         console.log(content);
         return (
-          <div key={entity.name + i}>
-            <h2>{entity.name}</h2>
+          <Container
+            className="nes-container with-title is-centered"
+            key={entity.name + i}
+          >
+            <p className="title">{entity.name}</p>
+
             {content}
-          </div>
+          </Container>
         );
-      }
-      else {
+      } else {
         return this.getHacks(entity);
       }
     });
     return hacks;
-  }
-
-  importTbl() {
-
-    const inputValue = document.getElementById("tblDump").value;
-    const charsData = inputValue.split("\n");
-    const chars = {};
-    charsData.forEach((char) => {
-      const [addr, letter] = char.split("=");
-      chars[parseInt(addr, 16)] = letter;
-    })
-
-    if (!this.props.hacks.hasOwnProperty("textTables")){
-      this.props.hacks.textTables = [];
-    }
-    this.props.hacks.textTables[0] = {
-      title: "Standard",
-      tbl: chars
-    }
-
-    window.hacks = this.props.hacks;
-
-  }
+  };
 }
 
-
-
-
 const mapStateToProps = state => {
-  return { 
+  return {
     hacks: state.romSettingsReducer.hacks,
     textTables: state.romSettingsReducer.textTables,
     romData: state.nesRomReducer.romData,
@@ -389,9 +198,12 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return { a: ()=> {console.log("d")}}
+  return {
+    a: () => {
+      console.log("d");
+    }
+  };
 };
-
 
 export default connect(
   mapStateToProps,

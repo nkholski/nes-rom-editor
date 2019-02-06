@@ -21,10 +21,7 @@ export default (state = defaultState, action) => {
 
   switch (type) {
     case "ROM_STATUS":
-      return {
-        ...state,
-        romStatus: payload
-      };
+      return { ...state, romStatus: payload };
     case "IS_READY":
       return {
         ...state,

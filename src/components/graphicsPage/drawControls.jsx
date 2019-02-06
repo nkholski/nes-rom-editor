@@ -36,7 +36,7 @@ import PaletteModal from "./paletteModal";
 import SaveCompositionModal from "./saveCompositionModal";
 import SelectCompositionModal from "./selectCompositionModal";
 
-import CompositionService from "../../services/compositionService";
+// import CompositionService from "../../services/compositionService";
 import classnames from "classnames";
 
 class DrawControls extends Component {

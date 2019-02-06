@@ -56,7 +56,6 @@ import "./emulator.css";
 import "./importImage.css";
 import "./tools.css";
 
-
 // import "./bootstrap-cyborg.min.css";
 import DraggedBlock from "./components/graphicsPage/draggedBlock";
 import GraphicsPage from "./components/graphicsPage";
@@ -82,8 +81,7 @@ class App extends React.Component {
     const init = new Init(this.props);
     init.init().then(() => {
       this.setState({ ready: true });
-});
-
+    });
 
     /// return new Promise(resolve => { let i = new Image(); i.onload = () => { resolve(i) }; i.src = url; });
 
@@ -135,20 +133,26 @@ class App extends React.Component {
 
   render() {
     console.log(this.state.activeTab);
-    const pageIds = ["File", "Graphics", "Palettes", "Texts", "Hacks", "Emulator", "Tools", "Help"];
+    const pageIds = [
+      "File",
+      "Graphics",
+      "Palettes",
+      "Texts",
+      "Hacks",
+      "Emulator",
+      "Tools",
+      "Help"
+    ];
     const disabled = this.state.disabled;
-    
-    pageIds.forEach(page => { 
-      if(page==="Help") {
-        disabled[page] = true; 
 
-      }
-      else {
-        disabled[page] = false; 
-
+    pageIds.forEach(page => {
+      if (page === "Help") {
+        disabled[page] = true;
+      } else {
+        disabled[page] = false;
       }
     });
-    this.setState({disabled});
+    this.setState({ disabled });
 
     if (!this.state.ready || this.props.romVersion < 1) {
       return <div>Loading...</div>;
@@ -163,7 +167,6 @@ class App extends React.Component {
           onClick={() => {
             this.toggle(page);
           }}
-          
         >
           {page}
         </NavLink>
@@ -173,57 +176,66 @@ class App extends React.Component {
     const pages = pageIds.map(page => {
       let pageTag;
 
-      if(page === this.state.activeTab) {
-      switch(page){
-        case "File":
-          pageTag = <File />;
-          break;
-        case "Graphics":
-          pageTag = <GraphicsPage />;
-          break;
-        case "Texts":
-          pageTag = <Texts />;
-          break;
-        case "Hacks":
-          pageTag = <RomHacks/>;
-          break;
-        case "Emulator":
-          pageTag = <Emulator/>;
-          break;
-        case "Tools":
-          pageTag = <Tools/>;
-          break;
-        case "Palettes":
-          pageTag = <Palettes/>;
-          break;
-        default:
-          pageTag = <h1>{page}</h1>;
-          break;
-      }
-      }
-      else {
+      if (page === this.state.activeTab) {
+        switch (page) {
+          case "File":
+            pageTag = <File />;
+            break;
+          case "Graphics":
+            pageTag = <GraphicsPage />;
+            break;
+          case "Texts":
+            pageTag = <Texts />;
+            break;
+          case "Hacks":
+            pageTag = <RomHacks />;
+            break;
+          case "Emulator":
+            pageTag = <Emulator />;
+            break;
+          case "Tools":
+            pageTag = <Tools />;
+            break;
+          case "Palettes":
+            pageTag = <Palettes />;
+            break;
+          default:
+            pageTag = <h1>{page}</h1>;
+            break;
+        }
+      } else {
         // I want the page to reset render when visited
         pageTag = <div>Waiting...</div>;
       }
 
-     
       return (
         <TabPane key={page} tabId={page}>
-            {pageTag} 
+          {pageTag}
         </TabPane>
       );
     });
 
-   // return <ImportImage/>;
+    // return <ImportImage/>;
 
     return (
       <div>
         <DraggedBlock />
-        <a className="github-link" href="https://github.com/nkholski/nes-rom-editor" target="_blank">
-          <p className="balloon from-right">Fork me<br/>on GitHub</p>
-          <i className="octocat"></i>
+        <a
+          className="github-link"
+          href="https://github.com/nkholski/nes-rom-editor"
+          target="_blank"
+        >
+          <p className="balloon from-right">
+            Fork me
+            <br />
+            on GitHub
+          </p>
+          <i className="octocat" />
         </a>
-        <div id="titlebar"><h1 className="main">NEStamptation</h1><span className="version">beta</span></div>
+        <div id="titlebar">
+          <h1 className="main">NEStamptation</h1>
+          <span className="version">beta</span>
+        </div>
         <Nav tabs>{tabs}</Nav>
         <TabContent activeTab={this.state.activeTab}>{pages}</TabContent>
       </div>
@@ -232,9 +244,11 @@ class App extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     console.log(nextState.activeTab, nextState.ready, nextProps.romVersion);
-    return nextState.activeTab !== this.state.activeTab ||
+    return (
+      nextState.activeTab !== this.state.activeTab ||
       nextState.ready !== this.state.ready ||
-      this.props.romVersion !== nextProps.romVersion;
+      this.props.romVersion !== nextProps.romVersion
+    );
   }
 
   /*page(pg) {
@@ -263,13 +277,11 @@ class App extends React.Component {
     }
   }
 
-  toggle(activeTab){
-    
+  toggle(activeTab) {
     if (this.state.disabled[activeTab]) {
       return;
     }
-    this.setState({activeTab});
-
+    this.setState({ activeTab });
   }
 
   getRomSpecificStuff() {
@@ -300,6 +312,20 @@ class App extends React.Component {
           let hacks = counter(res.hacks);
           let palettes = counter(res.palettes);
           let compositionCount = res.compositions.length;
+
+          /* Flytta om sen */
+          const localStorageKeys = Object.keys(localStorage);
+          let compositionIndex = -1;
+
+          alert("APA");
+          while (
+            (composition = localStorage.getItem(
+              "composition" + ++compositionIndex
+            ))
+          ) {
+            alert("FOUND");
+            res.compositions.push(JSON.parse(composition));
+          }
 
           this.props.setPresetCompositions(res.compositions);
 
