@@ -14,7 +14,8 @@ class Tools extends Component {
             imageBinaryData: null
         }*/
     this.state = {
-      tool: null
+      tool: null,
+      imageBinaryData: null
     };
   }
 
@@ -161,10 +162,10 @@ class Tools extends Component {
     let currentPage = "";
     switch (this.state.tool) {
       case "imageImport":
-        currentPage = (
+        const page = this.state.imageBinaryData ? (
+          <ImportImage imageBinaryData={this.state.imageBinaryData} />
+        ) : (
           <div>
-            <ImportImage />
-            <img id="source-image" />
             <input
               type="file"
               id="input"
@@ -172,16 +173,35 @@ class Tools extends Component {
             />
           </div>
         );
+        currentPage = (
+          <div>
+            {" "}
+            <img id="source-image" />
+            {page}
+          </div>
+        );
+        //             <ImportImage/>
+        /* currentPage = (
+          <div>
+            <ImportImage targetFile={this.state.imageBinaryData} />
+            <img id="source-image" />
+            <input
+              type="file"
+              id="input"
+              onChange={e => this.parseImage(e.target.files)}
+            />
+          </div>
+        );*/
         break;
       case "text":
         currentPage = <TextFinder />;
         break;
     }
 
-    /*const importImage = 
-                this.state.imageBinaryData ? 
-                <ImportImage imageBinaryData={this.state.imageBinaryData}/> 
-                : 
+    /*const importImage =
+                this.state.imageBinaryData ?
+                <ImportImage imageBinaryData={this.state.imageBinaryData}/>
+                :
                 <input type="file" id="input" onChange={e => this.parseImage(e.target.files)} />;*/
 
     //             <ImportImage/>
@@ -202,16 +222,13 @@ class Tools extends Component {
   }
 
   parseImage(data) {
+    console.log("PARSE");
     const reader = new FileReader();
-
     if (data[0]) {
       reader.onload = e => {
-        console.log(e.target.result);
         this.setState({ imageBinaryData: e.target.result });
       };
       reader.readAsBinaryString(data[0]);
-    } else {
-      alert("FAIL");
     }
   }
 }

@@ -44,7 +44,10 @@ class DrawControls extends Component {
     super(props);
 
     console.log(props.presetCompositions);
-    const compositions = props.compositions ? [...props.compositions] : [];
+
+    const compositions = props.compositions
+      ? [...props.compositions, ...props.presetCompositions]
+      : [];
 
     try {
       const storedCompositions = JSON.parse(
@@ -374,9 +377,6 @@ class DrawControls extends Component {
       return;
     }
     const composition = this.state.compositions[cI];
-    console.log(this.state.compositions, cI);
-    //  debugger;
-
     if (
       composition.hasOwnProperty("palettes") &&
       composition.palettes.length > 0
@@ -387,9 +387,15 @@ class DrawControls extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.compositions !== this.props.compositions) {
+    if (
+      prevProps.compositions !== this.props.compositions ||
+      prevProps.presetCompositions != this.props.presetCompositions
+    ) {
       this.setState({
-        compositions: [...this.props.compositions]
+        compositions: [
+          ...this.props.compositions,
+          ...this.props.presetCompositions
+        ]
       });
     }
   }
@@ -406,7 +412,8 @@ const mapStateToProps = state => {
     nesColorIndicies: state.drawReducer.nesColorIndicies,
     romData: state.nesRomReducer.romData,
     palettes: state.romSettingsReducer.palettes,
-    compositions: state.romSettingsReducer.compositions
+    compositions: state.romSettingsReducer.compositions,
+    presetCompositions: state.canvasReducer.presetCompositions
   };
 };
 

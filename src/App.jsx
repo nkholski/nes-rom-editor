@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 
 // Actions
 import { init } from "./services/init";
-import { loadURL } from "./services/romIO";
+// import { loadURL } from "./services/romIO";
 // import { setPalette } from "./redux/actions/drawActions";
 import {
   setPresetCompositions,
@@ -160,7 +160,7 @@ class App extends React.Component {
           <i className="octocat" />
         </a>
         <div id="titlebar">
-          <h1 className="main">NEStamptation</h1>
+          <h1 className="main">NEStamp</h1>
           <span className="version">beta</span>
         </div>
         <Nav tabs>{tabs}</Nav>

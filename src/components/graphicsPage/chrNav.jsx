@@ -8,7 +8,6 @@ import { setClipByte } from "../../redux/actions/canvasActions";
 
 import { renderTile } from "../../services/render";
 
-
 class ChrNav extends Component {
   constructor(props) {
     super(props);
@@ -18,15 +17,14 @@ class ChrNav extends Component {
     this.clipContext = null;
     this.renderedVersion = -1;
 
-    if(this.props.romInfo.chr && this.props.romInfo.chr.length>0) {
-    this.chrSpan = {
-      first: this.props.romInfo.chr[0],
-      len: 8192 * this.props.romInfo.chr.length
-    };
-  }
+    if (this.props.romInfo.chr && this.props.romInfo.chr.length > 0) {
+      this.chrSpan = {
+        first: this.props.romInfo.chr[0],
+        len: 8192 * this.props.romInfo.chr.length
+      };
+    }
 
     this.state = {
-     
       height: 9 * (this.chrSpan.len / 128),
       romCheckupDone: false
     };
@@ -45,9 +43,9 @@ class ChrNav extends Component {
     const correctX = this.chrSpan.first % 128;
 
     // Havn't figuered out why context is forgotten...
-    this.context = this.context.hasOwnProperty("fillStyle") ? this.context : this.canvas.getContext("2d");
-
-    
+    this.context = this.context.hasOwnProperty("fillStyle")
+      ? this.context
+      : this.canvas.getContext("2d");
 
     for (
       let i = this.chrSpan.first;
@@ -81,14 +79,18 @@ class ChrNav extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    let colorChange = this.props.colors.reduce((changed, value, index)=>{ return changed || value!==nextProps[index];}, false);
-    if(colorChange && this.canvas){
+    let colorChange = this.props.colors.reduce((changed, value, index) => {
+      return changed || value !== nextProps[index];
+    }, false);
+    if (colorChange && this.canvas) {
       /*console.log(this);
       this.canvas = document.getElementById("chr-canvas");
       this.clip = document.getElementById("clip");
       this.clipContext = document.getElementById("clip").getContext("2d");*/
       this.drawCHR(nextProps.colors);
     }
+
+    console.log("Should Update?", this.props.version, this.renderedVersion);
 
     return this.props.version !== this.renderedVersion;
   }
@@ -147,7 +149,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(setRomSettings(romSettings));
     },
     renderTile: (...args) => {
-      dispatch(renderTile(...args))
+      dispatch(renderTile(...args));
     }
   };
 };
